@@ -5,5 +5,5 @@ public class EatListRestaurant
     public int restaurantId { get; set; } // FOREIGN KEY REFERENCES RESTAURANTS
 
     public EatList AssignedEatList { get; set; }
-    public Restaurant Assigned Restaurant { get; set; }
+    public Restaurant AssignedRestaurant { get; set; }
 }
