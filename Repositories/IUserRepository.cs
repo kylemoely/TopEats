@@ -6,10 +6,10 @@ namespace TopEats.Repositories
 {
     public interface IUserRepository
     {
-        User GetUserById(int id);
+        User GetUserById(int userId);
         IEnumerable<User> GetAllUsers();
         void CreateUser(User user);
         void UpdateUser(User user);
-        void DeleteUser(int id);
+        void DeleteUser(int userId);
     }
 }
