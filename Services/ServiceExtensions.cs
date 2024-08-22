@@ -11,6 +11,8 @@ namespace TopEats.Services
         {
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
         }
     }
 
