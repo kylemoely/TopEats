@@ -76,7 +76,7 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue('@reviewId', comment.reviewId);
                 command.Parameters.AddWithValue('@userId', comment.userId);
-                command.Parameters.AddWithValue('@commentText');
+                command.Parameters.AddWithValue('@commentText', comment.commentText);
 
                 connection.Open();
                 command.ExecuteNonQuery();
