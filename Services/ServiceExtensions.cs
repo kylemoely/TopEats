@@ -17,6 +17,8 @@ namespace TopEats.Services
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             services.AddScoped<IRestaurantService, RestaurantService>();
+            services.AddScoped<IEatListRepository, EatListRepository>();
+            services.AddScoped<IEatListService, EatListService>();
         }
     }
 
