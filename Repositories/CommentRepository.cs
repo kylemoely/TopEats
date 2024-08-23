@@ -15,7 +15,7 @@ namespace TopEats.Repositories
 
         public CommentRepository(IConfiguration configuration, IUserService userService, IReviewService reviewService)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = Environment.GetEnvironmentVariable("connection_string");
             _userService = userService;
             _reviewService = reviewService;
         }

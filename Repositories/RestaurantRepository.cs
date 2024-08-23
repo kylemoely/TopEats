@@ -12,7 +12,7 @@ namespace TopEats.Repositories
 
         public RestaurantRepository(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = Environment.GetEnvironmentVariable("connection_string");
         }
 
         public Restaurant GetRestaurantById(int restaurantId)

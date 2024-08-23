@@ -12,7 +12,7 @@ namespace TopEats.Repositories
 
         public UserRepository(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = Environment.GetEnvironmentVariable("connection_string");
         }
 
         public User GetUserById(int userId)

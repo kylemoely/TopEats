@@ -14,7 +14,7 @@ namespace TopEats.Repositories
 
         public EatListRepository(IConfiguration configuration, IUserService userService)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = Environment.GetEnvironmentVariable("connection_string");
             _userService = userService;
         }
 
