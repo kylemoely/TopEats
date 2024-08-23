@@ -27,6 +27,8 @@ namespace TopEats.Models
             eatListName = _eatListName;
             private_setting = _private_setting;
             userId = _userId;
+
+            AssignedUser = userService.GetUserById(userId);
         }
     }
 
