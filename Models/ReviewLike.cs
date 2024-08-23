@@ -1,4 +1,5 @@
 using System;
+using TopEats.Services;
 
 namespace TopEats.Models
 {
