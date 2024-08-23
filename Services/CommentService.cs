@@ -26,17 +26,17 @@ namespace TopEats.Services
 
         public void CreateComment(Comment comment)
         {
-            return _commentRepository.CreateComment(comment);
+            _commentRepository.CreateComment(comment);
         }
 
         public void UpdateComment(Comment comment)
         {
-            return _commentRepository.UpdateComment(comment);
+            _commentRepository.UpdateComment(comment);
         }
 
         public void DeleteComment(int commentId)
         {
-            return _commentRepository.DeleteComment(commentId);
+            _commentRepository.DeleteComment(commentId);
         }
     }
 }

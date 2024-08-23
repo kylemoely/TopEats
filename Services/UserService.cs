@@ -26,17 +26,17 @@ namespace TopEats.Services
 
         public void CreateUser(User user)
         {
-            return _userRepository.CreateUser(user);
+            _userRepository.CreateUser(user);
         }
 
         public void UpdateUser(User user)
         {
-            return _userRepository.UpdateUser(user);
+            _userRepository.UpdateUser(user);
         }
 
         public void DeleteUser(int userId)
         {
-            return _userRepository.DeleteUser(userId);
+            _userRepository.DeleteUser(userId);
         }
     }
 }

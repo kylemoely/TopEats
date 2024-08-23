@@ -26,17 +26,17 @@ namespace TopEats.Services
 
         public void CreateEatList(EatList eatList)
         {
-            return _eatListRepository.CreateEatList(eatList);
+            _eatListRepository.CreateEatList(eatList);
         }
 
         public void UpdateEatList(EatList eatList)
         {
-            return _eatListRepository.UpdateEatList(eatList);
+            _eatListRepository.UpdateEatList(eatList);
         }
 
         public void DeleteEatList(int eatListId)
         {
-            return _eatListRepository.DeleteEatList(eatListId);
+            _eatListRepository.DeleteEatList(eatListId);
         }
     }
 }

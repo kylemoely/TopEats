@@ -26,17 +26,17 @@ namespace TopEats.Services
 
         public void CreateReview(Review review)
         {
-            return _reviewRepository.CreateReview(review);
+            _reviewRepository.CreateReview(review);
         }
 
         public void UpdateReview(Review review)
         {
-            return _reviewRepository.UpdateReview(review);
+            _reviewRepository.UpdateReview(review);
         }
 
         public void DeleteReview(int reviewId)
         {
-            return _reviewRepository.DeleteReview(reviewId);
+            _reviewRepository.DeleteReview(reviewId);
         }
     }
 }

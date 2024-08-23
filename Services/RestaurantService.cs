@@ -26,17 +26,17 @@ namespace TopEats.Services
 
         public void CreateRestaurant(Restaurant restaurant)
         {
-            return _restaurantRepository.CreateRestaurant(restaurant);
+            _restaurantRepository.CreateRestaurant(restaurant);
         }
 
         public void UpdateRestaurant(Restaurant restaurant)
         {
-            return _restaurantRepository.UpdateRestaurant(restaurant);
+            _restaurantRepository.UpdateRestaurant(restaurant);
         }
 
         public void DeleteRestaurant(int restaurantId)
         {
-            return _restaurantRepository.DeleteRestaurant(restaurantId);
+            _restaurantRepository.DeleteRestaurant(restaurantId);
         }
     }
 }
