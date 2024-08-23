@@ -34,15 +34,15 @@ namespace TopEats.Repositories
                     if (reader.Read())
                     {
                         return new Review
-                        {
-                            _reviewId = (int)reader["reviewId"],
-                            _rating = (int)reader["rating"],
-                            _reviewText = reader["reviewText"].ToString(),
-                            _restaurantId = (int)reader["restaurantId"],
-                            _userId = (int)reader["userId"],
-                            userService = _userService,
-                            restaurantService = _restaurantService
-                        };
+                        (
+                            (int)reader["reviewId"],
+                            (int)reader["rating"],
+                            reader["reviewText"].ToString(),
+                            (int)reader["restaurantId"],
+                            (int)reader["userId"],
+                            _userService,
+                            _restaurantService
+                        );
                     }
                 }
             }
@@ -64,15 +64,15 @@ namespace TopEats.Repositories
                     while (reader.Read())
                     {
                         reviews.Add(new Review
-                        {
-                            _reviewId = (int)reader["reviewId"],
-                            _rating = (int)reader["rating"],
-                            _reviewText = reader["reviewText"].ToString(),
-                            _restaurantId = (int)reader["restaurantId"],
-                            _userId = (int)reader["userId"],
-                            userService = _userService,
-                            restaurantService = _restaurantService
-                        });
+                        (
+                            (int)reader["reviewId"],
+                            (int)reader["rating"],
+                            reader["reviewText"].ToString(),
+                            (int)reader["restaurantId"],
+                            (int)reader["userId"],
+                            _userService,
+                            _restaurantService
+                        ));
                     }
                 }
             }

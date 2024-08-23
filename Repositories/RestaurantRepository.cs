@@ -29,12 +29,12 @@ namespace TopEats.Repositories
                     if (reader.Read())
                     {
                         return new Restaurant
-                        {
-                            _restaurantId = (int)reader["restaurantId"],
-                            _restaurantName = reader["restaurantName"].ToString(),
-                            _cuisine = reader["cuisine"].ToString(),
-                            _priceCategory = (int)reader["priceCategory"]
-                        };
+                        (
+                            (int)reader["restaurantId"],
+                            reader["restaurantName"].ToString(),
+                            reader["cuisine"].ToString(),
+                            (int)reader["priceCategory"]
+                        );
                     }
                 }
             }
@@ -56,12 +56,12 @@ namespace TopEats.Repositories
                     while (reader.Read())
                     {
                         restaurants.Add(new Restaurant
-                        {
-                            _restaurantId = (int)reader["restaurantId"],
-                            _restaurantName = reader["restaurantName"].ToString(),
-                            _cuisine = reader["cuisine"].ToString(),
-                            _priceCategory = (int)reader["priceCategory"]
-                        });
+                        (
+                            (int)reader["restaurantId"],
+                            reader["restaurantName"].ToString(),
+                            reader["cuisine"].ToString(),
+                            (int)reader["priceCategory"]
+                        ));
                     }
                 }
             }

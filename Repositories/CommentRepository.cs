@@ -34,14 +34,14 @@ namespace TopEats.Repositories
                     if (reader.Read())
                     {
                         return new Comment
-                        {
-                            _commentId = (int)reader["commentId"],
-                            _reviewId = (int)reader["reviewId"],
-                            _userId = (int)reader["userId"],
-                            _commentText = reader["commentText"].ToString(),
-                            userService = _userService,
-                            reviewService = _reviewService
-                        };
+                        (
+                            (int)reader["commentId"],
+                            (int)reader["reviewId"],
+                            (int)reader["userId"],
+                            reader["commentText"].ToString(),
+                            _userService,
+                            _reviewService
+                        );
                     }
                 }
             }
@@ -63,14 +63,14 @@ namespace TopEats.Repositories
                     while (reader.Read())
                     {
                         comments.Add(new Comment
-                        {
-                            _commentId = (int)reader["commentId"],
-                            _reviewId = (int)reader["reviewId"],
-                            _userId = (int)reader["userId"],
-                            _commentText = reader["commentText"].ToString(),
-                            userService = _userService,
-                            reviewService = _reviewService
-                        });
+                        (
+                            (int)reader["commentId"],
+                            (int)reader["reviewId"],
+                            (int)reader["userId"],
+                            reader["commentText"].ToString(),
+                            _userService,
+                            _reviewService
+                        ));
                     }
                 }
             }

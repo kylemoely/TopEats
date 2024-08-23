@@ -32,12 +32,13 @@ namespace TopEats.Repositories
                     if (reader.Read())
                     {
                         return new EatList
-                        {
-                            _eatListId = (int)reader["eatListId"],
-                            _eatListName = reader["eatListName"].ToString(),
-                            _private_setting = (bool)reader["private_setting"],
-                            userService = _userService
-                        };
+                        (
+                            (int)reader["eatListId"],
+                            reader["eatListName"].ToString(),
+                            (bool)reader["private_setting"],
+                            (int)reader["userId"],
+                            _userService
+                        );
                     }
                 }
             }
@@ -59,12 +60,13 @@ namespace TopEats.Repositories
                     while (reader.Read())
                     {
                         eatLists.Add(new EatList
-                        {
-                            _eatListId = (int)reader["eatListId"],
-                            _eatListname = reader["eatListName"].ToString(),
-                            _private_setting = (bool)reader["private_setting"],
-                            userService = _userService
-                        });
+                        (
+                            (int)reader["eatListId"],
+                            reader["eatListName"].ToString(),
+                            (bool)reader["private_setting"],
+                            (int)reader["userId"],
+                            _userService
+                        ));
                     }
                 }
             }

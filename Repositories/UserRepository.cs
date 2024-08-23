@@ -29,11 +29,11 @@ namespace TopEats.Repositories
                     if (reader.Read())
                     {
                         return new User
-                        {
-                            _userId = (int)reader["userId"],
-                            _username = reader["username"].ToString(),
-                            _passwordHash = reader["passwordHash"].ToString()
-                        };
+                        (
+                            (int)reader["userId"],
+                            reader["username"].ToString(),
+                            reader["passwordHash"].ToString()
+                        );
                     }
                 }
             }
@@ -55,11 +55,11 @@ namespace TopEats.Repositories
                     while (reader.Read())
                     {
                         users.Add(new User
-                        {
-                            _userId = (int)reader["userId"],
-                            _username = reader["username"].ToString(),
-                            _passwordHash = reader["passwordHash"].ToString()
-                        });
+                        (
+                            (int)reader["userId"],
+                            reader["username"].ToString(),
+                            reader["passwordHash"].ToString()
+                        ));
                     }
                 }
             }
