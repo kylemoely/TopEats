@@ -11,17 +11,17 @@ namespace TopEats.Models
 
         public Restaurant(int _restaurantId, string _restaurantName, string _cuisine, int _priceCategory)
         {
-            restaurantId = _restaurantId
-            restaurantName = _restaurantName
-            cuisine = _cuisine
-            priceCategory = _priceCategory
+            restaurantId = _restaurantId;
+            restaurantName = _restaurantName;
+            cuisine = _cuisine;
+            priceCategory = _priceCategory;
         }
 
         public Restaurant(string _restaurantName, string _cuisine, int _priceCategory)
         {
-            restaurantName = _restaurantName
-            cuisine = _cuisine
-            priceCategory = _priceCategory
+            restaurantName = _restaurantName;
+            cuisine = _cuisine;
+            priceCategory = _priceCategory;
         }
     }
 }

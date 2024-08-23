@@ -11,7 +11,7 @@ namespace TopEats.Services
 
         public CommentService(ICommentRepository commentRepository)
         {
-            _commentRepository = commentRepository
+            _commentRepository = commentRepository;
         }
 
         public Comment GetCommentById(int commentId)

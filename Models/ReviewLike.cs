@@ -12,11 +12,11 @@ namespace TopEats.Models
 
         public ReviewLike(int _reviewId, int _userId, IUserService userService, IReviewService reviewService)
         {
-            reviewId = _reviewId
-            userId = _userId
+            reviewId = _reviewId;
+            userId = _userId;
 
-            AssignedUser = userService.GetUserById(userId)
-            AssignedReview = reviewService.GetReviewById(reviewId)
+            AssignedUser = userService.GetUserById(userId);
+            AssignedReview = reviewService.GetReviewById(reviewId);
         }
     }
 }

@@ -10,15 +10,15 @@ namespace TopEats.Models
         
         public User(int _userId, string _username, string _passwordHash)
         {
-            userId = _userId
-            username = _username
-            passwordHash = _passwordHash
+            userId = _userId;
+            username = _username;
+            passwordHash = _passwordHash;
         }
 
         public User(string _username, string _passwordHash)
         {
-            username = _username
-            passwordHash = _passwordHash
+            username = _username;
+            passwordHash = _passwordHash;
         }
     }
 }

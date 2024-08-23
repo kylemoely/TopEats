@@ -11,7 +11,7 @@ namespace TopEats.Services
 
         public UserService(IUserRepository userRepository)
         {
-            _userRepository = userRepository
+            _userRepository = userRepository;
         }
 
         public User GetUserById(int userId)

@@ -13,11 +13,11 @@ namespace TopEats.Models
 
         public CommentLike(int _commentId, int _userId, IUserService userService, ICommentService commentService)
         {
-            commentId = _commentId
-            userId = _userId
+            commentId = _commentId;
+            userId = _userId;
 
-            AssignedComment = commentService.GetCommentById(commentId)
-            AssignedUser = userService.GetUserById(userId)
+            AssignedComment = commentService.GetCommentById(commentId);
+            AssignedUser = userService.GetUserById(userId);
         }
     }
 

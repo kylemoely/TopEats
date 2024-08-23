@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using TopEats.Repositories
+using TopEats.Repositories;
 
 namespace TopEats.Services
 {

@@ -12,11 +12,11 @@ namespace TopEats.Models
 
         public Follow(int _followerId, int _followeeId, IUserService userService)
         {
-            followerId = _followerId
-            followeeId = _followeeId
+            followerId = _followerId;
+            followeeId = _followeeId;
 
-            Follower = userService.GetUserById(followerId)
-            Followee = userService.GetUserById(followeeId)
+            Follower = userService.GetUserById(followerId);
+            Followee = userService.GetUserById(followeeId);
         }
     }
 }

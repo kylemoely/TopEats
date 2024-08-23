@@ -11,7 +11,7 @@ namespace TopEats.Services
 
         public EatListService(IEatListRepository eatListRepository)
         {
-            _eatListRepository = eatListRepository
+            _eatListRepository = eatListRepository;
         }
 
         public EatList GetEatListById(int eatListId)

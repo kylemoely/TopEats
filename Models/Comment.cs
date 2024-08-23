@@ -14,23 +14,23 @@ namespace TopEats.Models
 
         public Comment(int _commentId, int _reviewId, int _userId, string _commentText, IUserService userService, IReviewService reviewService)
         {
-            commentId = _commentId
-            reviewId = _reviewId
-            userId = _userId
-            commentText = _commentText
+            commentId = _commentId;
+            reviewId = _reviewId;
+            userId = _userId;
+            commentText = _commentText;
 
-            AssignedReview = reviewService.GetReviewById(reviewId)
-            AssignedUser = userService.GetUserById(userId)
+            AssignedReview = reviewService.GetReviewById(reviewId);
+            AssignedUser = userService.GetUserById(userId);
         }
 
         public Comment(int _reviewId, int _userId, string _commentText, IUserService userService, IReviewService reviewService)
         {
-            reviewId = _reviewId
-            userId = _userId
-            commentText = _commentText
+            reviewId = _reviewId;
+            userId = _userId;
+            commentText = _commentText;
 
-            AssignedReview = reviewService.GetReviewById(reviewId)
-            AssignedUser = userService.GetUserById(userId)
+            AssignedReview = reviewService.GetReviewById(reviewId);
+            AssignedUser = userService.GetUserById(userId);
         }
     }
 }

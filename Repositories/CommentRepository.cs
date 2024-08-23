@@ -30,10 +30,10 @@ namespace TopEats.Repositories
                     {
                         return new Comment
                         {
-                            _commentId = (int)reader['commentId'],
-                            _reviewId = (int)reader['reviewId'],
-                            _userId = (int)reader['userId'],
-                            _commentText = reader['commentText'].ToString()
+                            _commentId = (int)reader["commentId"],
+                            _reviewId = (int)reader["reviewId"],
+                            _userId = (int)reader["userId"],
+                            _commentText = reader["commentText"].ToString()
                         };
                     }
                 }
@@ -47,7 +47,7 @@ namespace TopEats.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'SELECT * FROM Comments';
+                string query = "SELECT * FROM Comments";
                 SqlCommand command = new SqlCommand(query, connection);
                 
                 connection.Open();
@@ -57,10 +57,10 @@ namespace TopEats.Repositories
                     {
                         comments.Add(new Comment
                         {
-                            _commentId = (int)reader['commentId'],
-                            _reviewId = (int)reader['reviewId'],
-                            _userId = (int)reader['userId'],
-                            _commentText = reader['commentText'].ToString()
+                            _commentId = (int)reader["commentId"],
+                            _reviewId = (int)reader["reviewId"],
+                            _userId = (int)reader["userId"],
+                            _commentText = reader["commentText"].ToString()
                         });
                     }
                 }
@@ -72,11 +72,11 @@ namespace TopEats.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'INSERT INTO Comments (reviewId, userId, commentText) VALUES (@reviewId, @userId, @commentText)';
+                string query = "INSERT INTO Comments (reviewId, userId, commentText) VALUES (@reviewId, @userId, @commentText)";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@reviewId', comment.reviewId);
-                command.Parameters.AddWithValue('@userId', comment.userId);
-                command.Parameters.AddWithValue('@commentText', comment.commentText);
+                command.Parameters.AddWithValue("@reviewId", comment.reviewId);
+                command.Parameters.AddWithValue("@userId", comment.userId);
+                command.Parameters.AddWithValue("@commentText", comment.commentText);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -87,10 +87,10 @@ namespace TopEats.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'UPDATE Comments SET commentText = @commentText WHERE commentId = @commentId';
+                string query = "UPDATE Comments SET commentText = @commentText WHERE commentId = @commentId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@commentText', comment.commentText);
-                command.Parameters.AddWithValue('@commentId', comment.commentId);
+                command.Parameters.AddWithValue("@commentText", comment.commentText);
+                command.Parameters.AddWithValue("@commentId", comment.commentId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -100,9 +100,9 @@ namespace TopEats.Repositories
         public void DeleteComment(int commentId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString)){
-                string query = 'DELETE FROM Comments WHERE commentId = @commentId';
+                string query = "DELETE FROM Comments WHERE commentId = @commentId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@commentId', commentId);
+                command.Parameters.AddWithValue("@commentId", commentId);
 
                 connection.Open();
                 command.ExecuteNonQuery();

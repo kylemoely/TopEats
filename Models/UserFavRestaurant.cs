@@ -13,12 +13,12 @@ namespace TopEats.Models
 
         public UserFavRestaurant(int _userId, int _restaurantId, int _restaurantRank, IUserService userService, IRestaurantService restaurantService)
         {
-            userId = _userId
-            restaurantId = _restaurantId
-            restaurantRank = _restaurantRank
+            userId = _userId;
+            restaurantId = _restaurantId;
+            restaurantRank = _restaurantRank;
 
-            AssignedUser = userService.GetUserById(userId)
-            AssignedRestaurant = restaurantService.GetRestaurantById(restaurantId)
+            AssignedUser = userService.GetUserById(userId);
+            AssignedRestaurant = restaurantService.GetRestaurantById(restaurantId);
         }
     }
 }

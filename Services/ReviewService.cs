@@ -11,7 +11,7 @@ namespace TopEats.Services
 
         public ReviewService(IReviewRepository reviewRepository)
         {
-            _reviewRepository = reviewRepository
+            _reviewRepository = reviewRepository;
         }
 
         public Review GetReviewById(int reviewId)

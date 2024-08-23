@@ -16,25 +16,25 @@ namespace TopEats.Models
 
         public Review(int _reviewId, int _rating, string _reviewText, int _restaurantId, int _userId, IUserService userService, IRestaurantService restaurantService)
         {
-            reviewId = _reviewId
-            rating = _rating
-            reviewText = _reviewText
-            restaurantId = _restaurantId
-            userId = _userId
+            reviewId = _reviewId;
+            rating = _rating;
+            reviewText = _reviewText;
+            restaurantId = _restaurantId;
+            userId = _userId;
 
-            AssignedUser = userService.GetUserById(userId)
-            AssignedRestaurant = restaurantService.GetRestaurantById(restaurantId)
+            AssignedUser = userService.GetUserById(userId);
+            AssignedRestaurant = restaurantService.GetRestaurantById(restaurantId);
         }
 
         public Review(int _rating, string _reviewText, int _restaurantId, int _userId, IUserService userService, IRestaurantService restaurantService)
         {
-            rating = _rating
-            reviewText = _reviewText
-            restaurantId = _restaurantId
-            userId = _userId
+            rating = _rating;
+            reviewText = _reviewText;
+            restaurantId = _restaurantId;
+            userId = _userId;
 
-            AssignedUser = userService.GetUserById(userId)
-            AssignedRestaurant = restaurantService.GetRestaurantById(restaurantId)
+            AssignedUser = userService.GetUserById(userId);
+            AssignedRestaurant = restaurantService.GetRestaurantById(restaurantId);
         }
     }
 }

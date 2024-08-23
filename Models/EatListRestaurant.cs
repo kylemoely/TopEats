@@ -12,11 +12,11 @@ namespace TopEats.Models
 
         public EatListRestaurant(int _eatListId, int _restaurantId, IEatListService eatListService, IRestaurantService restaurantService)
         {
-            eatListId = _eatListId
-            restaurantId = _restaurantId
+            eatListId = _eatListId;
+            restaurantId = _restaurantId;
 
-            AssignedEatList = eatListService.GetEatListById(eatListId)
-            AssignedRestaurant = restaurantService.GetRestaurantById(restaurantId)
+            AssignedEatList = eatListService.GetEatListById(eatListId);
+            AssignedRestaurant = restaurantService.GetRestaurantById(restaurantId);
         }
 
     }

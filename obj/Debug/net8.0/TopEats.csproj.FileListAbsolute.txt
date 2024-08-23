@@ -1,0 +1,8 @@
+/Users/kylemoellenkamp/TopEats/obj/Debug/net8.0/TopEats.GeneratedMSBuildEditorConfig.editorconfig
+/Users/kylemoellenkamp/TopEats/obj/Debug/net8.0/TopEats.AssemblyInfoInputs.cache
+/Users/kylemoellenkamp/TopEats/obj/Debug/net8.0/TopEats.AssemblyInfo.cs
+/Users/kylemoellenkamp/TopEats/obj/Debug/net8.0/TopEats.csproj.CoreCompileInputs.cache
+/Users/kylemoellenkamp/TopEats/obj/Debug/net8.0/TopEats.MvcApplicationPartsAssemblyInfo.cache
+/Users/kylemoellenkamp/TopEats/obj/Debug/net8.0/TopEats.RazorAssemblyInfo.cache
+/Users/kylemoellenkamp/TopEats/obj/Debug/net8.0/TopEats.RazorAssemblyInfo.cs
+/Users/kylemoellenkamp/TopEats/obj/Debug/net8.0/TopEats.sourcelink.json

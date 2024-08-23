@@ -11,7 +11,7 @@ namespace TopEats.Services
 
         public RestaurantService(IRestaurantRepository restaurantRepository)
         {
-            _restaurantRepository = restaurantRepository
+            _restaurantRepository = restaurantRepository;
         }
 
         public Restaurant GetRestaurantById(int restaurantId)
