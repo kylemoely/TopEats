@@ -20,7 +20,7 @@ namespace TopEats.Repositories
             _reviewService = reviewService;
         }
 
-        public CommentRepository GetCommentById(int commentId)
+        public Comment GetCommentById(int commentId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
