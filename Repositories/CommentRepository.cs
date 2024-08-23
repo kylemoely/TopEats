@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using TopEats.Models;
+using TopEats.Services;
 
 namespace TopEats.Repositories
 {
     public class CommentRepository : ICommentRepository
     {
         private readonly string _connectionString;
+        private readonly IUserService _userService;
+        private readonly IReviewService _reviewService;
 
-        public CommentRepository(IConfiguration configuration)
+        public CommentRepository(IConfiguration configuration, IUserService userservice, IReviewService reviewService)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _userService = userService;
+            _reviewService = reviewService;
         }
 
         public CommentRepository GetCommentById(int commentId)
@@ -33,7 +38,9 @@ namespace TopEats.Repositories
                             _commentId = (int)reader["commentId"],
                             _reviewId = (int)reader["reviewId"],
                             _userId = (int)reader["userId"],
-                            _commentText = reader["commentText"].ToString()
+                            _commentText = reader["commentText"].ToString(),
+                            userService = _userService,
+                            reviewService = _reviewService
                         };
                     }
                 }
@@ -60,7 +67,9 @@ namespace TopEats.Repositories
                             _commentId = (int)reader["commentId"],
                             _reviewId = (int)reader["reviewId"],
                             _userId = (int)reader["userId"],
-                            _commentText = reader["commentText"].ToString()
+                            _commentText = reader["commentText"].ToString(),
+                            userService = _userService,
+                            reviewService = _reviewService
                         });
                     }
                 }

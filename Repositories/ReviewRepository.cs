@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using TopEats.Models;
+using TopEats.Services;
 
 namespace TopEats.Repositories
 {
     public class ReviewRepository : IReviewRepository
     {
         private readonly string _connectionString;
+        private readonly IUserService _userService;
+        private readonly IRestaurantService _restaurantService;
 
-        public ReviewRepository(IConfiguration configuration)
+        public ReviewRepository(IConfiguration configuration, IUserService userService, IRestaurantService restaurantService)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _userService = userService;
+            _restaurantService = restaurantService;
         }
 
         public ReviewRepository GetReviewById(int reviewId)
@@ -34,7 +39,9 @@ namespace TopEats.Repositories
                             _rating = (int)reader['rating'],
                             _reviewText = reader['reviewText'].ToString(),
                             _restaurantId = (int)reader['restaurantId'],
-                            _userId = (int)reader['userId']
+                            _userId = (int)reader['userId'],
+                            userService = _userService,
+                            restaurantService = _restaurantService
                         };
                     }
                 }
@@ -62,7 +69,9 @@ namespace TopEats.Repositories
                             _rating = (int)reader['rating'],
                             _reviewText = reader['reviewText'].ToString(),
                             _restaurantId = (int)reader['restaurantId'],
-                            _userId = (int)reader['userId']
+                            _userId = (int)reader['userId'],
+                            userService = _userService,
+                            restaurantService = _restaurantService
                         });
                     }
                 }

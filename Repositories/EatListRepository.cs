@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using TopEats.Models;
+using TopEats.Services;
 
 namespace TopEats.Repositories
 {
     public class EatListRepository : IEatListRepository
     {
         private readonly string _connectionString;
+        private readonly IUserService _userService;
 
-        public EatListRepository(IConfiguration configuration)
+        public EatListRepository(IConfiguration configuration, IUserService userService)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _userService = userService;
         }
 
         public EatListRepository GetEatListById(int eatListId)
@@ -32,7 +35,8 @@ namespace TopEats.Repositories
                         {
                             _eatListId = (int)reader['eatListId'],
                             _eatListName = reader['eatListName'].ToString(),
-                            _private_setting = (bool)reader['private_setting']
+                            _private_setting = (bool)reader['private_setting'],
+                            userService = _userService
                         };
                     }
                 }
@@ -58,7 +62,8 @@ namespace TopEats.Repositories
                         {
                             _eatListId = (int)reader['eatListId'],
                             _eatListname = reader['eatListName'].ToString(),
-                            _private_setting = (bool)reader['private_setting']
+                            _private_setting = (bool)reader['private_setting'],
+                            userService = _userService
                         });
                     }
                 }
