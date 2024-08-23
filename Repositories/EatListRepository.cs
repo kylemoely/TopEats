@@ -33,9 +33,9 @@ namespace TopEats.Repositories
                     {
                         return new EatList
                         {
-                            _eatListId = (int)reader['eatListId'],
-                            _eatListName = reader['eatListName'].ToString(),
-                            _private_setting = (bool)reader['private_setting'],
+                            _eatListId = (int)reader["eatListId"],
+                            _eatListName = reader["eatListName"].ToString(),
+                            _private_setting = (bool)reader["private_setting"],
                             userService = _userService
                         };
                     }
@@ -50,7 +50,7 @@ namespace TopEats.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'SELECT * FROM EatLists';
+                string query = "SELECT * FROM EatLists";
                 SqlCommand command = new SqlCommand(query, connection);
                 
                 connection.Open();
@@ -60,9 +60,9 @@ namespace TopEats.Repositories
                     {
                         eatLists.Add(new EatList
                         {
-                            _eatListId = (int)reader['eatListId'],
-                            _eatListname = reader['eatListName'].ToString(),
-                            _private_setting = (bool)reader['private_setting'],
+                            _eatListId = (int)reader["eatListId"],
+                            _eatListname = reader["eatListName"].ToString(),
+                            _private_setting = (bool)reader["private_setting"],
                             userService = _userService
                         });
                     }
@@ -75,10 +75,10 @@ namespace TopEats.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'INSERT INTO EatLists (eatListName, private_setting) VALUES (@eatListName, @private_setting)';
+                string query = "INSERT INTO EatLists (eatListName, private_setting) VALUES (@eatListName, @private_setting)";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@eatListName', eatList.eatListName);
-                command.Parameters.AddWithValue('@private_setting', eatList.private_setting);
+                command.Parameters.AddWithValue("@eatListName", eatList.eatListName);
+                command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -89,11 +89,11 @@ namespace TopEats.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'UPDATE EatLists SET eatListName = @eatListName, private_setting = @private_setting WHERE eatListId = @eatListId';
+                string query = "UPDATE EatLists SET eatListName = @eatListName, private_setting = @private_setting WHERE eatListId = @eatListId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@eatListName', eatList.eatListName);
-                command.Parameters.AddWithValue('@private_setting', eatList.private_setting);
-                command.Parameters.AddWithValue('@eatListId', eatList.eatListId);
+                command.Parameters.AddWithValue("@eatListName", eatList.eatListName);
+                command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
+                command.Parameters.AddWithValue("@eatListId", eatList.eatListId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -103,9 +103,9 @@ namespace TopEats.Repositories
         public void DeleteEatList(int eatListId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString)){
-                string query = 'DELETE FROM EatLists WHERE eatListId = @eatListId';
+                string query = "DELETE FROM EatLists WHERE eatListId = @eatListId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@eatListId', eatListId);
+                command.Parameters.AddWithValue("@eatListId", eatListId);
 
                 connection.Open();
                 command.ExecuteNonQuery();

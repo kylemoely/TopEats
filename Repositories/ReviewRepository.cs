@@ -35,11 +35,11 @@ namespace TopEats.Repositories
                     {
                         return new Review
                         {
-                            _reviewId = (int)reader['reviewId'],
-                            _rating = (int)reader['rating'],
-                            _reviewText = reader['reviewText'].ToString(),
-                            _restaurantId = (int)reader['restaurantId'],
-                            _userId = (int)reader['userId'],
+                            _reviewId = (int)reader["reviewId"],
+                            _rating = (int)reader["rating"],
+                            _reviewText = reader["reviewText"].ToString(),
+                            _restaurantId = (int)reader["restaurantId"],
+                            _userId = (int)reader["userId"],
                             userService = _userService,
                             restaurantService = _restaurantService
                         };
@@ -55,7 +55,7 @@ namespace TopEats.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'SELECT * FROM Reviews';
+                string query = "SELECT * FROM Reviews";
                 SqlCommand command = new SqlCommand(query, connection);
                 
                 connection.Open();
@@ -65,11 +65,11 @@ namespace TopEats.Repositories
                     {
                         reviews.Add(new Review
                         {
-                            _reviewId = (int)reader['reviewId'],
-                            _rating = (int)reader['rating'],
-                            _reviewText = reader['reviewText'].ToString(),
-                            _restaurantId = (int)reader['restaurantId'],
-                            _userId = (int)reader['userId'],
+                            _reviewId = (int)reader["reviewId"],
+                            _rating = (int)reader["rating"],
+                            _reviewText = reader["reviewText"].ToString(),
+                            _restaurantId = (int)reader["restaurantId"],
+                            _userId = (int)reader["userId"],
                             userService = _userService,
                             restaurantService = _restaurantService
                         });
@@ -83,12 +83,12 @@ namespace TopEats.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'INSERT INTO Reviews (rating, reviewText, restaurantId, userId) VALUES (@rating, @reviewText, @restaurantId, @userId)';
+                string query = "INSERT INTO Reviews (rating, reviewText, restaurantId, userId) VALUES (@rating, @reviewText, @restaurantId, @userId)";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@rating', review.rating);
-                command.Parameters.AddWithValue('@reviewText', review.reviewText);
-                command.Parameters.AddWithValue('@restaurantId', review.restaurantId);
-                command.Parameters.AddWithValue('@userId', review.userId);
+                command.Parameters.AddWithValue("@rating", review.rating);
+                command.Parameters.AddWithValue("@reviewText", review.reviewText);
+                command.Parameters.AddWithValue("@restaurantId", review.restaurantId);
+                command.Parameters.AddWithValue("@userId", review.userId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -99,11 +99,11 @@ namespace TopEats.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'UPDATE Reviews SET rating = @rating, reviewText = @reviewText WHERE reviewId = @reviewId';
+                string query = "UPDATE Reviews SET rating = @rating, reviewText = @reviewText WHERE reviewId = @reviewId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@rating', review.rating);
-                command.Parameters.AddWithValue('@reviewText', review.reviewText);
-                command.Parameters.AddWithValue('@reviewId', review.reviewId);
+                command.Parameters.AddWithValue("@rating", review.rating);
+                command.Parameters.AddWithValue("@reviewText", review.reviewText);
+                command.Parameters.AddWithValue("@reviewId", review.reviewId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -113,9 +113,9 @@ namespace TopEats.Repositories
         public void DeleteReview(int reviewId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString)){
-                string query = 'DELETE FROM Reviews WHERE reviewId = @reviewId';
+                string query = "DELETE FROM Reviews WHERE reviewId = @reviewId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@reviewId', reviewId);
+                command.Parameters.AddWithValue("@reviewId", reviewId);
 
                 connection.Open();
                 command.ExecuteNonQuery();

@@ -30,10 +30,10 @@ namespace TopEats.Repositories
                     {
                         return new Restaurant
                         {
-                            _restaurantId = (int)reader['restaurantId'],
-                            _restaurantName = reader['restaurantName'].ToString(),
-                            _cuisine = reader['cuisine'].ToString(),
-                            _priceCategory = (int)reader['priceCategory']
+                            _restaurantId = (int)reader["restaurantId"],
+                            _restaurantName = reader["restaurantName"].ToString(),
+                            _cuisine = reader["cuisine"].ToString(),
+                            _priceCategory = (int)reader["priceCategory"]
                         };
                     }
                 }
@@ -47,7 +47,7 @@ namespace TopEats.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'SELECT * FROM Restaurants';
+                string query = "SELECT * FROM Restaurants";
                 SqlCommand command = new SqlCommand(query, connection);
                 
                 connection.Open();
@@ -57,10 +57,10 @@ namespace TopEats.Repositories
                     {
                         restaurants.Add(new Restaurant
                         {
-                            _restaurantId = (int)reader['restaurantId'],
-                            _restaurantName = reader['restaurantName'].ToString(),
-                            _cuisine = reader['cuisine'].ToString(),
-                            _priceCategory = (int)reader['priceCategory']
+                            _restaurantId = (int)reader["restaurantId"],
+                            _restaurantName = reader["restaurantName"].ToString(),
+                            _cuisine = reader["cuisine"].ToString(),
+                            _priceCategory = (int)reader["priceCategory"]
                         });
                     }
                 }
@@ -72,11 +72,11 @@ namespace TopEats.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'INSERT INTO Restaurants (restaurantName, cuisine, priceCategory) VALUES (@restaurantName, @cuisine, @priceCategory)';
+                string query = "INSERT INTO Restaurants (restaurantName, cuisine, priceCategory) VALUES (@restaurantName, @cuisine, @priceCategory)";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@restaurantName', restaurant.restaurantName);
-                command.Parameters.AddWithValue('@cuisine', restaurant.cuisine);
-                command.Parameters.AddWithValue('@priceCategory', restaurant.priceCategory);
+                command.Parameters.AddWithValue("@restaurantName", restaurant.restaurantName);
+                command.Parameters.AddWithValue("@cuisine", restaurant.cuisine);
+                command.Parameters.AddWithValue("@priceCategory", restaurant.priceCategory);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -87,12 +87,12 @@ namespace TopEats.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'UPDATE Restaurants SET restaurantName = @restaurantName, cuisine = @cuisine, priceCategory = @priceCategory WHERE restaurantId = @restaurantId';
+                string query = "UPDATE Restaurants SET restaurantName = @restaurantName, cuisine = @cuisine, priceCategory = @priceCategory WHERE restaurantId = @restaurantId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@restaurantName', restaurant.restaurantName);
-                command.Parameters.AddWithValue('@cuisine', restaurant.cuisine);
-                command.Parameters.AddWithValue('@priceCategory', restaurant.priceCategory);
-                command.Parameters.AddWithValue('@restaurantId', restaurant.restaurantId);
+                command.Parameters.AddWithValue("@restaurantName", restaurant.restaurantName);
+                command.Parameters.AddWithValue("@cuisine", restaurant.cuisine);
+                command.Parameters.AddWithValue("@priceCategory", restaurant.priceCategory);
+                command.Parameters.AddWithValue("@restaurantId", restaurant.restaurantId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -102,9 +102,9 @@ namespace TopEats.Repositories
         public void DeleteRestaurant(int restaurantId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString)){
-                string query = 'DELETE FROM Restaurants WHERE restaurantId = @restaurantId';
+                string query = "DELETE FROM Restaurants WHERE restaurantId = @restaurantId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@restaurantId', restaurantId);
+                command.Parameters.AddWithValue("@restaurantId", restaurantId);
 
                 connection.Open();
                 command.ExecuteNonQuery();

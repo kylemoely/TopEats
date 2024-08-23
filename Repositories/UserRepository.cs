@@ -30,9 +30,9 @@ namespace TopEats.Repositories
                     {
                         return new User
                         {
-                            _userId = (int)reader['userId'],
-                            _username = reader['username'].ToString(),
-                            _passwordHash = reader['passwordHash'].ToString()
+                            _userId = (int)reader["userId"],
+                            _username = reader["username"].ToString(),
+                            _passwordHash = reader["passwordHash"].ToString()
                         };
                     }
                 }
@@ -46,7 +46,7 @@ namespace TopEats.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'SELECT * FROM Users';
+                string query = "SELECT * FROM Users";
                 SqlCommand command = new SqlCommand(query, connection);
                 
                 connection.Open();
@@ -56,9 +56,9 @@ namespace TopEats.Repositories
                     {
                         users.Add(new User
                         {
-                            _userId = (int)reader['userId'],
-                            _username = reader['username'].ToString(),
-                            _passwordHash = reader['passwordHash'].ToString()
+                            _userId = (int)reader["userId"],
+                            _username = reader["username"].ToString(),
+                            _passwordHash = reader["passwordHash"].ToString()
                         });
                     }
                 }
@@ -70,10 +70,10 @@ namespace TopEats.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'INSERT INTO Users (username, passwordHash) VALUES (@username, @passwordHash)';
+                string query = "INSERT INTO Users (username, passwordHash) VALUES (@username, @passwordHash)";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@username', user.username);
-                command.Parameters.AddWithValue('@passwordHash', user.passwordHash);
+                command.Parameters.AddWithValue("@username", user.username);
+                command.Parameters.AddWithValue("@passwordHash", user.passwordHash);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -84,10 +84,10 @@ namespace TopEats.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = 'UPDATE Users SET passwordHash = @passwordHash WHERE userId = @userId';
+                string query = "UPDATE Users SET passwordHash = @passwordHash WHERE userId = @userId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@passwordHash', user.passwordHash);
-                command.Parameters.AddWithValue('@userId', user.userId);
+                command.Parameters.AddWithValue("@passwordHash", user.passwordHash);
+                command.Parameters.AddWithValue("@userId", user.userId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -97,9 +97,9 @@ namespace TopEats.Repositories
         public void DeleteUser(int userId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString)){
-                string query = 'DELETE FROM Users WHERE userId = @userId';
+                string query = "DELETE FROM Users WHERE userId = @userId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue('@userId', userId);
+                command.Parameters.AddWithValue("@userId", userId);
 
                 connection.Open();
                 command.ExecuteNonQuery();
