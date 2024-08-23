@@ -18,7 +18,7 @@ namespace TopEats.Repositories
             _userService = userService;
         }
 
-        public EatListRepository GetEatListById(int eatListId)
+        public EatList GetEatListById(int eatListId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

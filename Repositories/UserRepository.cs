@@ -15,7 +15,7 @@ namespace TopEats.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public UserRepository GetUserById(int userId)
+        public User GetUserById(int userId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

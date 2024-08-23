@@ -20,7 +20,7 @@ namespace TopEats.Repositories
             _restaurantService = restaurantService;
         }
 
-        public ReviewRepository GetReviewById(int reviewId)
+        public Review GetReviewById(int reviewId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

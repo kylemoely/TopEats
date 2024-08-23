@@ -15,7 +15,7 @@ namespace TopEats.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public RestaurantRepository GetRestaurantById(int restaurantId)
+        public Restaurant GetRestaurantById(int restaurantId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
