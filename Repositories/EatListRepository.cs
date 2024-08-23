@@ -68,7 +68,7 @@ namespace TopEats.Repositories
                     }
                 }
             }
-            return EatLists;
+            return eatLists;
         }
 
         public void CreateEatList(EatList eatList)

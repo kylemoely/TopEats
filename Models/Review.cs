@@ -9,7 +9,7 @@ namespace TopEats.Models
         public int rating { get; set; }
         public string reviewText { get; set; }
 
-        public int resturantId { get; set; } // FOREIGN KEY REFERENCES Restaurants
+        public int restaurantId { get; set; } // FOREIGN KEY REFERENCES Restaurants
         public int userId { get; set; } // FOREIGN KEY REFERENCES Users
         
         public User AssignedUser { get; set; }

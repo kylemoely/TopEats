@@ -63,7 +63,7 @@ namespace TopEats.Repositories
                     }
                 }
             }
-            return Users;
+            return users;
         }
 
         public void CreateUser(User user)

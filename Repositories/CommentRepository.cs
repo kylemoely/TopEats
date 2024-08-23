@@ -13,7 +13,7 @@ namespace TopEats.Repositories
         private readonly IUserService _userService;
         private readonly IReviewService _reviewService;
 
-        public CommentRepository(IConfiguration configuration, IUserService userservice, IReviewService reviewService)
+        public CommentRepository(IConfiguration configuration, IUserService userService, IReviewService reviewService)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
             _userService = userService;
