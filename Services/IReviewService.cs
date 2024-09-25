@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TopEats.Models;
 
 namespace TopEats.Services
 {
     public interface IReviewService
     {
-        Review GetReviewById(int reviewId);
-        IEnumerable<Review> GetAllReviews();
-        void CreateReview(Review review);
-        void UpdateReview(Review review);
-        void DeleteReview(int reviewId);
+        Task<Review> GetReviewById(int reviewId);
+        Task<IEnumerable<Review>> GetAllReviews();
+        Task CreateReview(Review review);
+        Task UpdateReview(Review review);
+        Task DeleteReview(int reviewId);
     }
 }

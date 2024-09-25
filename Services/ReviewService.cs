@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Repositories;
 
@@ -14,29 +15,29 @@ namespace TopEats.Services
             _reviewRepository = reviewRepository;
         }
 
-        public Review GetReviewById(int reviewId)
+        public async Task<Review> GetReviewById(int reviewId)
         {
-            return _reviewRepository.GetReviewById(reviewId);
+            return await _reviewRepository.GetReviewById(reviewId);
         }
 
-        public IEnumerable<Review> GetAllReviews()
+        public async Task<IEnumerable<Review>> GetAllReviews()
         {
-            return _reviewRepository.GetAllReviews();
+            return await _reviewRepository.GetAllReviews();
         }
 
-        public void CreateReview(Review review)
+        public async Task CreateReview(Review review)
         {
-            _reviewRepository.CreateReview(review);
+            await _reviewRepository.CreateReview(review);
         }
 
-        public void UpdateReview(Review review)
+        public async Task UpdateReview(Review review)
         {
-            _reviewRepository.UpdateReview(review);
+            await _reviewRepository.UpdateReview(review);
         }
 
-        public void DeleteReview(int reviewId)
+        public async Task DeleteReview(int reviewId)
         {
-            _reviewRepository.DeleteReview(reviewId);
+            await _reviewRepository.DeleteReview(reviewId);
         }
     }
 }

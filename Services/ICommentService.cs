@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TopEats.Models;
 
 namespace TopEats.Services
 {
     public interface ICommentService
     {
-        Comment GetCommentById(int commentId);
-        IEnumerable<Comment> GetAllComments();
-        void CreateComment(Comment comment);
-        void UpdateComment(Comment comment);
-        void DeleteComment(int commentId);
+        Task<Comment> GetCommentById(int commentId);
+        Task<IEnumerable<Comment>> GetAllComments();
+        Task CreateComment(Comment comment);
+        Task UpdateComment(Comment comment);
+        Task DeleteComment(int commentId);
     }
 }

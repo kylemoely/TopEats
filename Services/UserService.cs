@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Repositories;
 
@@ -14,29 +15,29 @@ namespace TopEats.Services
             _userRepository = userRepository;
         }
 
-        public User GetUserById(int userId)
+        public async Task<User> GetUserById(int userId)
         {
-            return _userRepository.GetUserById(userId);
+            return await _userRepository.GetUserById(userId);
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return _userRepository.GetAllUsers();
+            return await _userRepository.GetAllUsers();
         }
 
-        public void CreateUser(User user)
+        public async Task CreateUser(User user)
         {
-            _userRepository.CreateUser(user);
+            await _userRepository.CreateUser(user);
         }
 
-        public void UpdateUser(User user)
+        public async Task UpdateUser(User user)
         {
-            _userRepository.UpdateUser(user);
+            await _userRepository.UpdateUser(user);
         }
 
-        public void DeleteUser(int userId)
+        public async Task DeleteUser(int userId)
         {
-            _userRepository.DeleteUser(userId);
+            await _userRepository.DeleteUser(userId);
         }
     }
 }

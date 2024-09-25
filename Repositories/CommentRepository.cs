@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Services;
 
@@ -20,7 +21,7 @@ namespace TopEats.Repositories
             _reviewService = reviewService;
         }
 
-        public Comment GetCommentById(int commentId)
+        public async Task<Comment> GetCommentById(int commentId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -28,10 +29,10 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@commentId", commentId);
 
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         return new Comment
                         (
@@ -48,7 +49,7 @@ namespace TopEats.Repositories
             return null;
         }
 
-        public IEnumerable<Comment> GetAllComments()
+        public async Task<IEnumerable<Comment>> GetAllComments()
         {
             List<Comment> comments = new List<Comment>();
 
@@ -57,10 +58,10 @@ namespace TopEats.Repositories
                 string query = "SELECT * FROM Comments";
                 SqlCommand command = new SqlCommand(query, connection);
                 
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         comments.Add(new Comment
                         (
@@ -77,7 +78,7 @@ namespace TopEats.Repositories
             return comments;
         }
 
-        public void CreateComment(Comment comment)
+        public async Task CreateComment(Comment comment)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -87,12 +88,12 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@userId", comment.userId);
                 command.Parameters.AddWithValue("@commentText", comment.commentText);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
 
-        public void UpdateComment(Comment comment)
+        public async Task UpdateComment(Comment comment)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -101,20 +102,20 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@commentText", comment.commentText);
                 command.Parameters.AddWithValue("@commentId", comment.commentId);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
 
-        public void DeleteComment(int commentId)
+        public async Task DeleteComment(int commentId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString)){
                 string query = "DELETE FROM Comments WHERE commentId = @commentId";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@commentId", commentId);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Repositories;
 
@@ -14,29 +15,29 @@ namespace TopEats.Services
             _restaurantRepository = restaurantRepository;
         }
 
-        public Restaurant GetRestaurantById(int restaurantId)
+        public async Task<Restaurant> GetRestaurantById(int restaurantId)
         {
-            return _restaurantRepository.GetRestaurantById(restaurantId);
+            return await _restaurantRepository.GetRestaurantById(restaurantId);
         }
 
-        public IEnumerable<Restaurant> GetAllRestaurants()
+        public async Task<IEnumerable<Restaurant>> GetAllRestaurants()
         {
-            return _restaurantRepository.GetAllRestaurants();
+            return await _restaurantRepository.GetAllRestaurants();
         }
 
-        public void CreateRestaurant(Restaurant restaurant)
+        public async Task CreateRestaurant(Restaurant restaurant)
         {
-            _restaurantRepository.CreateRestaurant(restaurant);
+            await _restaurantRepository.CreateRestaurant(restaurant);
         }
 
-        public void UpdateRestaurant(Restaurant restaurant)
+        public async Task UpdateRestaurant(Restaurant restaurant)
         {
-            _restaurantRepository.UpdateRestaurant(restaurant);
+            await _restaurantRepository.UpdateRestaurant(restaurant);
         }
 
-        public void DeleteRestaurant(int restaurantId)
+        public async Task DeleteRestaurant(int restaurantId)
         {
-            _restaurantRepository.DeleteRestaurant(restaurantId);
+            await _restaurantRepository.DeleteRestaurant(restaurantId);
         }
     }
 }

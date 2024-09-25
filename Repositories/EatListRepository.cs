@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Services;
 
@@ -18,7 +19,7 @@ namespace TopEats.Repositories
             _userService = userService;
         }
 
-        public EatList GetEatListById(int eatListId)
+        public async Task<EatList> GetEatListById(int eatListId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -26,10 +27,10 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListId", eatListId);
 
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         return new EatList
                         (
@@ -45,7 +46,7 @@ namespace TopEats.Repositories
             return null;
         }
 
-        public IEnumerable<EatList> GetAllEatLists()
+        public async Task<IEnumerable<EatList>> GetAllEatLists()
         {
             List<EatList> eatLists = new List<EatList>();
 
@@ -54,10 +55,10 @@ namespace TopEats.Repositories
                 string query = "SELECT * FROM EatLists";
                 SqlCommand command = new SqlCommand(query, connection);
                 
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         eatLists.Add(new EatList
                         (
@@ -73,7 +74,7 @@ namespace TopEats.Repositories
             return eatLists;
         }
 
-        public void CreateEatList(EatList eatList)
+        public async Task CreateEatList(EatList eatList)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -82,12 +83,12 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@eatListName", eatList.eatListName);
                 command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
 
-        public void UpdateEatList(EatList eatList)
+        public async Task UpdateEatList(EatList eatList)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -97,20 +98,20 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
                 command.Parameters.AddWithValue("@eatListId", eatList.eatListId);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
 
-        public void DeleteEatList(int eatListId)
+        public async Task DeleteEatList(int eatListId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString)){
                 string query = "DELETE FROM EatLists WHERE eatListId = @eatListId";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListId", eatListId);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
     }

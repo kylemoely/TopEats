@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Repositories;
 
@@ -14,29 +15,29 @@ namespace TopEats.Services
             _eatListRepository = eatListRepository;
         }
 
-        public EatList GetEatListById(int eatListId)
+        public async Task<EatList> GetEatListById(int eatListId)
         {
-            return _eatListRepository.GetEatListById(eatListId);
+            return await _eatListRepository.GetEatListById(eatListId);
         }
 
-        public IEnumerable<EatList> GetAllEatLists()
+        public async Task<IEnumerable<EatList>> GetAllEatLists()
         {
-            return _eatListRepository.GetAllEatLists();
+            return await _eatListRepository.GetAllEatLists();
         }
 
-        public void CreateEatList(EatList eatList)
+        public Task CreateEatList(EatList eatList)
         {
-            _eatListRepository.CreateEatList(eatList);
+            await _eatListRepository.CreateEatList(eatList);
         }
 
-        public void UpdateEatList(EatList eatList)
+        public Task UpdateEatList(EatList eatList)
         {
-            _eatListRepository.UpdateEatList(eatList);
+            await _eatListRepository.UpdateEatList(eatList);
         }
 
-        public void DeleteEatList(int eatListId)
+        public Task DeleteEatList(int eatListId)
         {
-            _eatListRepository.DeleteEatList(eatListId);
+            await _eatListRepository.DeleteEatList(eatListId);
         }
     }
 }

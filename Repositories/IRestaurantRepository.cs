@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TopEats.Models;
 
 namespace TopEats.Repositories
 {
     public interface IRestaurantRepository
     {
-        Restaurant GetRestaurantById(int restaurantId);
-        IEnumerable<Restaurant> GetAllRestaurants();
-        void CreateRestaurant(Restaurant restaurant);
-        void UpdateRestaurant(Restaurant restaurant);
-        void DeleteRestaurant(int restaurantId);
+        Task<Restaurant> GetRestaurantById(int restaurantId);
+        Task<IEnumerable<Restaurant>> GetAllRestaurants();
+        Task CreateRestaurant(Restaurant restaurant);
+        Task UpdateRestaurant(Restaurant restaurant);
+        Task DeleteRestaurant(int restaurantId);
     }
 }

@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TopEats.Models;
 
 namespace TopEats.Services
 {
     public interface IUserService
     {
-        User GetUserById(int userId);
-        IEnumerable<User> GetAllUsers();
-        void CreateUser(User user);
-        void UpdateUser(User user);
-        void DeleteUser(int userId);
+        Task<User> GetUserById(int userId);
+        Task<IEnumerable<User>> GetAllUsers();
+        Task CreateUser(User user);
+        Task UpdateUser(User user);
+        Task DeleteUser(int userId);
     }
 }

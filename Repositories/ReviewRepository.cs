@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Services;
 
@@ -20,7 +21,7 @@ namespace TopEats.Repositories
             _restaurantService = restaurantService;
         }
 
-        public Review GetReviewById(int reviewId)
+        public async Task<Review> GetReviewById(int reviewId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -28,10 +29,10 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@reviewId", reviewId);
 
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         return new Review
                         (
@@ -49,7 +50,7 @@ namespace TopEats.Repositories
             return null;
         }
 
-        public IEnumerable<Review> GetAllReviews()
+        public async Task<IEnumerable<Review>> GetAllReviews()
         {
             List<Review> reviews = new List<Review>();
 
@@ -58,10 +59,10 @@ namespace TopEats.Repositories
                 string query = "SELECT * FROM Reviews";
                 SqlCommand command = new SqlCommand(query, connection);
                 
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         reviews.Add(new Review
                         (
@@ -79,7 +80,7 @@ namespace TopEats.Repositories
             return reviews;
         }
 
-        public void CreateReview(Review review)
+        public async Task CreateReview(Review review)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -90,12 +91,12 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@restaurantId", review.restaurantId);
                 command.Parameters.AddWithValue("@userId", review.userId);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
 
-        public void UpdateReview(Review review)
+        public async Task UpdateReview(Review review)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -105,20 +106,20 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@reviewText", review.reviewText);
                 command.Parameters.AddWithValue("@reviewId", review.reviewId);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
 
-        public void DeleteReview(int reviewId)
+        public async Task DeleteReview(int reviewId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString)){
                 string query = "DELETE FROM Reviews WHERE reviewId = @reviewId";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@reviewId", reviewId);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
     }

@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TopEats.Models;
 
 namespace TopEats.Repositories
 {
     public interface IEatListRepository
     {
-        EatList GetEatListById(int eatListId);
-        IEnumerable<EatList> GetAllEatLists();
-        void CreateEatList(EatList eatList);
-        void UpdateEatList(EatList eatList);
-        void DeleteEatList(int eatListId);
+        Task<EatList> GetEatListById(int eatListId);
+        Task<IEnumerable<EatList>> GetAllEatLists();
+        Task CreateEatList(EatList eatList);
+        Task UpdateEatList(EatList eatList);
+        Task DeleteEatList(int eatListId);
     }
 }

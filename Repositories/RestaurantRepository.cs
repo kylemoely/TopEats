@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using TopEats.Models;
 
 namespace TopEats.Repositories
@@ -15,7 +16,7 @@ namespace TopEats.Repositories
             _connectionString = Environment.GetEnvironmentVariable("connection_string");
         }
 
-        public Restaurant GetRestaurantById(int restaurantId)
+        public async Task<Restaurant> GetRestaurantById(int restaurantId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -23,10 +24,10 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@restaurantId", restaurantId);
 
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         return new Restaurant
                         (
@@ -41,7 +42,7 @@ namespace TopEats.Repositories
             return null;
         }
 
-        public IEnumerable<Restaurant> GetAllRestaurants()
+        public async Task<IEnumerable<Restaurant>> GetAllRestaurants()
         {
             List<Restaurant> restaurants = new List<Restaurant>();
 
@@ -50,10 +51,10 @@ namespace TopEats.Repositories
                 string query = "SELECT * FROM Restaurants";
                 SqlCommand command = new SqlCommand(query, connection);
                 
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         restaurants.Add(new Restaurant
                         (
@@ -68,7 +69,7 @@ namespace TopEats.Repositories
             return restaurants;
         }
 
-        public void CreateRestaurant(Restaurant restaurant)
+        public async Task CreateRestaurant(Restaurant restaurant)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -78,12 +79,12 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@cuisine", restaurant.cuisine);
                 command.Parameters.AddWithValue("@priceCategory", restaurant.priceCategory);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
 
-        public void UpdateRestaurant(Restaurant restaurant)
+        public async Task UpdateRestaurant(Restaurant restaurant)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -94,20 +95,20 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@priceCategory", restaurant.priceCategory);
                 command.Parameters.AddWithValue("@restaurantId", restaurant.restaurantId);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
 
-        public void DeleteRestaurant(int restaurantId)
+        public async Task DeleteRestaurant(int restaurantId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString)){
                 string query = "DELETE FROM Restaurants WHERE restaurantId = @restaurantId";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@restaurantId", restaurantId);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
     }

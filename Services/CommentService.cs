@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Repositories;
 
@@ -14,29 +15,29 @@ namespace TopEats.Services
             _commentRepository = commentRepository;
         }
 
-        public Comment GetCommentById(int commentId)
+        public async Task<Comment> GetCommentById(int commentId)
         {
-            return _commentRepository.GetCommentById(commentId);
+            return await _commentRepository.GetCommentById(commentId);
         }
 
-        public IEnumerable<Comment> GetAllComments()
+        public async Task<IEnumerable<Comment>> GetAllComments()
         {
-            return _commentRepository.GetAllComments();
+            return await _commentRepository.GetAllComments();
         }
 
-        public void CreateComment(Comment comment)
+        public async Task CreateComment(Comment comment)
         {
-            _commentRepository.CreateComment(comment);
+            await _commentRepository.CreateComment(comment);
         }
 
-        public void UpdateComment(Comment comment)
+        public async Task UpdateComment(Comment comment)
         {
-            _commentRepository.UpdateComment(comment);
+            await _commentRepository.UpdateComment(comment);
         }
 
-        public void DeleteComment(int commentId)
+        public async Task DeleteComment(int commentId)
         {
-            _commentRepository.DeleteComment(commentId);
+            await _commentRepository.DeleteComment(commentId);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using TopEats.Models;
 
 namespace TopEats.Repositories
@@ -15,7 +16,7 @@ namespace TopEats.Repositories
             _connectionString = Environment.GetEnvironmentVariable("connection_string");
         }
 
-        public User GetUserById(int userId)
+        public async Task<User> GetUserById(int userId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -23,10 +24,10 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", userId);
 
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
                         return new User
                         (
@@ -40,7 +41,7 @@ namespace TopEats.Repositories
             return null;
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
             List<User> users = new List<User>();
 
@@ -49,10 +50,10 @@ namespace TopEats.Repositories
                 string query = "SELECT * FROM Users";
                 SqlCommand command = new SqlCommand(query, connection);
                 
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         users.Add(new User
                         (
@@ -66,7 +67,7 @@ namespace TopEats.Repositories
             return users;
         }
 
-        public void CreateUser(User user)
+        public async Task CreateUser(User user)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -75,12 +76,12 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@username", user.username);
                 command.Parameters.AddWithValue("@passwordHash", user.passwordHash);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
 
-        public void UpdateUser(User user)
+        public async Task UpdateUser(User user)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -89,20 +90,20 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@passwordHash", user.passwordHash);
                 command.Parameters.AddWithValue("@userId", user.userId);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
 
-        public void DeleteUser(int userId)
+        public async Task DeleteUser(int userId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString)){
                 string query = "DELETE FROM Users WHERE userId = @userId";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", userId);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                connection.OpenAsync();
+                command.ExecuteNonQueryAsync();
             }
         }
     }
