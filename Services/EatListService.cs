@@ -25,17 +25,17 @@ namespace TopEats.Services
             return await _eatListRepository.GetAllEatLists();
         }
 
-        public Task CreateEatList(EatList eatList)
+        public async Task CreateEatList(EatList eatList)
         {
             await _eatListRepository.CreateEatList(eatList);
         }
 
-        public Task UpdateEatList(EatList eatList)
+        public async Task UpdateEatList(EatList eatList)
         {
             await _eatListRepository.UpdateEatList(eatList);
         }
 
-        public Task DeleteEatList(int eatListId)
+        public async Task DeleteEatList(int eatListId)
         {
             await _eatListRepository.DeleteEatList(eatListId);
         }
