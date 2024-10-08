@@ -50,7 +50,7 @@ namespace TopEats.Repositories
                 string query = "SELECT * FROM Users";
                 SqlCommand command = new SqlCommand(query, connection);
                 
-                connection.OpenAsync();
+                await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
@@ -76,8 +76,8 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@username", user.username);
                 command.Parameters.AddWithValue("@passwordHash", user.passwordHash);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -90,8 +90,8 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@passwordHash", user.passwordHash);
                 command.Parameters.AddWithValue("@userId", user.userId);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -102,8 +102,8 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", userId);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
     }
