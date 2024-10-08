@@ -24,7 +24,7 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@restaurantId", restaurantId);
 
-                connection.OpenAsync();
+                await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())
@@ -51,7 +51,7 @@ namespace TopEats.Repositories
                 string query = "SELECT * FROM Restaurants";
                 SqlCommand command = new SqlCommand(query, connection);
                 
-                connection.OpenAsync();
+                await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
@@ -79,8 +79,8 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@cuisine", restaurant.cuisine);
                 command.Parameters.AddWithValue("@priceCategory", restaurant.priceCategory);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -95,8 +95,8 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@priceCategory", restaurant.priceCategory);
                 command.Parameters.AddWithValue("@restaurantId", restaurant.restaurantId);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -107,8 +107,8 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@restaurantId", restaurantId);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
     }

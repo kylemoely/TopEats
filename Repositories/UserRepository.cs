@@ -24,7 +24,7 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", userId);
 
-                connection.OpenAsync();
+                await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())

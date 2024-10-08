@@ -29,7 +29,7 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@commentId", commentId);
 
-                connection.OpenAsync();
+                await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())
@@ -40,7 +40,7 @@ namespace TopEats.Repositories
                             (int)reader["userId"],
                             reader["commentText"].ToString()
                         );
-                        comment.AssignUserAndReview(_userService, _reviewService);
+                        await comment.AssignUserAndReview(_userService, _reviewService);
                         return comment;
                     }
                 }
@@ -57,7 +57,7 @@ namespace TopEats.Repositories
                 string query = "SELECT * FROM Comments";
                 SqlCommand command = new SqlCommand(query, connection);
                 
-                connection.OpenAsync();
+                await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
@@ -69,7 +69,7 @@ namespace TopEats.Repositories
                             (int)reader["userId"], 
                             reader["commentText"].ToString()
                         );
-                        comment.AssignUserAndReview(_userService, _reviewService);
+                        await comment.AssignUserAndReview(_userService, _reviewService);
                         comments.Add(comment);
                     }
                 }
@@ -87,8 +87,8 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@userId", comment.userId);
                 command.Parameters.AddWithValue("@commentText", comment.commentText);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -101,8 +101,8 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@commentText", comment.commentText);
                 command.Parameters.AddWithValue("@commentId", comment.commentId);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -113,8 +113,8 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@commentId", commentId);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
     }

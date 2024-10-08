@@ -29,7 +29,7 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@reviewId", reviewId);
 
-                connection.OpenAsync();
+                await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())
@@ -42,7 +42,7 @@ namespace TopEats.Repositories
                             (int)reader["restaurantId"],
                             (int)reader["userId"]
                         );
-                        review.AssignUserAndRestaurant(_userService, _restaurantService);
+                        await review.AssignUserAndRestaurant(_userService, _restaurantService);
                         return review;
                     }
                 }
@@ -59,7 +59,7 @@ namespace TopEats.Repositories
                 string query = "SELECT * FROM Reviews";
                 SqlCommand command = new SqlCommand(query, connection);
                 
-                connection.OpenAsync();
+                await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
@@ -72,7 +72,7 @@ namespace TopEats.Repositories
                             (int)reader["restaurantId"],
                             (int)reader["userId"]
                         );
-                        review.AssignUserAndRestaurant(_userService, _restaurantService);
+                        await review.AssignUserAndRestaurant(_userService, _restaurantService);
                         reviews.Add(review);
                     }
                 }
@@ -91,8 +91,8 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@restaurantId", review.restaurantId);
                 command.Parameters.AddWithValue("@userId", review.userId);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -106,8 +106,8 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@reviewText", review.reviewText);
                 command.Parameters.AddWithValue("@reviewId", review.reviewId);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -118,8 +118,8 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@reviewId", reviewId);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
     }

@@ -27,7 +27,7 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListId", eatListId);
 
-                connection.OpenAsync();
+                await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())
@@ -39,7 +39,7 @@ namespace TopEats.Repositories
                             (bool)reader["private_setting"],
                             (int)reader["userId"]
                         );
-                        eatList.AssignUser(_userService);
+                        await eatList.AssignUser(_userService);
                         return eatList;
                     }
                 }
@@ -56,7 +56,7 @@ namespace TopEats.Repositories
                 string query = "SELECT * FROM EatLists";
                 SqlCommand command = new SqlCommand(query, connection);
                 
-                connection.OpenAsync();
+                await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
@@ -68,7 +68,7 @@ namespace TopEats.Repositories
                             (bool)reader["private_setting"],
                             (int)reader["userId"]
                         );
-                        eatList.AssignUser(_userService);
+                        await eatList.AssignUser(_userService);
                         eatLists.Add(eatList);
                     }
                 }
@@ -85,8 +85,8 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@eatListName", eatList.eatListName);
                 command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -100,8 +100,8 @@ namespace TopEats.Repositories
                 command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
                 command.Parameters.AddWithValue("@eatListId", eatList.eatListId);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -112,8 +112,8 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListId", eatListId);
 
-                connection.OpenAsync();
-                command.ExecuteNonQueryAsync();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
             }
         }
     }
