@@ -34,15 +34,14 @@ namespace TopEats.Repositories
                 {
                     if (await reader.ReadAsync())
                     {
-                        return new Comment
-                        (
+                        Comment comment = new Comment(
                             (int)reader["commentId"],
                             (int)reader["reviewId"],
                             (int)reader["userId"],
-                            reader["commentText"].ToString(),
-                            _userService,
-                            _reviewService
+                            reader["commentText"].ToString()
                         );
+                        comment.AssignUserAndReview(_userService, _reviewService);
+                        return comment;
                     }
                 }
             }
@@ -63,15 +62,15 @@ namespace TopEats.Repositories
                 {
                     while (await reader.ReadAsync())
                     {
-                        comments.Add(new Comment
+                        Comment comment = new Comment
                         (
-                            (int)reader["commentId"],
-                            (int)reader["reviewId"],
-                            (int)reader["userId"],
-                            reader["commentText"].ToString(),
-                            _userService,
-                            _reviewService
-                        ));
+                            (int)reader["commentId"], 
+                            (int)reader["reviewId"], 
+                            (int)reader["userId"], 
+                            reader["commentText"].ToString()
+                        );
+                        comment.AssignUserAndReview(_userService, _reviewService);
+                        comments.Add(comment);
                     }
                 }
             }

@@ -34,16 +34,16 @@ namespace TopEats.Repositories
                 {
                     if (await reader.ReadAsync())
                     {
-                        return new Review
+                        Review review = new Review
                         (
                             (int)reader["reviewId"],
                             (int)reader["rating"],
                             reader["reviewText"].ToString(),
                             (int)reader["restaurantId"],
-                            (int)reader["userId"],
-                            _userService,
-                            _restaurantService
+                            (int)reader["userId"]
                         );
+                        review.AssignUserAndRestaurant(_userService, _restaurantService);
+                        return review;
                     }
                 }
             }
@@ -64,16 +64,16 @@ namespace TopEats.Repositories
                 {
                     while (await reader.ReadAsync())
                     {
-                        reviews.Add(new Review
+                        Review review = new Review
                         (
                             (int)reader["reviewId"],
                             (int)reader["rating"],
                             reader["reviewText"].ToString(),
                             (int)reader["restaurantId"],
-                            (int)reader["userId"],
-                            _userService,
-                            _restaurantService
-                        ));
+                            (int)reader["userId"]
+                        );
+                        review.AssignUserAndRestaurant(_userService, _restaurantService);
+                        reviews.Add(review);
                     }
                 }
             }

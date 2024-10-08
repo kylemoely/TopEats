@@ -1,5 +1,6 @@
 using System;
 using TopEats.Services;
+using System.Threading.Tasks;
 
 namespace TopEats.Models
 {
@@ -11,14 +12,16 @@ namespace TopEats.Models
         public EatList AssignedEatList { get; set; }
         public Restaurant AssignedRestaurant { get; set; }
 
-        public EatListRestaurant(int _eatListId, int _restaurantId, IEatListService eatListService, IRestaurantService restaurantService)
+        public EatListRestaurant(int _eatListId, int _restaurantId)
         {
             eatListId = _eatListId;
             restaurantId = _restaurantId;
-
-            AssignedEatList = eatListService.GetEatListById(eatListId);
-            AssignedRestaurant = restaurantService.GetRestaurantById(restaurantId);
         }
 
+        public async Task AssignEatListAndRestaurant(IRestaurantService restaurantService, IEatListService eatListService)
+        {
+            AssignedEatList = await eatListService.GetEatListById(eatListId);
+            AssignedRestaurant = await restaurantService.GetRestaurantById(restaurantId);
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using TopEats.Services;
+using System.Threading.Tasks;
 
 namespace TopEats.Models
 {
@@ -13,25 +14,25 @@ namespace TopEats.Models
         public Review AssignedReview { get; set; }
         public User AssignedUser { get; set; }
 
-        public Comment(int _commentId, int _reviewId, int _userId, string _commentText, IUserService userService, IReviewService reviewService)
+        public Comment(int _commentId, int _reviewId, int _userId, string _commentText)
         {
             commentId = _commentId;
             reviewId = _reviewId;
             userId = _userId;
             commentText = _commentText;
-
-            AssignedReview = reviewService.GetReviewById(reviewId);
-            AssignedUser = userService.GetUserById(userId);
         }
 
-        public Comment(int _reviewId, int _userId, string _commentText, IUserService userService, IReviewService reviewService)
+        public Comment(int _reviewId, int _userId, string _commentText)
         {
             reviewId = _reviewId;
             userId = _userId;
             commentText = _commentText;
+        }
 
-            AssignedReview = reviewService.GetReviewById(reviewId);
-            AssignedUser = userService.GetUserById(userId);
+        public async Task AssignUserAndReview(IUserService userService, IReviewService reviewService)
+        {
+            AssignedReview = await reviewService.GetReviewById(reviewId);
+            AssignedUser = await userService.GetUserById(userId);
         }
     }
 }

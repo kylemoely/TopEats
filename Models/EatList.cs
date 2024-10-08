@@ -1,5 +1,6 @@
 using System;
 using TopEats.Services;
+using System.Threading.Tasks;
 
 namespace TopEats.Models
 {
@@ -12,23 +13,24 @@ namespace TopEats.Models
 
         public User AssignedUser { get; set; }
 
-        public EatList(int _eatListId, string _eatListName, bool _private_setting, int _userId, IUserService userService)
+        public EatList(int _eatListId, string _eatListName, bool _private_setting, int _userId)
         {
             eatListId = _eatListId;
             eatListName = _eatListName;
             private_setting = _private_setting;
             userId = _userId;
-
-            AssignedUser = userService.GetUserById(userId);
         }
 
-        public EatList(string _eatListName, bool _private_setting, int _userId, IUserService userService)
+        public EatList(string _eatListName, bool _private_setting, int _userId)
         {
             eatListName = _eatListName;
             private_setting = _private_setting;
             userId = _userId;
+        }
 
-            AssignedUser = userService.GetUserById(userId);
+        public async Task AssignUser(IUserService userService)
+        {
+            AssignedUser = await userService.GetUserById(userId);
         }
     }
 
