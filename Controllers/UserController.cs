@@ -57,7 +57,7 @@ namespace TopEats.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User updatedUser)
         {
-            if (id != updatedUser.Id || !ModelState.IsValid)
+            if (id != updatedUser.userId || !ModelState.IsValid)
             {
                 return BadRequest();
             }
