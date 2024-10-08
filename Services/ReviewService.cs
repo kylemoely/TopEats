@@ -39,5 +39,10 @@ namespace TopEats.Services
         {
             await _reviewRepository.DeleteReview(reviewId);
         }
+
+        public async Task<IEnumerable<Review>> GetUserReviews(int userId)
+        {
+            return await _reviewRepository.GetUserReviews(userId);
+        }
     }
 }

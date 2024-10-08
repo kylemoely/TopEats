@@ -12,5 +12,6 @@ namespace TopEats.Repositories
         Task CreateReview(Review review);
         Task UpdateReview(Review review);
         Task DeleteReview(int reviewId);
+        Task<IEnumerable<Review>> GetUserReviews(int userId);
     }
 }
