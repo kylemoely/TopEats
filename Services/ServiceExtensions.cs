@@ -25,6 +25,8 @@ namespace TopEats.Services
             services.AddScoped<IReviewLikeService, ReviewLikeService>();
             services.AddScoped<ICommentLikeRepository, CommentLikeRepository>();
             services.AddScoped<ICommentLikeService, CommentLikeService>();
+            services.AddScoped<IFollowRepository, FollowRepository>();
+            services.AddScoped<IFollowService, FollowService>();
         }
     }
 
