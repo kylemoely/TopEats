@@ -126,6 +126,7 @@ namespace TopEats.Repositories
             {
                 string query = "SELECT * FROM Comments WHERE reviewId = @reviewId";
                 SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@reviewId", reviewId);
 
                 await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
