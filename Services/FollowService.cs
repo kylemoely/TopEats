@@ -19,5 +19,10 @@ namespace TopEats.Services
         {
             return await _followRepository.GetUserFollowers(userId);
         }
+
+        public async Task<IEnumerable<Follow>> GetUserFollowees(int userId)
+        {
+            return await _followRepository.GetUserFollowees(userId);
+        }
     }
 }
