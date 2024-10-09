@@ -27,24 +27,51 @@ namespace TopEats.Repositories
             {
                 string query = "SELECT * FROM Follows WHERE followeeId = @userId";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@followeeId", userId);
+                command.Parameters.AddWithValue("@userId", userId);
 
                 await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
-                        Follow follow = new Follow(
+                        Follow follower = new Follow(
                             (int)reader["followerId"],
                             (int)reader["followeeId"]
                         );
-                        await restaurant.AssignFollowerAndFollowee(_userService);
-                        follows.Add(follow);
+                        await follower.AssignFollowerAndFollowee(_userService);
+                        followers.Add(follower);
                     }
                 }
             }
 
-            return follows;
+            return followers;
+        }
+
+        public async Task<IEnumerable<Follow>> GetUserFollowees(int userId)
+        {
+            List<Follow> followees = new List<Follow>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT * FROM Follows WHERE followerId = @userId";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                await connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        Follow followee = new Follow(
+                            (int)reader["followerId"],
+                            (int)reader["followeeId"]
+                        );
+                        await followee.AssignFollowerAndFollowee(_userService);
+                        followees.Add(followee);
+                    }
+                }
+            }
+            return followees;
         }
     }
 }
