@@ -39,5 +39,10 @@ namespace TopEats.Services
         {
             await _eatListRepository.DeleteEatList(eatListId);
         }
+
+        public async Task<IEnumerable<EatList>> GetUserEatLists(int userId)
+        {
+            return await _eatListRepository.GetUserEatLists(userId);
+        }
     }
 }
