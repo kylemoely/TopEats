@@ -8,5 +8,6 @@ namespace TopEats.Services
     public interface IFollowService
     {
         Task<IEnumerable<Follow>> GetUserFollowers(int userId);
+        Task<IEnumerable<Follow>> GetUserFollowees(int userId);
     }
 }
