@@ -116,5 +116,35 @@ namespace TopEats.Repositories
                 await command.ExecuteNonQueryAsync();
             }
         }
+
+        public async Task<IEnumerable<EatList>> GetUserEatLists(int userId)
+        {
+            List<EatList> eatLists = new List<EatList>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)
+            {
+                string query = "SELECT * FROM EatLists WHERE userId = @userId";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                await connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    while(await reader.ReadAsync())
+                    {
+                        EatList eatList = new EatList
+                        (
+                            (int)reader["eatListId"],
+                            reader["eatListName"].ToString(),
+                            (bool)reader["private_setting"],
+                            (int)reader["userId"]  
+                        );
+                        await eatList.AssignUser(_userService);
+                        eatLists.Add(eatList);
+                    }
+                }
+            }
+            return eatLists;
+        }
     }
 }
