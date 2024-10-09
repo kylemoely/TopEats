@@ -12,5 +12,6 @@ namespace TopEats.Services
         Task CreateEatList(EatList eatList);
         Task UpdateEatList(EatList eatList);
         Task DeleteEatList(int eatListId);
+        Task<IEnumerable<EatList>> GetUserEatLists(int userId);
     }
 }
