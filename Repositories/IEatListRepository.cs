@@ -12,5 +12,6 @@ namespace TopEats.Repositories
         Task CreateEatList(EatList eatList);
         Task UpdateEatList(EatList eatList);
         Task DeleteEatList(int eatListId);
+        Task<IEnumerable<EatList>> GetUserEatLists(int userId);
     }
 }
