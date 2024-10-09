@@ -14,5 +14,6 @@ namespace TopEats.Services
         Task DeleteReview(int reviewId);
         Task<IEnumerable<Review>> GetUserReviews(int userId);
         Task<IEnumerable<Review>> GetRestaurantReviews(int restaurantId);
+        Task<IEnumerable<Review>> GetFolloweeReviews(int userId);
     }
 }
