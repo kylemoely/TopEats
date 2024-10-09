@@ -191,7 +191,7 @@ namespace TopEats.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "SELECT r.* FROM Reviews r INNER JOIN Follows f ON r.userId = f.followeeId WHERE f.followerId = @userId";
+                string query = "SELECT r.* FROM Reviews r INNER JOIN Follows f ON r.userId = f.followeeId WHERE f.followerId = @userId ORDER BY createdAt DESC";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", userId);
 
