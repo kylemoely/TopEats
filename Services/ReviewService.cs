@@ -44,5 +44,10 @@ namespace TopEats.Services
         {
             return await _reviewRepository.GetUserReviews(userId);
         }
+
+        public async Task<IEnumerable<Review>> GetRestaurantReviews(int restaurantId)
+        {
+            return await _reviewRepository.GetUserReviews(restaurantId);
+        }
     }
 }

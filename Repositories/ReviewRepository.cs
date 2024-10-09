@@ -153,5 +153,36 @@ namespace TopEats.Repositories
             }
             return reviews;
         }
+
+        public async Task<IEnumerable<Review>> GetRestaurantReviews(int restaurantId)
+        {
+            List<Review> reviews = new List<Review>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT * FROM Reviews WHERE restaurantId = @restaurantId";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@restaurantId", restaurantId);
+
+                await connection.OpenAsync();
+                using(SqlDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    while(await reader.ReadAsync())
+                    {
+                        Review review = new Review
+                        (
+                            (int)reader["reviewId"],
+                            (int)reader["rating"],
+                            reader["reviewText"].ToString(),
+                            (int)reader["restaurantId"],
+                            (int)reader["userId"]
+                        );
+                        await review.AssignUserAndRestaurant(_userService, _restaurantService);
+                        reviews.Add(review);
+                    }
+                }
+            }
+            return reviews;
+        }
     }
 }
