@@ -117,5 +117,34 @@ namespace TopEats.Repositories
                 await command.ExecuteNonQueryAsync();
             }
         }
+
+        public async Task<IEnumerable<Comment>> GetReviewComments(int reviewId)
+        {
+            List<Comment> comments = new List<Comment>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT * FROM Comments WHERE reviewId = @reviewId";
+                SqlCommand command = new SqlCommand(query, connection);
+
+                await connection.OpenAsync();
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        Comment comment = new Comment
+                        (
+                            (int)reader["commentId"],
+                            (int)reader["reviewId"],
+                            (int)reader["userId"],
+                            reader["commentText"].ToString()
+                        );
+                        await comment.AssignUserAndReview(_userService, _reviewService);
+                        comments.Add(comment);
+                    }
+                }
+            }
+            return comments;
+        }
     }
 }

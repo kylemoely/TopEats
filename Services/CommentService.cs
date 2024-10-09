@@ -39,5 +39,10 @@ namespace TopEats.Services
         {
             await _commentRepository.DeleteComment(commentId);
         }
+
+        public async Task<IEnumerable<Comment>> GetReviewComments(int reviewId)
+        {
+            return await _commentRepository.GetReviewComments(reviewId);
+        }
     }
 }

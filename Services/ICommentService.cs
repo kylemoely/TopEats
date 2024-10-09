@@ -12,5 +12,6 @@ namespace TopEats.Services
         Task CreateComment(Comment comment);
         Task UpdateComment(Comment comment);
         Task DeleteComment(int commentId);
+        Task<IEnumerable<Comment>> GetReviewComments(int reviewId);
     }
 }
