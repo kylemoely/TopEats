@@ -29,6 +29,7 @@ namespace TopEats.Repositories
             {
                 string query = "SELECT * FROM User_Fav_Restaurants WHERE userId = @userId";
                 SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
 
                 await connection.OpenAsync();
                 using (SqlDataReader reader = await command.ExecuteReaderAsync())
