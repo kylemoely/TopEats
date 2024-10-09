@@ -8,5 +8,6 @@ namespace TopEats.Repositories
     public interface IFollowRepository
     {
         Task<IEnumerable<Follow>> GetUserFollowers(int userId);
+        Task<IEnumerable<Follow>> GetUserFollowees(int userId);
     }
 }
