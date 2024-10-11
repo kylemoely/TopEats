@@ -48,5 +48,19 @@ namespace TopEats.Repositories
             }
             return commentLikes;
         }
+
+        public async Task CreateCommentLike(int commentId, int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "INSERT INTO CommentLikes (commentId, userId) VALUES (@commentId, @userId)";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@commentId", commentId);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+            }
+        }
     }
 }
