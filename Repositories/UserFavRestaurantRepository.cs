@@ -49,5 +49,20 @@ namespace TopEats.Repositories
 
             return restaurants;
         }
+
+        public async Task CreateUserTopRestaurant(UserFavRestaurant userFavRestaurant)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "INSERT INTO UserFavRestaurants (userId, restaurantId, restaurantRank) VALUES (@userId, @restaurantId, @restaurantRank)";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userFavRestaurant.userId);
+                command.Parameters.AddWithValue("@restaurantId", userFavRestaurant.restaurantId);
+                command.Parameters.AddWithValue("@restaurantRank", userFavRestaurant.restaurantRank);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+            }
+        }
     }
 }
