@@ -8,5 +8,6 @@ namespace TopEats.Services
     public interface IUserFavRestaurantService
     {
         Task<IEnumerable<UserFavRestaurant>> GetUserTopRestaurants(int userId);
+        Task CreateUserTopRestaurant(UserFavRestaurant userFavRestaurant);
     }
 }
