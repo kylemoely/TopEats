@@ -8,5 +8,6 @@ namespace TopEats.Services
     public interface ICommentLikeService
     {
         Task<IEnumerable<CommentLike>> GetCommentLikes(int commentId);
+        Task CreateCommentLike(int commentId, int userId);
     }
 }
