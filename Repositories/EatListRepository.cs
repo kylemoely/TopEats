@@ -80,10 +80,11 @@ namespace TopEats.Repositories
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                string query = "INSERT INTO EatLists (eatListName, private_setting) VALUES (@eatListName, @private_setting)";
+                string query = "INSERT INTO EatLists (eatListName, private_setting, userId) VALUES (@eatListName, @private_setting, @userId)";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListName", eatList.eatListName);
                 command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
+                command.Paremeters.AddWithValue("@userId", eatList.userId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
