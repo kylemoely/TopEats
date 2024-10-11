@@ -19,5 +19,10 @@ namespace TopEats.Services
         {
             return await _commentLikeRepository.GetCommentLikes(commentId);
         }
+
+        public async Task CreateCommentLike(int commentId, int userId)
+        {
+            await _commentLikeRepository.CreateCommentLike(commentId, userId);
+        }
     }
 }
