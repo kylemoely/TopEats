@@ -24,5 +24,10 @@ namespace TopEats.Services
         {
             return await _followRepository.GetUserFollowees(userId);
         }
+
+        public async Task CreateFollow(int followerId, int followeeId)
+        {
+            await _followRepository.CreateFollow(followerId, followeeId);
+        }
     }
 }
