@@ -8,5 +8,6 @@ namespace TopEats.Repositories
     public interface IReviewLikeRepository
     {
         Task<IEnumerable<ReviewLike>> GetReviewLikes(int reviewId);
+        Task CreateReviewLike(int reviewId, int userId);
     }
 }
