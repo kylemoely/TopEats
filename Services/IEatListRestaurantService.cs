@@ -8,5 +8,6 @@ namespace TopEats.Services
     public interface IEatListRestaurantService
     {
         Task<IEnumerable<EatListRestaurant>> GetEatListRestaurants(int eatListId);
+        Task AddRestaurantToEatList(int eatListId, int restaurantId);
     }
 }
