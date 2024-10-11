@@ -73,5 +73,19 @@ namespace TopEats.Repositories
             }
             return followees;
         }
+
+        public async Task CreateFollow(int followerId, int followeeId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "INSERT INTO Follows (followerId, followeeId) VALUES (@followerId, @followeeId)";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@followerId", followerId);
+                command.Parameters.AddWithValue("@followeeId", followeeId);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+            }
+        }
     }
 }
