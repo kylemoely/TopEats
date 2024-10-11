@@ -8,5 +8,6 @@ namespace TopEats.Repositories
     public interface IUserFavRestaurantRepository
     {
         Task<IEnumerable<UserFavRestaurant>> GetUserTopRestaurants(int userId);
+        Task CreateUserTopRestaurant(UserFavRestaurant userFavRestaurant);
     }
 }
