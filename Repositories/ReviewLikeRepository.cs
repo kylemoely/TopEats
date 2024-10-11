@@ -48,5 +48,19 @@ namespace TopEats.Repositories
             }
             return reviewLikes;
         }
+
+        public async Task CreateReviewtLike(int reviewId, int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "INSERT INTO ReviewLikes (reviewId, userId) VALUES (@reviewId, @userId)";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@reviewId", reviewId);
+                command.Parameters.AddWithValue("@userId", userId);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+            }
+        }
     }
 }
