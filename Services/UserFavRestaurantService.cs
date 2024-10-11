@@ -19,5 +19,10 @@ namespace TopEats.Services
         {
             return await _userFavRestaurantRepository.GetUserTopRestaurants(userId);
         }
+
+        public async Task CreateUserTopRestaurant(UserFavRestaurant userFavRestaurant)
+        {
+            await _userFavRestaurantRepository.CreateUserTopRestaurant(userFavRestaurant);
+        }
     }
 }
