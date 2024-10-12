@@ -84,7 +84,7 @@ namespace TopEats.Repositories
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListName", eatList.eatListName);
                 command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
-                command.Paremeters.AddWithValue("@userId", eatList.userId);
+                command.Parameters.AddWithValue("@userId", eatList.userId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -122,7 +122,7 @@ namespace TopEats.Repositories
         {
             List<EatList> eatLists = new List<EatList>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString)
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM EatLists WHERE userId = @userId";
                 SqlCommand command = new SqlCommand(query, connection);

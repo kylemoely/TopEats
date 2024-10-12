@@ -14,7 +14,7 @@ namespace TopEats.Repositories
         private readonly IEatListService _eatListService;
         private readonly IRestaurantService _restaurantService;
 
-        public UserFavRestaurantRepository(IConfiguration configuration, IEatListService eatListService, IRestaurantService restaurantService)
+        public EatListRestaurantRepository(IConfiguration configuration, IEatListService eatListService, IRestaurantService restaurantService)
         {
             _connectionString = Environment.GetEnvironmentVariable("connection_string");
             _eatListService = eatListService;

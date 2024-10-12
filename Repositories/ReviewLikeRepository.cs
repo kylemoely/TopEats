@@ -49,7 +49,7 @@ namespace TopEats.Repositories
             return reviewLikes;
         }
 
-        public async Task CreateReviewtLike(int reviewId, int userId)
+        public async Task CreateReviewLike(int reviewId, int userId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

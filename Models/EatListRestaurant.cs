@@ -18,7 +18,7 @@ namespace TopEats.Models
             restaurantId = _restaurantId;
         }
 
-        public async Task AssignEatListAndRestaurant(IRestaurantService restaurantService, IEatListService eatListService)
+        public async Task AssignEatListAndRestaurant(IEatListService eatListService, IRestaurantService restaurantService)
         {
             AssignedEatList = await eatListService.GetEatListById(eatListId);
             AssignedRestaurant = await restaurantService.GetRestaurantById(restaurantId);
