@@ -30,9 +30,9 @@ namespace TopEats.Services
             await _userRepository.CreateUser(user);
         }
 
-        public async Task UpdateUser(User user)
+        public async Task UpdatePassword(User user)
         {
-            await _userRepository.UpdateUser(user);
+            await _userRepository.UpdatePassword(user);
         }
 
         public async Task DeleteUser(int userId)

@@ -81,7 +81,7 @@ namespace TopEats.Repositories
             }
         }
 
-        public async Task UpdateUser(User user)
+        public async Task UpdatePassword(User user)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

@@ -55,7 +55,7 @@ namespace TopEats.Controllers
 
         // PUT: api/User/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] User updatedUser)
+        public async Task<IActionResult> UpdatePassword(int id, [FromBody] User updatedUser)
         {
             if (id != updatedUser.userId || !ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace TopEats.Controllers
                 return NotFound();
             }
 
-            await _userService.UpdateUser(updatedUser);
+            await _userService.UpdatePassword(updatedUser);
 
             return NoContent();
         }
