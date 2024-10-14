@@ -79,5 +79,19 @@ namespace TopEats.Repositories
                 await command.ExecuteNonQueryAsync();
             }
         }
+
+        public async Task DeleteUserTopRestaurant(UserFavRestaurant userFavRestaurant)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "DELETE FROM UserFavRestaurants WHERE userId = @userId AND restaurantRank = @restaurantRank";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userFavRestaurant.userId);
+                command.Parameters.AddWithValue("@restaurantRank", userFavRestaurant.restaurantRank);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+            }
+        }
     }
 }
