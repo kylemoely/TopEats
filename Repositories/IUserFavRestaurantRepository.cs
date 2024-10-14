@@ -10,5 +10,6 @@ namespace TopEats.Repositories
         Task<IEnumerable<UserFavRestaurant>> GetUserTopRestaurants(int userId);
         Task CreateUserTopRestaurant(UserFavRestaurant userFavRestaurant);
         Task UpdateUserTopRestaurant(UserFavRestaurant userFavRestaurant);
+        Task DeleteUserTopRestaurant(UserFavRestaurant userFavRestaurant);
     }
 }
