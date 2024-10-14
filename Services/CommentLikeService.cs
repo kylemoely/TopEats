@@ -22,7 +22,12 @@ namespace TopEats.Services
 
         public async Task CreateCommentLike(CommentLike commentLike)
         {
-            await _commentLikeRepository.CreateCommentLike(commentId, userId);
+            await _commentLikeRepository.CreateCommentLike(commentLike);
+        }
+
+        public async Task DeleteCommentLike(CommentLike commentLike)
+        {
+            await _commentLikeRepository.DeleteCommentLike(commentLike);
         }
     }
 }
