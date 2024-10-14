@@ -9,5 +9,6 @@ namespace TopEats.Repositories
     {
         Task<IEnumerable<CommentLike>> GetCommentLikes(int commentId);
         Task CreateCommentLike(CommentLike commentLike);
+        Task DeleteCommentLike(CommentLike commentLike);
     }
 }
