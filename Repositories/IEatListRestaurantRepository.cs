@@ -9,5 +9,6 @@ namespace TopEats.Repositories
     {
         Task<IEnumerable<EatListRestaurant>> GetEatListRestaurants(int eatListId);
         Task AddRestaurantToEatList(int eatListId, int restaurantId);
+        Task DeleteRestaurantFromEatList(EatListRestaurant eatListRestaurant);
     }
 }
