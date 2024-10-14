@@ -9,7 +9,7 @@ namespace TopEats.Services
     {
         Task<IEnumerable<Follow>> GetUserFollowers(int userId);
         Task<IEnumerable<Follow>> GetUserFollowees(int userId);
-        Task CreateFollow(int followerId, int followeeId);
+        Task CreateFollow(Follow follow);
         Task DeleteFollow(Follow follow);
     }
 }
