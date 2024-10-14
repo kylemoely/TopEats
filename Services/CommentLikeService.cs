@@ -20,7 +20,7 @@ namespace TopEats.Services
             return await _commentLikeRepository.GetCommentLikes(commentId);
         }
 
-        public async Task CreateCommentLike(int commentId, int userId)
+        public async Task CreateCommentLike(CommentLike commentLike)
         {
             await _commentLikeRepository.CreateCommentLike(commentId, userId);
         }
