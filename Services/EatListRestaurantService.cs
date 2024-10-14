@@ -20,9 +20,9 @@ namespace TopEats.Services
             return await _eatListRestaurantRepository.GetEatListRestaurants(eatListId);
         }
 
-        public async Task AddRestaurantToEatList(int eatListId, int restaurantId)
+        public async Task AddRestaurantToEatList(EatListRestaurant eatListRestaurant)
         {
-            await _eatListRestaurantRepository.AddRestaurantToEatList(eatListId, restaurantId);
+            await _eatListRestaurantRepository.AddRestaurantToEatList(eatListRestaurant);
         }
 
         public async Task DeleteRestaurantFromEatList(EatListRestaurant eatListRestaurant)
