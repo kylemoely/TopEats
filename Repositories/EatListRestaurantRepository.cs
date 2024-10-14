@@ -49,14 +49,14 @@ namespace TopEats.Repositories
             return eatListRestaurants;
         }
 
-        public async Task AddRestaurantToEatList(int eatListId, int restaurantId)
+        public async Task AddRestaurantToEatList(EatListRestaurant eatListRestaurant)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 string query = "INSERT INTO EatListRestaurants (eatListId, restaurantId) VALUES (@eatListId, @restaurantId)";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@eatListId", eatListId);
-                command.Parameters.AddWithValue("@restaurantId", restaurantId);
+                command.Parameters.AddWithValue("@eatListId", eatListRestaurant.eatListId);
+                command.Parameters.AddWithValue("@restaurantId", eatListRestaurant.restaurantId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
