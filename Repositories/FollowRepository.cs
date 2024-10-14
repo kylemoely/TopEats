@@ -87,5 +87,19 @@ namespace TopEats.Repositories
                 await command.ExecuteNonQueryAsync();
             }
         }
+
+        public async Task DeleteFollow(Follow follow)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "DELETE FROM Follows WHERE followerId = @followerId AND followeeId = @followeeId";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@followerId", follow.followerId);
+                command.Parameters.AddWithValue("@followeeId", follow.followeeId);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+            }
+        }
     }
 }
