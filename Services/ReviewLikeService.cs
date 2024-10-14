@@ -20,9 +20,9 @@ namespace TopEats.Services
             return await _reviewLikeRepository.GetReviewLikes(reviewId);
         }
 
-        public async Task CreateReviewLike(int reviewId, int userId)
+        public async Task CreateReviewLike(ReviewLike reviewLike)
         {
-            await _reviewLikeRepository.CreateReviewLike(reviewId, userId);
+            await _reviewLikeRepository.CreateReviewLike(reviewLike);
         }
     }
 }
