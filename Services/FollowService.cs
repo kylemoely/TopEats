@@ -29,5 +29,10 @@ namespace TopEats.Services
         {
             await _followRepository.CreateFollow(followerId, followeeId);
         }
+
+        public async Task DeleteFollow(Follow follow)
+        {
+            await _followRepository.DeleteFollow(follow);
+        }
     }
 }
