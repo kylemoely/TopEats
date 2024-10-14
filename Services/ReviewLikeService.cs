@@ -24,5 +24,10 @@ namespace TopEats.Services
         {
             await _reviewLikeRepository.CreateReviewLike(reviewLike);
         }
+
+        public async Task DeleteReviewLike(ReviewLike reviewLike)
+        {
+            await _reviewLikeRepository.DeleteReviewLike(reviewLike);
+        }
     }
 }
