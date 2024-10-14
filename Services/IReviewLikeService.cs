@@ -9,5 +9,6 @@ namespace TopEats.Services
     {
         Task<IEnumerable<ReviewLike>> GetReviewLikes(int reviewId);
         Task CreateReviewLike(ReviewLike reviewLike);
+        Task DeleteReviewLike(ReviewLike reviewLike);
     }
 }
