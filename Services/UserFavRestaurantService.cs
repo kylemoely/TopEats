@@ -29,5 +29,10 @@ namespace TopEats.Services
         {
             await _userFavRestaurantRepository.UpdateUserTopRestaurant(userFavRestaurant);
         }
+
+        public async Task DeleteUserTopRestaurant(UserFavRestaurant userFavRestaurant)
+        {
+            await _userFavRestaurantRepository.DeleteUserTopRestaurant(userFavRestaurant);
+        }
     }
 }
