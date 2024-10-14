@@ -62,5 +62,19 @@ namespace TopEats.Repositories
                 await command.ExecuteNonQueryAsync();
             }
         }
+
+        public async Task DeleteReviewLike(ReviewLike reviewLike)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "DELETE FROM ReviewLikes WHERE reviewId = @reviewId AND userId = @userId";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@reviewId", reviewLike.reviewId);
+                command.Parameters.AddWithValue("@userId", reviewLike.userId);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+            }
+        }
     }
 }
