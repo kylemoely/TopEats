@@ -8,7 +8,7 @@ namespace TopEats.Repositories
     public interface IEatListRestaurantRepository
     {
         Task<IEnumerable<EatListRestaurant>> GetEatListRestaurants(int eatListId);
-        Task AddRestaurantToEatList(int eatListId, int restaurantId);
+        Task AddRestaurantToEatList(EatListRestaurant eatListRestaurant);
         Task DeleteRestaurantFromEatList(EatListRestaurant eatListRestaurant);
     }
 }
