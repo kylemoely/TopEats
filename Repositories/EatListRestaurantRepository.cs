@@ -62,5 +62,19 @@ namespace TopEats.Repositories
                 await command.ExecuteNonQueryAsync();
             }
         }
+
+        public async Task DeleteRestaurantFromEatList(EatListRestaurant eatListRestaurant)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string query = "DELETE FROM EatListRestaurants WHERE eatListId = @eatListId AND restaurantId = @restaurantId";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@eatListId", eatListRestaurant.eatListId);
+                command.Parameters.AddWithValue("@restaurantId", eatListRestaurant.restaurantId);
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+            }
+        }
     }
 }
