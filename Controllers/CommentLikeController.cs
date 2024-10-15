@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace TopEats.Controllers
 
             if (commentLikes == null)
             {
-                return NotFound( new { message = $"Comment not found."} );
+                return NotFound( new { message = "Comment not found."} );
             }
 
             return Ok(commentLikes);
