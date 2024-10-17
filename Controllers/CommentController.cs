@@ -22,7 +22,7 @@ namespace TopEats.Controllers
     [HttpGet("{commentId}")]
     public async Task<ActionResult<Comment>> GetCommentById(int commentId)
     {
-      var comment = _commentService.GetCommentById(commentId);
+      var comment = await _commentService.GetCommentById(commentId);
 
       if (comment == null)
       {
@@ -36,7 +36,7 @@ namespace TopEats.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Comment>>> GetAllComments()
     {
-      var comments = _commentService.GetAllComments();
+      var comments = await _commentService.GetAllComments();
 
       if (comments == null)
       {
