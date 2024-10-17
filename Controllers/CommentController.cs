@@ -22,7 +22,7 @@ namespace TopEats.Controllers
     [HttpGet("{commentId}")]
     public async Task<ActionResult<Comment>> GetCommentById(int commentId)
     {
-      var comment = _commentService.GetCommenyById(commentId);
+      var comment = _commentService.GetCommentById(commentId);
 
       if (comment == null)
       {
@@ -40,7 +40,7 @@ namespace TopEats.Controllers
 
       if (comments == null)
       {
-        return NotFound( { message = "No comments found." } );
+        return NotFound( new { message = "No comments found." } );
       }
 
       return Ok(comments);
@@ -70,7 +70,7 @@ namespace TopEats.Controllers
     {
       if (comment == null)
       {
-        return BadRequest("Request body is null.")
+        return BadRequest("Request body is null.");
       }
       if (!ModelState.IsValid)
       {
@@ -83,10 +83,10 @@ namespace TopEats.Controllers
     }
 
     // DELETE: /api/[controller]/commentId
-    [HttpDelete("{commentId}")]
-    public async Task<ActionResult> DeleteComment(int commentId)
-    {
+    // [HttpDelete("{commentId}")]
+    // public async Task<ActionResult> DeleteComment(int commentId)
+    // {
       
-    }
+    // }
   }
 }
