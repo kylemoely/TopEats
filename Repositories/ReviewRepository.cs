@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using MySqlConnector;
 using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Services;
@@ -16,21 +17,21 @@ namespace TopEats.Repositories
 
         public ReviewRepository(IConfiguration configuration, IUserService userService, IRestaurantService restaurantService)
         {
-            _connectionString = Environment.GetEnvironmentVariable("connection_string");
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
             _userService = userService;
             _restaurantService = restaurantService;
         }
 
         public async Task<Review> GetReviewById(int reviewId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Reviews WHERE reviewId = @reviewId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@reviewId", reviewId);
 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())
                     {
@@ -54,13 +55,13 @@ namespace TopEats.Repositories
         {
             List<Review> reviews = new List<Review>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Reviews";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
@@ -82,10 +83,10 @@ namespace TopEats.Repositories
 
         public async Task CreateReview(Review review)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "INSERT INTO Reviews (rating, reviewText, restaurantId, userId) VALUES (@rating, @reviewText, @restaurantId, @userId)";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@rating", review.rating);
                 command.Parameters.AddWithValue("@reviewText", review.reviewText);
                 command.Parameters.AddWithValue("@restaurantId", review.restaurantId);
@@ -98,10 +99,10 @@ namespace TopEats.Repositories
 
         public async Task UpdateReview(Review review)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "UPDATE Reviews SET rating = @rating, reviewText = @reviewText WHERE reviewId = @reviewId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@rating", review.rating);
                 command.Parameters.AddWithValue("@reviewText", review.reviewText);
                 command.Parameters.AddWithValue("@reviewId", review.reviewId);
@@ -113,9 +114,9 @@ namespace TopEats.Repositories
 
         public async Task DeleteReview(int reviewId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString)){
+            using (MySqlConnection connection = new MySqlConnection(_connectionString)){
                 string query = "DELETE FROM Reviews WHERE reviewId = @reviewId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@reviewId", reviewId);
 
                 await connection.OpenAsync();
@@ -127,14 +128,14 @@ namespace TopEats.Repositories
         {
             List<Review> reviews = new List<Review>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Reviews WHERE userId = @userId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", userId);
                 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
@@ -158,14 +159,14 @@ namespace TopEats.Repositories
         {
             List<Review> reviews = new List<Review>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Reviews WHERE restaurantId = @restaurantId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@restaurantId", restaurantId);
 
                 await connection.OpenAsync();
-                using(SqlDataReader reader = await command.ExecuteReaderAsync())
+                using(MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while(await reader.ReadAsync())
                     {
@@ -189,14 +190,14 @@ namespace TopEats.Repositories
         {
             List<Review> reviews = new List<Review>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT r.* FROM Reviews r INNER JOIN Follows f ON r.userId = f.followeeId WHERE f.followerId = @userId ORDER BY createdAt DESC";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", userId);
 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while(await reader.ReadAsync())
                     {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using MySqlConnector;
 using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Services;
@@ -16,7 +17,7 @@ namespace TopEats.Repositories
 
         public EatListRestaurantRepository(IConfiguration configuration, IEatListService eatListService, IRestaurantService restaurantService)
         {
-            _connectionString = Environment.GetEnvironmentVariable("connection_string");
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
             _eatListService = eatListService;
             _restaurantService = restaurantService;
         }
@@ -25,14 +26,14 @@ namespace TopEats.Repositories
         {
             List<EatListRestaurant> eatListRestaurants = new List<EatListRestaurant>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM EatListRestaurants WHERE eatListId = @eatListId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListId", eatListId);
 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
@@ -51,10 +52,10 @@ namespace TopEats.Repositories
 
         public async Task AddRestaurantToEatList(EatListRestaurant eatListRestaurant)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "INSERT INTO EatListRestaurants (eatListId, restaurantId) VALUES (@eatListId, @restaurantId)";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListId", eatListRestaurant.eatListId);
                 command.Parameters.AddWithValue("@restaurantId", eatListRestaurant.restaurantId);
 
@@ -65,10 +66,10 @@ namespace TopEats.Repositories
 
         public async Task DeleteRestaurantFromEatList(EatListRestaurant eatListRestaurant)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "DELETE FROM EatListRestaurants WHERE eatListId = @eatListId AND restaurantId = @restaurantId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListId", eatListRestaurant.eatListId);
                 command.Parameters.AddWithValue("@restaurantId", eatListRestaurant.restaurantId);
 

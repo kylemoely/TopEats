@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using MySqlConnector;
 using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Services;
@@ -16,21 +17,21 @@ namespace TopEats.Repositories
 
         public CommentRepository(IConfiguration configuration, IUserService userService, IReviewService reviewService)
         {
-            _connectionString = Environment.GetEnvironmentVariable("connection_string");
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
             _userService = userService;
             _reviewService = reviewService;
         }
 
         public async Task<Comment> GetCommentById(int commentId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Comments WHERE commentId = @commentId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@commentId", commentId);
 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())
                     {
@@ -52,13 +53,13 @@ namespace TopEats.Repositories
         {
             List<Comment> comments = new List<Comment>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Comments";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
@@ -79,10 +80,10 @@ namespace TopEats.Repositories
 
         public async Task CreateComment(Comment comment)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "INSERT INTO Comments (reviewId, userId, commentText) VALUES (@reviewId, @userId, @commentText)";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@reviewId", comment.reviewId);
                 command.Parameters.AddWithValue("@userId", comment.userId);
                 command.Parameters.AddWithValue("@commentText", comment.commentText);
@@ -94,10 +95,10 @@ namespace TopEats.Repositories
 
         public async Task UpdateComment(Comment comment)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "UPDATE Comments SET commentText = @commentText WHERE commentId = @commentId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@commentText", comment.commentText);
                 command.Parameters.AddWithValue("@commentId", comment.commentId);
 
@@ -108,9 +109,9 @@ namespace TopEats.Repositories
 
         public async Task DeleteComment(int commentId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString)){
+            using (MySqlConnection connection = new MySqlConnection(_connectionString)){
                 string query = "DELETE FROM Comments WHERE commentId = @commentId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@commentId", commentId);
 
                 await connection.OpenAsync();
@@ -122,14 +123,14 @@ namespace TopEats.Repositories
         {
             List<Comment> comments = new List<Comment>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Comments WHERE reviewId = @reviewId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@reviewId", reviewId);
 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {

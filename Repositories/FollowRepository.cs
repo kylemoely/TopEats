@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using MySqlConnector;
 using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Services;
@@ -15,7 +16,7 @@ namespace TopEats.Repositories
 
         public FollowRepository(IConfiguration configuration, IUserService userService)
         {
-            _connectionString = Environment.GetEnvironmentVariable("connection_string");
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
             _userService = userService;
         }
 
@@ -23,14 +24,14 @@ namespace TopEats.Repositories
         {
             List<Follow> followers = new List<Follow>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Follows WHERE followeeId = @userId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", userId);
 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
@@ -51,14 +52,14 @@ namespace TopEats.Repositories
         {
             List<Follow> followees = new List<Follow>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM Follows WHERE followerId = @userId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", userId);
 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
@@ -76,10 +77,10 @@ namespace TopEats.Repositories
 
         public async Task CreateFollow(Follow follow)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "INSERT INTO Follows (followerId, followeeId) VALUES (@followerId, @followeeId)";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@followerId", follow.followerId);
                 command.Parameters.AddWithValue("@followeeId", follow.followeeId);
 
@@ -90,10 +91,10 @@ namespace TopEats.Repositories
 
         public async Task DeleteFollow(Follow follow)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "DELETE FROM Follows WHERE followerId = @followerId AND followeeId = @followeeId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@followerId", follow.followerId);
                 command.Parameters.AddWithValue("@followeeId", follow.followeeId);
 

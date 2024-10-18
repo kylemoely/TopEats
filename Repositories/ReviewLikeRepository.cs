@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using MySqlConnector;
 using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Services;
@@ -16,7 +17,7 @@ namespace TopEats.Repositories
         
         public ReviewLikeRepository(IConfiguration configuration, IUserService userService, IReviewService reviewService)
         {
-            _connectionString = Environment.GetEnvironmentVariable("connection_string");
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
             _userService = userService;
             _reviewService = reviewService;
         }
@@ -25,14 +26,14 @@ namespace TopEats.Repositories
         {
             List<ReviewLike> reviewLikes = new List<ReviewLike>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM ReviewLikes WHERE reviewId = @reviewId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@reviewId", reviewId);
 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
@@ -51,10 +52,10 @@ namespace TopEats.Repositories
 
         public async Task CreateReviewLike(ReviewLike reviewLike)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "INSERT INTO ReviewLikes (reviewId, userId) VALUES (@reviewId, @userId)";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@reviewId", reviewLike.reviewId);
                 command.Parameters.AddWithValue("@userId", reviewLike.userId);
 
@@ -65,10 +66,10 @@ namespace TopEats.Repositories
 
         public async Task DeleteReviewLike(ReviewLike reviewLike)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "DELETE FROM ReviewLikes WHERE reviewId = @reviewId AND userId = @userId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@reviewId", reviewLike.reviewId);
                 command.Parameters.AddWithValue("@userId", reviewLike.userId);
 

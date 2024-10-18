@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using MySqlConnector;
 using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Services;
@@ -15,20 +16,20 @@ namespace TopEats.Repositories
 
         public EatListRepository(IConfiguration configuration, IUserService userService)
         {
-            _connectionString = Environment.GetEnvironmentVariable("connection_string");
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
             _userService = userService;
         }
 
         public async Task<EatList> GetEatListById(int eatListId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM EatLists WHERE eatListId = @eatListId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListId", eatListId);
 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())
                     {
@@ -51,13 +52,13 @@ namespace TopEats.Repositories
         {
             List<EatList> eatLists = new List<EatList>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM EatLists";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
@@ -78,10 +79,10 @@ namespace TopEats.Repositories
 
         public async Task CreateEatList(EatList eatList)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "INSERT INTO EatLists (eatListName, private_setting, userId) VALUES (@eatListName, @private_setting, @userId)";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListName", eatList.eatListName);
                 command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
                 command.Parameters.AddWithValue("@userId", eatList.userId);
@@ -93,10 +94,10 @@ namespace TopEats.Repositories
 
         public async Task UpdateEatList(EatList eatList)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "UPDATE EatLists SET eatListName = @eatListName, private_setting = @private_setting WHERE eatListId = @eatListId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListName", eatList.eatListName);
                 command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
                 command.Parameters.AddWithValue("@eatListId", eatList.eatListId);
@@ -108,9 +109,9 @@ namespace TopEats.Repositories
 
         public async Task DeleteEatList(int eatListId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString)){
+            using (MySqlConnection connection = new MySqlConnection(_connectionString)){
                 string query = "DELETE FROM EatLists WHERE eatListId = @eatListId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@eatListId", eatListId);
 
                 await connection.OpenAsync();
@@ -122,14 +123,14 @@ namespace TopEats.Repositories
         {
             List<EatList> eatLists = new List<EatList>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM EatLists WHERE userId = @userId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", userId);
 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while(await reader.ReadAsync())
                     {

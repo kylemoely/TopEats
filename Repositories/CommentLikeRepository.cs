@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using MySqlConnector;
 using System.Threading.Tasks;
 using TopEats.Models;
 using TopEats.Services;
@@ -16,7 +17,7 @@ namespace TopEats.Repositories
         
         public CommentLikeRepository(IConfiguration configuration, IUserService userService, ICommentService commentService)
         {
-            _connectionString = Environment.GetEnvironmentVariable("connection_string");
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
             _userService = userService;
             _commentService = commentService;
         }
@@ -25,14 +26,14 @@ namespace TopEats.Repositories
         {
             List<CommentLike> commentLikes = new List<CommentLike>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "SELECT * FROM CommentLikes WHERE commentId = @commentId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@commentId", commentId);
 
                 await connection.OpenAsync();
-                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
@@ -51,10 +52,10 @@ namespace TopEats.Repositories
 
         public async Task CreateCommentLike(CommentLike commentLike)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "INSERT INTO CommentLikes (commentId, userId) VALUES (@commentId, @userId)";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@commentId", commentLike.commentId);
                 command.Parameters.AddWithValue("@userId", commentLike.userId);
 
@@ -65,10 +66,10 @@ namespace TopEats.Repositories
 
         public async Task DeleteCommentLike(CommentLike commentLike)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 string query = "DELETE FROM CommentLikes WHERE commentId = @commentId AND userId = @userId";
-                SqlCommand command = new SqlCommand(query, connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@commentId", commentLike.commentId);
                 command.Parameters.AddWithValue("@userId", commentLike.userId);
 
