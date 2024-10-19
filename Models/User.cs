@@ -1,4 +1,6 @@
 using System;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace TopEats.Models
 {
@@ -6,6 +8,7 @@ namespace TopEats.Models
     {
         public int? userId { get; set; } // PRIMARY KEY
         public string username { get; set; }
+        [JsonIgnore]
         public string passwordHash { get; set; }
         
         public User(int _userId, string _username, string _passwordHash)
