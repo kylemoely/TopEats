@@ -15,7 +15,7 @@ namespace TopEats.Services
             _userFavRestaurantRepository = userFavRestaurantRepository;
         }
 
-        public async Task<IEnumerable<UserFavRestaurant>> GetUserTopRestaurants(int userId)
+        public async Task<IEnumerable<UserFavRestaurant>> GetUserTopRestaurants(Guid userId)
         {
             return await _userFavRestaurantRepository.GetUserTopRestaurants(userId);
         }

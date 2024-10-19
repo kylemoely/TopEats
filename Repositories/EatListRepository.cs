@@ -20,7 +20,7 @@ namespace TopEats.Repositories
             _userService = userService;
         }
 
-        public async Task<EatList> GetEatListById(int eatListId)
+        public async Task<EatList> GetEatListById(Guid eatListId)
         {
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
@@ -35,10 +35,10 @@ namespace TopEats.Repositories
                     {
                         EatList eatList = new EatList
                         (
-                            (int)reader["eatListId"],
+                            Guid.Parse(reader["eatListId"].ToString()),
                             reader["eatListName"].ToString(),
                             (bool)reader["private_setting"],
-                            (int)reader["userId"]
+                            Guid.Parse(reader["userId"].ToString())
                         );
                         await eatList.AssignUser(_userService);
                         return eatList;
@@ -64,10 +64,10 @@ namespace TopEats.Repositories
                     {
                         EatList eatList = new EatList
                         (
-                            (int)reader["eatListId"],
+                            Guid.Parse(reader["eatListId"].ToString()),
                             reader["eatListName"].ToString(),
                             (bool)reader["private_setting"],
-                            (int)reader["userId"]
+                            Guid.Parse(reader["userId"].ToString())
                         );
                         await eatList.AssignUser(_userService);
                         eatLists.Add(eatList);
@@ -83,9 +83,9 @@ namespace TopEats.Repositories
             {
                 string query = "INSERT INTO EatLists (eatListName, private_setting, userId) VALUES (@eatListName, @private_setting, @userId)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@eatListName", eatList.eatListName);
-                command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
-                command.Parameters.AddWithValue("@userId", eatList.userId);
+                command.Parameters.AddWithValue("@eatListName", eatList.EatListName);
+                command.Parameters.AddWithValue("@private_setting", eatList.Private_setting);
+                command.Parameters.AddWithValue("@userId", eatList.UserId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -98,16 +98,16 @@ namespace TopEats.Repositories
             {
                 string query = "UPDATE EatLists SET eatListName = @eatListName, private_setting = @private_setting WHERE eatListId = @eatListId";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@eatListName", eatList.eatListName);
-                command.Parameters.AddWithValue("@private_setting", eatList.private_setting);
-                command.Parameters.AddWithValue("@eatListId", eatList.eatListId);
+                command.Parameters.AddWithValue("@eatListName", eatList.EatListName);
+                command.Parameters.AddWithValue("@private_setting", eatList.Private_setting);
+                command.Parameters.AddWithValue("@eatListId", eatList.EatListId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
             }
         }
 
-        public async Task DeleteEatList(int eatListId)
+        public async Task DeleteEatList(Guid eatListId)
         {
             using (MySqlConnection connection = new MySqlConnection(_connectionString)){
                 string query = "DELETE FROM EatLists WHERE eatListId = @eatListId";
@@ -119,7 +119,7 @@ namespace TopEats.Repositories
             }
         }
 
-        public async Task<IEnumerable<EatList>> GetUserEatLists(int userId)
+        public async Task<IEnumerable<EatList>> GetUserEatLists(Guid userId)
         {
             List<EatList> eatLists = new List<EatList>();
 
@@ -136,10 +136,10 @@ namespace TopEats.Repositories
                     {
                         EatList eatList = new EatList
                         (
-                            (int)reader["eatListId"],
+                            Guid.Parse(reader["eatListId"].ToString()),
                             reader["eatListName"].ToString(),
                             (bool)reader["private_setting"],
-                            (int)reader["userId"]  
+                            Guid.Parse(reader["userId"].ToString())
                         );
                         await eatList.AssignUser(_userService);
                         eatLists.Add(eatList);

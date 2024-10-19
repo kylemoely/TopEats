@@ -7,7 +7,7 @@ namespace TopEats.Repositories
 {
     public interface ICommentLikeRepository
     {
-        Task<IEnumerable<CommentLike>> GetCommentLikes(int commentId);
+        Task<IEnumerable<CommentLike>> GetCommentLikes(Guid commentId);
         Task CreateCommentLike(CommentLike commentLike);
         Task DeleteCommentLike(CommentLike commentLike);
     }

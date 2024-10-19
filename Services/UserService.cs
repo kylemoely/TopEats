@@ -15,7 +15,7 @@ namespace TopEats.Services
             _userRepository = userRepository;
         }
 
-        public async Task<User> GetUserById(int userId)
+        public async Task<User> GetUserById(Guid userId)
         {
             return await _userRepository.GetUserById(userId);
         }
@@ -35,7 +35,7 @@ namespace TopEats.Services
             await _userRepository.UpdatePassword(user);
         }
 
-        public async Task DeleteUser(int userId)
+        public async Task DeleteUser(Guid userId)
         {
             await _userRepository.DeleteUser(userId);
         }

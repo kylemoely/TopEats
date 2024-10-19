@@ -6,22 +6,22 @@ namespace TopEats.Models
 {
     public class EatListRestaurant
     {
-        public int eatListId { get; set; } // FOREIGN KEY REFERENCES EATLISTS
-        public int restaurantId { get; set; } // FOREIGN KEY REFERENCES RESTAURANTS
+        public Guid EatListId { get; set; } // FOREIGN KEY REFERENCES EATLISTS
+        public Guid RestaurantId { get; set; } // FOREIGN KEY REFERENCES RESTAURANTS
 
         public EatList AssignedEatList { get; set; }
         public Restaurant AssignedRestaurant { get; set; }
 
-        public EatListRestaurant(int _eatListId, int _restaurantId)
+        public EatListRestaurant(Guid eatListId, Guid restaurantId)
         {
-            eatListId = _eatListId;
-            restaurantId = _restaurantId;
+            EatListId = eatListId;
+            RestaurantId = restaurantId;
         }
 
         public async Task AssignEatListAndRestaurant(IEatListService eatListService, IRestaurantService restaurantService)
         {
-            AssignedEatList = await eatListService.GetEatListById(eatListId);
-            AssignedRestaurant = await restaurantService.GetRestaurantById(restaurantId);
+            AssignedEatList = await eatListService.GetEatListById(EatListId);
+            AssignedRestaurant = await restaurantService.GetRestaurantById(RestaurantId);
         }
     }
 }

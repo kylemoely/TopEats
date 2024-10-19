@@ -15,7 +15,7 @@ namespace TopEats.Services
             _reviewRepository = reviewRepository;
         }
 
-        public async Task<Review> GetReviewById(int reviewId)
+        public async Task<Review> GetReviewById(Guid reviewId)
         {
             return await _reviewRepository.GetReviewById(reviewId);
         }
@@ -35,22 +35,22 @@ namespace TopEats.Services
             await _reviewRepository.UpdateReview(review);
         }
 
-        public async Task DeleteReview(int reviewId)
+        public async Task DeleteReview(Guid reviewId)
         {
             await _reviewRepository.DeleteReview(reviewId);
         }
 
-        public async Task<IEnumerable<Review>> GetUserReviews(int userId)
+        public async Task<IEnumerable<Review>> GetUserReviews(Guid userId)
         {
             return await _reviewRepository.GetUserReviews(userId);
         }
 
-        public async Task<IEnumerable<Review>> GetRestaurantReviews(int restaurantId)
+        public async Task<IEnumerable<Review>> GetRestaurantReviews(Guid restaurantId)
         {
             return await _reviewRepository.GetUserReviews(restaurantId);
         }
 
-        public async Task<IEnumerable<Review>> GetFolloweeReviews(int userId)
+        public async Task<IEnumerable<Review>> GetFolloweeReviews(Guid userId)
         {
             return await _reviewRepository.GetFolloweeReviews(userId);
         }

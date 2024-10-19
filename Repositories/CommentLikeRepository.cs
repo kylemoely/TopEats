@@ -22,7 +22,7 @@ namespace TopEats.Repositories
             _commentService = commentService;
         }
 
-        public async Task<IEnumerable<CommentLike>> GetCommentLikes(int commentId)
+        public async Task<IEnumerable<CommentLike>> GetCommentLikes(Guid commentId)
         {
             List<CommentLike> commentLikes = new List<CommentLike>();
 
@@ -39,8 +39,8 @@ namespace TopEats.Repositories
                     {
                         CommentLike commentLike = new CommentLike
                         (
-                            (int)reader["commentId"],
-                            (int)reader["userId"]
+                            Guid.Parse(reader["commentId"].ToString()),
+                            Guid.Parse(reader["userId"].ToString())
                         );
                         await commentLike.AssignCommentAndUser(_commentService, _userService);
                         commentLikes.Add(commentLike);
@@ -56,8 +56,8 @@ namespace TopEats.Repositories
             {
                 string query = "INSERT INTO CommentLikes (commentId, userId) VALUES (@commentId, @userId)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@commentId", commentLike.commentId);
-                command.Parameters.AddWithValue("@userId", commentLike.userId);
+                command.Parameters.AddWithValue("@commentId", commentLike.CommentId);
+                command.Parameters.AddWithValue("@userId", commentLike.UserId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -70,8 +70,8 @@ namespace TopEats.Repositories
             {
                 string query = "DELETE FROM CommentLikes WHERE commentId = @commentId AND userId = @userId";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@commentId", commentLike.commentId);
-                command.Parameters.AddWithValue("@userId", commentLike.userId);
+                command.Parameters.AddWithValue("@commentId", commentLike.CommentId);
+                command.Parameters.AddWithValue("@userId", commentLike.UserId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();

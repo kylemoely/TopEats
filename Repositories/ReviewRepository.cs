@@ -22,7 +22,7 @@ namespace TopEats.Repositories
             _restaurantService = restaurantService;
         }
 
-        public async Task<Review> GetReviewById(int reviewId)
+        public async Task<Review> GetReviewById(Guid reviewId)
         {
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
@@ -37,11 +37,11 @@ namespace TopEats.Repositories
                     {
                         Review review = new Review
                         (
-                            (int)reader["reviewId"],
+                            Guid.Parse(reader["reviewId"].ToString()),
                             (int)reader["rating"],
                             reader["reviewText"].ToString(),
-                            (int)reader["restaurantId"],
-                            (int)reader["userId"]
+                            Guid.Parse(reader["restaurantId"].ToString()),
+                            Guid.Parse(reader["userId"].ToString())
                         );
                         await review.AssignUserAndRestaurant(_userService, _restaurantService);
                         return review;
@@ -67,11 +67,11 @@ namespace TopEats.Repositories
                     {
                         Review review = new Review
                         (
-                            (int)reader["reviewId"],
+                            Guid.Parse(reader["reviewId"].ToString()),
                             (int)reader["rating"],
                             reader["reviewText"].ToString(),
-                            (int)reader["restaurantId"],
-                            (int)reader["userId"]
+                            Guid.Parse(reader["restaurantId"].ToString()),
+                            Guid.Parse(reader["userId"].ToString())
                         );
                         await review.AssignUserAndRestaurant(_userService, _restaurantService);
                         reviews.Add(review);
@@ -87,10 +87,10 @@ namespace TopEats.Repositories
             {
                 string query = "INSERT INTO Reviews (rating, reviewText, restaurantId, userId) VALUES (@rating, @reviewText, @restaurantId, @userId)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@rating", review.rating);
-                command.Parameters.AddWithValue("@reviewText", review.reviewText);
-                command.Parameters.AddWithValue("@restaurantId", review.restaurantId);
-                command.Parameters.AddWithValue("@userId", review.userId);
+                command.Parameters.AddWithValue("@rating", review.Rating);
+                command.Parameters.AddWithValue("@reviewText", review.ReviewText);
+                command.Parameters.AddWithValue("@restaurantId", review.RestaurantId);
+                command.Parameters.AddWithValue("@userId", review.UserId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -103,16 +103,16 @@ namespace TopEats.Repositories
             {
                 string query = "UPDATE Reviews SET rating = @rating, reviewText = @reviewText WHERE reviewId = @reviewId";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@rating", review.rating);
-                command.Parameters.AddWithValue("@reviewText", review.reviewText);
-                command.Parameters.AddWithValue("@reviewId", review.reviewId);
+                command.Parameters.AddWithValue("@rating", review.Rating);
+                command.Parameters.AddWithValue("@reviewText", review.ReviewText);
+                command.Parameters.AddWithValue("@reviewId", review.ReviewId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
             }
         }
 
-        public async Task DeleteReview(int reviewId)
+        public async Task DeleteReview(Guid reviewId)
         {
             using (MySqlConnection connection = new MySqlConnection(_connectionString)){
                 string query = "DELETE FROM Reviews WHERE reviewId = @reviewId";
@@ -124,7 +124,7 @@ namespace TopEats.Repositories
             }
         }
 
-        public async Task<IEnumerable<Review>> GetUserReviews(int userId)
+        public async Task<IEnumerable<Review>> GetUserReviews(Guid userId)
         {
             List<Review> reviews = new List<Review>();
 
@@ -141,11 +141,11 @@ namespace TopEats.Repositories
                     {
                         Review review = new Review
                         (
-                            (int)reader["reviewId"],
+                            Guid.Parse(reader["reviewId"].ToString()),
                             (int)reader["rating"],
                             reader["reviewText"].ToString(),
-                            (int)reader["restaurantId"],
-                            (int)reader["userId"]
+                            Guid.Parse(reader["restaurantId"].ToString()),
+                            Guid.Parse(reader["userId"].ToString())
                         );
                         await review.AssignUserAndRestaurant(_userService, _restaurantService);
                         reviews.Add(review);
@@ -155,7 +155,7 @@ namespace TopEats.Repositories
             return reviews;
         }
 
-        public async Task<IEnumerable<Review>> GetRestaurantReviews(int restaurantId)
+        public async Task<IEnumerable<Review>> GetRestaurantReviews(Guid restaurantId)
         {
             List<Review> reviews = new List<Review>();
 
@@ -172,11 +172,11 @@ namespace TopEats.Repositories
                     {
                         Review review = new Review
                         (
-                            (int)reader["reviewId"],
+                            Guid.Parse(reader["reviewId"].ToString()),
                             (int)reader["rating"],
                             reader["reviewText"].ToString(),
-                            (int)reader["restaurantId"],
-                            (int)reader["userId"]
+                            Guid.Parse(reader["restaurantId"].ToString()),
+                            Guid.Parse(reader["userId"].ToString())
                         );
                         await review.AssignUserAndRestaurant(_userService, _restaurantService);
                         reviews.Add(review);
@@ -186,7 +186,7 @@ namespace TopEats.Repositories
             return reviews;
         }
 
-        public async Task<IEnumerable<Review>> GetFolloweeReviews(int userId)
+        public async Task<IEnumerable<Review>> GetFolloweeReviews(Guid userId)
         {
             List<Review> reviews = new List<Review>();
 
@@ -203,11 +203,11 @@ namespace TopEats.Repositories
                     {
                         Review review = new Review
                         (
-                            (int)reader["reviewId"],
+                            Guid.Parse(reader["reviewId"].ToString()),
                             (int)reader["rating"],
                             reader["reviewText"].ToString(),
-                            (int)reader["restaurantId"],
-                            (int)reader["userId"]
+                            Guid.Parse(reader["restaurantId"].ToString()),
+                            Guid.Parse(reader["userId"].ToString())
                         );
                         await review.AssignUserAndRestaurant(_userService, _restaurantService);
                         reviews.Add(review);

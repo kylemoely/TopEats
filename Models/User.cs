@@ -6,22 +6,22 @@ namespace TopEats.Models
 {
     public class User
     {
-        public int? userId { get; set; } // PRIMARY KEY
-        public string username { get; set; }
+        public Guid? UserId { get; set; } // PRIMARY KEY
+        public string Username { get; set; }
         [JsonIgnore]
-        public string passwordHash { get; set; }
+        public string PasswordHash { get; set; }
         
-        public User(int _userId, string _username, string _passwordHash)
+        public User(Guid userId, string username, string passwordHash)
         {
-            userId = _userId;
-            username = _username;
-            passwordHash = _passwordHash;
+            UserId = userId;
+            Username = username;
+            PasswordHash = passwordHash;
         }
 
-        public User(string _username, string _passwordHash)
+        public User(string username, string passwordHash)
         {
-            username = _username;
-            passwordHash = _passwordHash;
+            Username = username;
+            PasswordHash = passwordHash;
         }
     }
 }

@@ -7,22 +7,22 @@ namespace TopEats.Models
 
     public class CommentLike
     {
-        public int commentId { get; set; } // FOREIGN KEY REFERENCES COMMENTS
-        public int userId { get; set; } // FOREIGN KEY REFERENCES USERS
+        public Guid CommentId { get; set; } // FOREIGN KEY REFERENCES COMMENTS
+        public Guid UserId { get; set; } // FOREIGN KEY REFERENCES USERS
 
         public Comment AssignedComment { get; set; } 
         public User AssignedUser { get; set; }
 
-        public CommentLike(int _commentId, int _userId)
+        public CommentLike(Guid commentId, Guid userId)
         {
-            commentId = _commentId;
-            userId = _userId;
+            CommentId = commentId;
+            UserId = userId;
         }
 
         public async Task AssignCommentAndUser(ICommentService commentService, IUserService userService)
         {
-            AssignedComment = await commentService.GetCommentById(commentId);
-            AssignedUser = await userService.GetUserById(userId);
+            AssignedComment = await commentService.GetCommentById(CommentId);
+            AssignedUser = await userService.GetUserById(UserId);
         }
     }
 

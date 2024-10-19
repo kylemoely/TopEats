@@ -15,7 +15,7 @@ namespace TopEats.Services
             _restaurantRepository = restaurantRepository;
         }
 
-        public async Task<Restaurant> GetRestaurantById(int restaurantId)
+        public async Task<Restaurant> GetRestaurantById(Guid restaurantId)
         {
             return await _restaurantRepository.GetRestaurantById(restaurantId);
         }
@@ -35,7 +35,7 @@ namespace TopEats.Services
             await _restaurantRepository.UpdateRestaurant(restaurant);
         }
 
-        public async Task DeleteRestaurant(int restaurantId)
+        public async Task DeleteRestaurant(Guid restaurantId)
         {
             await _restaurantRepository.DeleteRestaurant(restaurantId);
         }

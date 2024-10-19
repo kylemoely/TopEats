@@ -7,8 +7,8 @@ namespace TopEats.Services
 {
     public interface IFollowService
     {
-        Task<IEnumerable<Follow>> GetUserFollowers(int userId);
-        Task<IEnumerable<Follow>> GetUserFollowees(int userId);
+        Task<IEnumerable<Follow>> GetUserFollowers(Guid userId);
+        Task<IEnumerable<Follow>> GetUserFollowees(Guid userId);
         Task CreateFollow(Follow follow);
         Task DeleteFollow(Follow follow);
     }

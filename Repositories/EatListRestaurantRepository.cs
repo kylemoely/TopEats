@@ -22,7 +22,7 @@ namespace TopEats.Repositories
             _restaurantService = restaurantService;
         }
 
-        public async Task<IEnumerable<EatListRestaurant>> GetEatListRestaurants(int eatListId)
+        public async Task<IEnumerable<EatListRestaurant>> GetEatListRestaurants(Guid eatListId)
         {
             List<EatListRestaurant> eatListRestaurants = new List<EatListRestaurant>();
 
@@ -38,8 +38,8 @@ namespace TopEats.Repositories
                     while (await reader.ReadAsync())
                     {
                         EatListRestaurant eatListRestaurant = new EatListRestaurant(
-                            (int)reader["eatListId"],
-                            (int)reader["restaurantId"]
+                            Guid.Parse(reader["eatListId"].ToString()),
+                            Guid.Parse(reader["restaurantId"].ToString())
                         );
                         await eatListRestaurant.AssignEatListAndRestaurant(_eatListService, _restaurantService);
                         eatListRestaurants.Add(eatListRestaurant);
@@ -56,8 +56,8 @@ namespace TopEats.Repositories
             {
                 string query = "INSERT INTO EatListRestaurants (eatListId, restaurantId) VALUES (@eatListId, @restaurantId)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@eatListId", eatListRestaurant.eatListId);
-                command.Parameters.AddWithValue("@restaurantId", eatListRestaurant.restaurantId);
+                command.Parameters.AddWithValue("@eatListId", eatListRestaurant.EatListId);
+                command.Parameters.AddWithValue("@restaurantId", eatListRestaurant.RestaurantId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -70,8 +70,8 @@ namespace TopEats.Repositories
             {
                 string query = "DELETE FROM EatListRestaurants WHERE eatListId = @eatListId AND restaurantId = @restaurantId";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@eatListId", eatListRestaurant.eatListId);
-                command.Parameters.AddWithValue("@restaurantId", eatListRestaurant.restaurantId);
+                command.Parameters.AddWithValue("@eatListId", eatListRestaurant.EatListId);
+                command.Parameters.AddWithValue("@restaurantId", eatListRestaurant.RestaurantId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();

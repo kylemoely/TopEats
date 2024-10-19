@@ -6,24 +6,24 @@ namespace TopEats.Models
 {
     public class UserFavRestaurant
     {
-        public int userId { get; set; } // FOREIGN KEY REFERENCES USER
-        public int restaurantId { get; set; } // FOREIGN KEY REFERENCES RESTAURANTS
-        public int restaurantRank { get; set; }
+        public Guid UserId { get; set; } // FOREIGN KEY REFERENCES USER
+        public Guid RestaurantId { get; set; } // FOREIGN KEY REFERENCES RESTAURANTS
+        public int RestaurantRank { get; set; }
 
         public User AssignedUser { get; set; }
         public Restaurant AssignedRestaurant { get; set; }
 
-        public UserFavRestaurant(int _userId, int _restaurantId, int _restaurantRank)
+        public UserFavRestaurant(Guid userId, Guid restaurantId, int restaurantRank)
         {
-            userId = _userId;
-            restaurantId = _restaurantId;
-            restaurantRank = _restaurantRank;
+            UserId = userId;
+            RestaurantId = restaurantId;
+            RestaurantRank = restaurantRank;
         }
         
         public async Task AssignUserAndRestaurant(IUserService userService, IRestaurantService restaurantService)
         {
-            AssignedUser = await userService.GetUserById(userId);
-            AssignedRestaurant = await restaurantService.GetRestaurantById(restaurantId);
+            AssignedUser = await userService.GetUserById(UserId);
+            AssignedRestaurant = await restaurantService.GetRestaurantById(RestaurantId);
         }
     }
 }

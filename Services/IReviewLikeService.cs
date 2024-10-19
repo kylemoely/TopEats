@@ -7,7 +7,7 @@ namespace TopEats.Services
 {
     public interface IReviewLikeService
     {
-        Task<IEnumerable<ReviewLike>> GetReviewLikes(int reviewId);
+        Task<IEnumerable<ReviewLike>> GetReviewLikes(Guid reviewId);
         Task CreateReviewLike(ReviewLike reviewLike);
         Task DeleteReviewLike(ReviewLike reviewLike);
     }

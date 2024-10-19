@@ -4,24 +4,24 @@ namespace TopEats.Models
 {
     public class Restaurant
     {
-        public int? restaurantId { get; set; } //  PRIMARY KEY
-        public string restaurantName { get; set; }
-        public string cuisine { get; set; }
-        public int priceCategory { get; set; }
+        public Guid? RestaurantId { get; set; } //  PRIMARY KEY
+        public string RestaurantName { get; set; }
+        public string Cuisine { get; set; }
+        public int PriceCategory { get; set; }
 
-        public Restaurant(int _restaurantId, string _restaurantName, string _cuisine, int _priceCategory)
+        public Restaurant(Guid restaurantId, string restaurantName, string cuisine, int priceCategory)
         {
-            restaurantId = _restaurantId;
-            restaurantName = _restaurantName;
-            cuisine = _cuisine;
-            priceCategory = _priceCategory;
+            RestaurantId = restaurantId;
+            RestaurantName = restaurantName;
+            Cuisine = cuisine;
+            PriceCategory = priceCategory;
         }
 
-        public Restaurant(string _restaurantName, string _cuisine, int _priceCategory)
+        public Restaurant(string restaurantName, string cuisine, int priceCategory)
         {
-            restaurantName = _restaurantName;
-            cuisine = _cuisine;
-            priceCategory = _priceCategory;
+            RestaurantName = restaurantName;
+            Cuisine = cuisine;
+            PriceCategory = priceCategory;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace TopEats.Repositories
             _restaurantService = restaurantService;
         }
 
-        public async Task<IEnumerable<UserFavRestaurant>> GetUserTopRestaurants(int userId)
+        public async Task<IEnumerable<UserFavRestaurant>> GetUserTopRestaurants(Guid userId)
         {
             List<UserFavRestaurant> restaurants = new List<UserFavRestaurant>();
 
@@ -38,8 +38,8 @@ namespace TopEats.Repositories
                     while (await reader.ReadAsync())
                     {
                         UserFavRestaurant restaurant = new UserFavRestaurant(
-                            (int)reader["userId"],
-                            (int)reader["restaurantId"],
+                            Guid.Parse(reader["userId"].ToString()),
+                            Guid.Parse(reader["restaurantId"].ToString()),
                             (int)reader["restaurantRank"]
                         );
                         await restaurant.AssignUserAndRestaurant(_userService, _restaurantService);
@@ -57,9 +57,9 @@ namespace TopEats.Repositories
             {
                 string query = "INSERT INTO UserFavRestaurants (userId, restaurantId, restaurantRank) VALUES (@userId, @restaurantId, @restaurantRank)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@userId", userFavRestaurant.userId);
-                command.Parameters.AddWithValue("@restaurantId", userFavRestaurant.restaurantId);
-                command.Parameters.AddWithValue("@restaurantRank", userFavRestaurant.restaurantRank);
+                command.Parameters.AddWithValue("@userId", userFavRestaurant.UserId);
+                command.Parameters.AddWithValue("@restaurantId", userFavRestaurant.RestaurantId);
+                command.Parameters.AddWithValue("@restaurantRank", userFavRestaurant.RestaurantRank);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -72,9 +72,9 @@ namespace TopEats.Repositories
             {
                 string query = "UPDATE UserFavRestaurants SET restaurantId = @restaurantId WHERE userId = @userId AND restaurantRank = @restaurantRank";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@restaurantId", userFavRestaurant.restaurantId);
-                command.Parameters.AddWithValue("@userId", userFavRestaurant.userId);
-                command.Parameters.AddWithValue("@restaurantRank", userFavRestaurant.restaurantRank);
+                command.Parameters.AddWithValue("@restaurantId", userFavRestaurant.RestaurantId);
+                command.Parameters.AddWithValue("@userId", userFavRestaurant.UserId);
+                command.Parameters.AddWithValue("@restaurantRank", userFavRestaurant.RestaurantRank);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -87,8 +87,8 @@ namespace TopEats.Repositories
             {
                 string query = "DELETE FROM UserFavRestaurants WHERE userId = @userId AND restaurantRank = @restaurantRank";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@userId", userFavRestaurant.userId);
-                command.Parameters.AddWithValue("@restaurantRank", userFavRestaurant.restaurantRank);
+                command.Parameters.AddWithValue("@userId", userFavRestaurant.UserId);
+                command.Parameters.AddWithValue("@restaurantRank", userFavRestaurant.RestaurantRank);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();

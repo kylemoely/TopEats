@@ -7,11 +7,11 @@ namespace TopEats.Repositories
 {
     public interface ICommentRepository
     {
-        Task<Comment> GetCommentById(int commentId);
+        Task<Comment> GetCommentById(Guid commentId);
         Task<IEnumerable<Comment>> GetAllComments();
         Task CreateComment(Comment comment);
         Task UpdateComment(Comment comment);
-        Task DeleteComment(int commentId);
-        Task<IEnumerable<Comment>> GetReviewComments(int reviewId);
+        Task DeleteComment(Guid commentId);
+        Task<IEnumerable<Comment>> GetReviewComments(Guid reviewId);
     }
 }

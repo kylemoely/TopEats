@@ -17,7 +17,7 @@ namespace TopEats.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<Restaurant> GetRestaurantById(int restaurantId)
+        public async Task<Restaurant> GetRestaurantById(Guid restaurantId)
         {
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
@@ -32,7 +32,7 @@ namespace TopEats.Repositories
                     {
                         return new Restaurant
                         (
-                            (int)reader["restaurantId"],
+                            Guid.Parse(reader["restaurantId"].ToString()),
                             reader["restaurantName"].ToString(),
                             reader["cuisine"].ToString(),
                             (int)reader["priceCategory"]
@@ -59,7 +59,7 @@ namespace TopEats.Repositories
                     {
                         restaurants.Add(new Restaurant
                         (
-                            (int)reader["restaurantId"],
+                            Guid.Parse(reader["restaurantId"].ToString()),
                             reader["restaurantName"].ToString(),
                             reader["cuisine"].ToString(),
                             (int)reader["priceCategory"]
@@ -76,9 +76,9 @@ namespace TopEats.Repositories
             {
                 string query = "INSERT INTO Restaurants (restaurantName, cuisine, priceCategory) VALUES (@restaurantName, @cuisine, @priceCategory)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@restaurantName", restaurant.restaurantName);
-                command.Parameters.AddWithValue("@cuisine", restaurant.cuisine);
-                command.Parameters.AddWithValue("@priceCategory", restaurant.priceCategory);
+                command.Parameters.AddWithValue("@restaurantName", restaurant.RestaurantName);
+                command.Parameters.AddWithValue("@cuisine", restaurant.Cuisine);
+                command.Parameters.AddWithValue("@priceCategory", restaurant.PriceCategory);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -91,17 +91,17 @@ namespace TopEats.Repositories
             {
                 string query = "UPDATE Restaurants SET restaurantName = @restaurantName, cuisine = @cuisine, priceCategory = @priceCategory WHERE restaurantId = @restaurantId";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@restaurantName", restaurant.restaurantName);
-                command.Parameters.AddWithValue("@cuisine", restaurant.cuisine);
-                command.Parameters.AddWithValue("@priceCategory", restaurant.priceCategory);
-                command.Parameters.AddWithValue("@restaurantId", restaurant.restaurantId);
+                command.Parameters.AddWithValue("@restaurantName", restaurant.RestaurantName);
+                command.Parameters.AddWithValue("@cuisine", restaurant.Cuisine);
+                command.Parameters.AddWithValue("@priceCategory", restaurant.PriceCategory);
+                command.Parameters.AddWithValue("@restaurantId", restaurant.RestaurantId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
             }
         }
 
-        public async Task DeleteRestaurant(int restaurantId)
+        public async Task DeleteRestaurant(Guid restaurantId)
         {
             using (MySqlConnection connection = new MySqlConnection(_connectionString)){
                 string query = "DELETE FROM Restaurants WHERE restaurantId = @restaurantId";

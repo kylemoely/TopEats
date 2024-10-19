@@ -22,7 +22,7 @@ namespace TopEats.Repositories
             _reviewService = reviewService;
         }
 
-        public async Task<Comment> GetCommentById(int commentId)
+        public async Task<Comment> GetCommentById(Guid commentId)
         {
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
@@ -107,7 +107,7 @@ namespace TopEats.Repositories
             }
         }
 
-        public async Task DeleteComment(int commentId)
+        public async Task DeleteComment(Guid commentId)
         {
             using (MySqlConnection connection = new MySqlConnection(_connectionString)){
                 string query = "DELETE FROM Comments WHERE commentId = @commentId";
@@ -119,7 +119,7 @@ namespace TopEats.Repositories
             }
         }
 
-        public async Task<IEnumerable<Comment>> GetReviewComments(int reviewId)
+        public async Task<IEnumerable<Comment>> GetReviewComments(Guid reviewId)
         {
             List<Comment> comments = new List<Comment>();
 

@@ -6,37 +6,37 @@ namespace TopEats.Models
 {
     public class Review
     {
-        public int? reviewId { get; set; } // PRIMARY KEY
-        public int rating { get; set; }
-        public string reviewText { get; set; }
+        public Guid? ReviewId { get; set; } // PRIMARY KEY
+        public int Rating { get; set; }
+        public string ReviewText { get; set; }
 
-        public int restaurantId { get; set; } // FOREIGN KEY REFERENCES Restaurants
-        public int userId { get; set; } // FOREIGN KEY REFERENCES Users
+        public Guid RestaurantId { get; set; } // FOREIGN KEY REFERENCES Restaurants
+        public Guid UserId { get; set; } // FOREIGN KEY REFERENCES Users
         
         public User AssignedUser { get; set; }
         public Restaurant AssignedRestaurant { get; set; }
 
-        public Review(int _reviewId, int _rating, string _reviewText, int _restaurantId, int _userId)
+        public Review(Guid reviewId, int rating, string reviewText, Guid restaurantId, Guid userId)
         {
-            reviewId = _reviewId;
-            rating = _rating;
-            reviewText = _reviewText;
-            restaurantId = _restaurantId;
-            userId = _userId;
+            ReviewId = reviewId;
+            Rating = rating;
+            ReviewText = reviewText;
+            RestaurantId = restaurantId;
+            UserId = userId;
         }
 
-        public Review(int _rating, string _reviewText, int _restaurantId, int _userId)
+        public Review(int rating, string reviewText, Guid restaurantId, Guid userId)
         {
-            rating = _rating;
-            reviewText = _reviewText;
-            restaurantId = _restaurantId;
-            userId = _userId;
+            Rating = rating;
+            ReviewText = reviewText;
+            RestaurantId = restaurantId;
+            UserId = userId;
         }
 
         public async Task AssignUserAndRestaurant(IUserService userService, IRestaurantService restaurantService)
         {
-            AssignedUser = await userService.GetUserById(userId);
-            AssignedRestaurant = await restaurantService.GetRestaurantById(restaurantId);
+            AssignedUser = await userService.GetUserById(UserId);
+            AssignedRestaurant = await restaurantService.GetRestaurantById(RestaurantId);
         }
     }
 }

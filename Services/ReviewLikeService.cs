@@ -15,7 +15,7 @@ namespace TopEats.Services
             _reviewLikeRepository = reviewLikeRepository;
         }
 
-        public async Task<IEnumerable<ReviewLike>> GetReviewLikes(int reviewId)
+        public async Task<IEnumerable<ReviewLike>> GetReviewLikes(Guid reviewId)
         {
             return await _reviewLikeRepository.GetReviewLikes(reviewId);
         }

@@ -7,13 +7,13 @@ namespace TopEats.Repositories
 {
     public interface IReviewRepository
     {
-        Task<Review> GetReviewById(int reviewId);
+        Task<Review> GetReviewById(Guid reviewId);
         Task<IEnumerable<Review>> GetAllReviews();
         Task CreateReview(Review review);
         Task UpdateReview(Review review);
-        Task DeleteReview(int reviewId);
-        Task<IEnumerable<Review>> GetUserReviews(int userId);
-        Task<IEnumerable<Review>> GetRestaurantReviews(int restaurantId);
-        Task<IEnumerable<Review>> GetFolloweeReviews(int userId);
+        Task DeleteReview(Guid reviewId);
+        Task<IEnumerable<Review>> GetUserReviews(Guid userId);
+        Task<IEnumerable<Review>> GetRestaurantReviews(Guid restaurantId);
+        Task<IEnumerable<Review>> GetFolloweeReviews(Guid userId);
     }
 }

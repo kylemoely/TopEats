@@ -15,7 +15,7 @@ namespace TopEats.Services
             _eatListRepository = eatListRepository;
         }
 
-        public async Task<EatList> GetEatListById(int eatListId)
+        public async Task<EatList> GetEatListById(Guid eatListId)
         {
             return await _eatListRepository.GetEatListById(eatListId);
         }
@@ -35,12 +35,12 @@ namespace TopEats.Services
             await _eatListRepository.UpdateEatList(eatList);
         }
 
-        public async Task DeleteEatList(int eatListId)
+        public async Task DeleteEatList(Guid eatListId)
         {
             await _eatListRepository.DeleteEatList(eatListId);
         }
 
-        public async Task<IEnumerable<EatList>> GetUserEatLists(int userId)
+        public async Task<IEnumerable<EatList>> GetUserEatLists(Guid userId)
         {
             return await _eatListRepository.GetUserEatLists(userId);
         }

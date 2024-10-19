@@ -15,7 +15,7 @@ namespace TopEats.Services
             _commentLikeRepository = commentLikeRepository;
         }
 
-        public async Task<IEnumerable<CommentLike>> GetCommentLikes(int commentId)
+        public async Task<IEnumerable<CommentLike>> GetCommentLikes(Guid commentId)
         {
             return await _commentLikeRepository.GetCommentLikes(commentId);
         }

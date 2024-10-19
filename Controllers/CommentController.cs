@@ -20,7 +20,7 @@ namespace TopEats.Controllers
 
     // GET: /api/[controller]/commentId
     [HttpGet("{commentId}")]
-    public async Task<ActionResult<Comment>> GetCommentById(int commentId)
+    public async Task<ActionResult<Comment>> GetCommentById(Guid commentId)
     {
       var comment = await _commentService.GetCommentById(commentId);
 

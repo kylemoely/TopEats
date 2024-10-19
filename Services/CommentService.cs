@@ -15,7 +15,7 @@ namespace TopEats.Services
             _commentRepository = commentRepository;
         }
 
-        public async Task<Comment> GetCommentById(int commentId)
+        public async Task<Comment> GetCommentById(Guid commentId)
         {
             return await _commentRepository.GetCommentById(commentId);
         }
@@ -35,12 +35,12 @@ namespace TopEats.Services
             await _commentRepository.UpdateComment(comment);
         }
 
-        public async Task DeleteComment(int commentId)
+        public async Task DeleteComment(Guid commentId)
         {
             await _commentRepository.DeleteComment(commentId);
         }
 
-        public async Task<IEnumerable<Comment>> GetReviewComments(int reviewId)
+        public async Task<IEnumerable<Comment>> GetReviewComments(Guid reviewId)
         {
             return await _commentRepository.GetReviewComments(reviewId);
         }

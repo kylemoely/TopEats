@@ -6,31 +6,31 @@ namespace TopEats.Models
 {
     public class EatList
     {
-        public int? eatListId { get; set; } // PRIMARY KEY
-        public string eatListName { get; set; }
-        public bool private_setting { get; set; }
-        public int userId { get; set; } // FOREIGN KEY REFERENCES USERS
+        public Guid? EatListId { get; set; } // PRIMARY KEY
+        public string EatListName { get; set; }
+        public bool Private_setting { get; set; }
+        public Guid UserId { get; set; } // FOREIGN KEY REFERENCES USERS
 
         public User AssignedUser { get; set; }
 
-        public EatList(int _eatListId, string _eatListName, bool _private_setting, int _userId)
+        public EatList(Guid eatListId, string eatListName, bool private_setting, Guid userId)
         {
-            eatListId = _eatListId;
-            eatListName = _eatListName;
-            private_setting = _private_setting;
-            userId = _userId;
+            EatListId = eatListId;
+            EatListName = eatListName;
+            Private_setting = private_setting;
+            UserId = userId;
         }
 
-        public EatList(string _eatListName, bool _private_setting, int _userId)
+        public EatList(string eatListName, bool private_setting, Guid userId)
         {
-            eatListName = _eatListName;
-            private_setting = _private_setting;
-            userId = _userId;
+            EatListName = eatListName;
+            Private_setting = private_setting;
+            UserId = userId;
         }
 
         public async Task AssignUser(IUserService userService)
         {
-            AssignedUser = await userService.GetUserById(userId);
+            AssignedUser = await userService.GetUserById(UserId);
         }
     }
 

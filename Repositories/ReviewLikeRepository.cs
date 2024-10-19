@@ -22,7 +22,7 @@ namespace TopEats.Repositories
             _reviewService = reviewService;
         }
 
-        public async Task<IEnumerable<ReviewLike>> GetReviewLikes(int reviewId)
+        public async Task<IEnumerable<ReviewLike>> GetReviewLikes(Guid reviewId)
         {
             List<ReviewLike> reviewLikes = new List<ReviewLike>();
 
@@ -39,8 +39,8 @@ namespace TopEats.Repositories
                     {
                         ReviewLike reviewLike = new ReviewLike
                         (
-                            (int)reader["reviewId"],
-                            (int)reader["userId"]
+                            Guid.Parse(reader["reviewId"].ToString()),
+                            Guid.Parse(reader["userId"].ToString())
                         );
                         await reviewLike.AssignUserAndReview(_userService, _reviewService);
                         reviewLikes.Add(reviewLike);
@@ -56,8 +56,8 @@ namespace TopEats.Repositories
             {
                 string query = "INSERT INTO ReviewLikes (reviewId, userId) VALUES (@reviewId, @userId)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@reviewId", reviewLike.reviewId);
-                command.Parameters.AddWithValue("@userId", reviewLike.userId);
+                command.Parameters.AddWithValue("@reviewId", reviewLike.ReviewId);
+                command.Parameters.AddWithValue("@userId", reviewLike.UserId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -70,8 +70,8 @@ namespace TopEats.Repositories
             {
                 string query = "DELETE FROM ReviewLikes WHERE reviewId = @reviewId AND userId = @userId";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@reviewId", reviewLike.reviewId);
-                command.Parameters.AddWithValue("@userId", reviewLike.userId);
+                command.Parameters.AddWithValue("@reviewId", reviewLike.ReviewId);
+                command.Parameters.AddWithValue("@userId", reviewLike.UserId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();

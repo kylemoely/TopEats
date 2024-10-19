@@ -17,7 +17,7 @@ namespace TopEats.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<User> GetUserById(int userId)
+        public async Task<User> GetUserById(Guid userId)
         {
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
@@ -32,7 +32,7 @@ namespace TopEats.Repositories
                     {
                         return new User
                         (
-                            (int)reader["userId"],
+                            Guid.Parse(reader["userId"].ToString()),
                             reader["username"].ToString(),
                             reader["passwordHash"].ToString()
                         );
@@ -58,7 +58,7 @@ namespace TopEats.Repositories
                     {
                         users.Add(new User
                         (
-                            (int)reader["userId"],
+                            Guid.Parse(reader["userId"].ToString()),
                             reader["username"].ToString(),
                             reader["passwordHash"].ToString()
                         ));
@@ -74,8 +74,8 @@ namespace TopEats.Repositories
             {
                 string query = "INSERT INTO Users (username, passwordHash) VALUES (@username, @passwordHash)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@username", user.username);
-                command.Parameters.AddWithValue("@passwordHash", user.passwordHash);
+                command.Parameters.AddWithValue("@username", user.Username);
+                command.Parameters.AddWithValue("@passwordHash", user.PasswordHash);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -88,15 +88,15 @@ namespace TopEats.Repositories
             {
                 string query = "UPDATE Users SET passwordHash = @passwordHash WHERE userId = @userId";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@passwordHash", user.passwordHash);
-                command.Parameters.AddWithValue("@userId", user.userId);
+                command.Parameters.AddWithValue("@passwordHash", user.PasswordHash);
+                command.Parameters.AddWithValue("@userId", user.UserId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
             }
         }
 
-        public async Task DeleteUser(int userId)
+        public async Task DeleteUser(Guid userId)
         {
             using (MySqlConnection connection = new MySqlConnection(_connectionString)){
                 string query = "DELETE FROM Users WHERE userId = @userId";

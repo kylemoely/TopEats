@@ -15,7 +15,7 @@ namespace TopEats.Services
             _eatListRestaurantRepository = eatListRestaurantRepository;
         }
 
-        public async Task<IEnumerable<EatListRestaurant>> GetEatListRestaurants(int eatListId)
+        public async Task<IEnumerable<EatListRestaurant>> GetEatListRestaurants(Guid eatListId)
         {
             return await _eatListRestaurantRepository.GetEatListRestaurants(eatListId);
         }

@@ -6,22 +6,22 @@ namespace TopEats.Models
 {
     public class Follow
     {
-        public int followerId { get; set; } // FOREIGN KEY REFERENCES USERS
-        public int followeeId { get; set; } // FOREIGN KEY REFERENCES USERS
+        public Guid FollowerId { get; set; } // FOREIGN KEY REFERENCES USERS
+        public Guid FolloweeId { get; set; } // FOREIGN KEY REFERENCES USERS
         
         public User Follower { get; set; }
         public User Followee { get; set; }
 
-        public Follow(int _followerId, int _followeeId)
+        public Follow(Guid followerId, Guid followeeId)
         {
-            followerId = _followerId;
-            followeeId = _followeeId;
+            FollowerId = followerId;
+            FolloweeId = followeeId;
         }
 
         public async Task AssignFollowerAndFollowee(IUserService userService)
         {
-            Follower = await userService.GetUserById(followerId);
-            Followee = await userService.GetUserById(followeeId);
+            Follower = await userService.GetUserById(FollowerId);
+            Followee = await userService.GetUserById(FolloweeId);
         }
     }
 }

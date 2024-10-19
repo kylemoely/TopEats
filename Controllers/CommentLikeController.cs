@@ -20,7 +20,7 @@ namespace TopEats.Controllers
 
         // GET: api/CommentLike/{commentId}
         [HttpGet("{commentId}")]
-        public async Task<ActionResult<IEnumerable<CommentLike>>> GetCommentLikes(int commentId)
+        public async Task<ActionResult<IEnumerable<CommentLike>>> GetCommentLikes(Guid commentId)
         {
             var commentLikes = await _commentLikeService.GetCommentLikes(commentId);
 
@@ -48,7 +48,7 @@ namespace TopEats.Controllers
             await _commentLikeService.CreateCommentLike(commentLike);
 
             // Return a 201 Created response with the created comment like information
-            return CreatedAtAction(nameof(GetCommentLikes), new { commentId = commentLike.commentId }, commentLike);
+            return CreatedAtAction(nameof(GetCommentLikes), new { commentId = commentLike.CommentId }, commentLike);
         }
 
         // DELETE: api/CommentLike

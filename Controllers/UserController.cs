@@ -27,7 +27,7 @@ namespace TopEats.Controllers
 
         // GET: api/User/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUserById(int id)
+        public async Task<ActionResult<User>> GetUserById(Guid id)
         {
             var user = await _userService.GetUserById(id);
             
@@ -50,14 +50,14 @@ namespace TopEats.Controllers
 
             await _userService.CreateUser(newUser);
 
-            return CreatedAtAction(nameof(GetUserById), new { id = newUser.userId }, newUser);
+            return CreatedAtAction(nameof(GetUserById), new { id = newUser.UserId }, newUser);
         }
 
         // PUT: api/User/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePassword(int id, [FromBody] User updatedUser)
+        public async Task<IActionResult> UpdatePassword(Guid id, [FromBody] User updatedUser)
         {
-            if (id != updatedUser.userId || !ModelState.IsValid)
+            if (id != updatedUser.UserId || !ModelState.IsValid)
             {
                 return BadRequest();
             }
@@ -75,7 +75,7 @@ namespace TopEats.Controllers
 
         // DELETE: api/User/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(Guid id)
         {
             var user = await _userService.GetUserById(id);
             if (user == null)
