@@ -61,7 +61,7 @@ namespace TopEats.Controllers
 
       await _commentService.CreateComment(comment);
 
-      return CreatedAtAction(nameof(GetCommentById), new { commentId = comment.commentId }, comment);
+      return CreatedAtAction(nameof(GetCommentById), new { commentId = comment.CommentId }, comment);
     }
 
     // PUT: /api/[controller]

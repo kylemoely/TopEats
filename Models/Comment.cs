@@ -8,27 +8,25 @@ namespace TopEats.Models
 {
     public class Comment
     {
-        public int CommentId { get; set; } // PRIMARY KEY
-        public int ReviewId { get; set; } // FOREIGN KEY REFERENCES REVIEWS
-        public int UserId { get; set; } // FOREIGN KEY REFERENCES USERS
+        public Guid? CommentId { get; set; } // PRIMARY KEY
+        public Guid ReviewId { get; set; } // FOREIGN KEY REFERENCES REVIEWS
+        public Guid UserId { get; set; } // FOREIGN KEY REFERENCES USERS
         public string CommentText { get; set; } 
 
         [ValidateNever]
-        [JsonIgnore]
         public Review AssignedReview { get; set; }
         [ValidateNever]
         public User AssignedUser { get; set; }
 
-        [JsonConstructor]
-        public Comment(int commentId, int reviewId, int userId, string commentText)
+        public Comment(Guid commentId, Guid reviewId, Guid userId, string commentText)
         {
             CommentId = commentId;
             ReviewId = reviewId;
             UserId = userId;
             CommentText = commentText;
         }
-
-        public Comment(int reviewId, int userId, string commentText)
+        [JsonConstructor]
+        public Comment(Guid reviewId, Guid userId, string commentText)
         {
             ReviewId = reviewId;
             UserId = userId;

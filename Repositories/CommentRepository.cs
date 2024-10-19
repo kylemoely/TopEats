@@ -36,9 +36,9 @@ namespace TopEats.Repositories
                     if (await reader.ReadAsync())
                     {
                         Comment comment = new Comment(
-                            (int)reader["commentId"],
-                            (int)reader["reviewId"],
-                            (int)reader["userId"],
+                            Guid.Parse(reader["commentId"].ToString()), 
+                            Guid.Parse(reader["reviewId"].ToString()), 
+                            Guid.Parse(reader["userId"].ToString()), 
                             reader["commentText"].ToString()
                         );
                         await comment.AssignUserAndReview(_userService, _reviewService);
@@ -65,9 +65,9 @@ namespace TopEats.Repositories
                     {
                         Comment comment = new Comment
                         (
-                            (int)reader["commentId"], 
-                            (int)reader["reviewId"], 
-                            (int)reader["userId"], 
+                            Guid.Parse(reader["commentId"].ToString()), 
+                            Guid.Parse(reader["reviewId"].ToString()), 
+                            Guid.Parse(reader["userId"].ToString()), 
                             reader["commentText"].ToString()
                         );
                         await comment.AssignUserAndReview(_userService, _reviewService);
@@ -84,9 +84,9 @@ namespace TopEats.Repositories
             {
                 string query = "INSERT INTO Comments (reviewId, userId, commentText) VALUES (@reviewId, @userId, @commentText)";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@reviewId", comment.reviewId);
-                command.Parameters.AddWithValue("@userId", comment.userId);
-                command.Parameters.AddWithValue("@commentText", comment.commentText);
+                command.Parameters.AddWithValue("@reviewId", comment.ReviewId);
+                command.Parameters.AddWithValue("@userId", comment.UserId);
+                command.Parameters.AddWithValue("@commentText", comment.CommentText);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -99,8 +99,8 @@ namespace TopEats.Repositories
             {
                 string query = "UPDATE Comments SET commentText = @commentText WHERE commentId = @commentId";
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@commentText", comment.commentText);
-                command.Parameters.AddWithValue("@commentId", comment.commentId);
+                command.Parameters.AddWithValue("@commentText", comment.CommentText);
+                command.Parameters.AddWithValue("@commentId", comment.CommentId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
@@ -136,9 +136,9 @@ namespace TopEats.Repositories
                     {
                         Comment comment = new Comment
                         (
-                            (int)reader["commentId"],
-                            (int)reader["reviewId"],
-                            (int)reader["userId"],
+                            Guid.Parse(reader["commentId"].ToString()), 
+                            Guid.Parse(reader["reviewId"].ToString()), 
+                            Guid.Parse(reader["userId"].ToString()), 
                             reader["commentText"].ToString()
                         );
                         await comment.AssignUserAndReview(_userService, _reviewService);
