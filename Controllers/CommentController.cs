@@ -22,71 +22,108 @@ namespace TopEats.Controllers
     [HttpGet("{commentId}")]
     public async Task<ActionResult<Comment>> GetCommentById(Guid commentId)
     {
-      var comment = await _commentService.GetCommentById(commentId);
-
-      if (comment == null)
+      try
       {
-        return NotFound( new { message = "Comment not found." } );
+        var comment = await _commentService.GetCommentById(commentId);
+
+        if (comment == null)
+        {
+          return NotFound( new { message = "Comment not found." } );
+        }
+
+        return Ok(comment);
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message });
       }
 
-      return Ok(comment);
     }
 
     // GET: /api/[controller]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Comment>>> GetAllComments()
     {
-      var comments = await _commentService.GetAllComments();
-
-      if (comments == null)
+      try
       {
-        return NotFound( new { message = "No comments found." } );
-      }
+        var comments = await _commentService.GetAllComments();
 
-      return Ok(comments);
+        if (comments == null)
+        {
+          return NotFound( new { message = "No comments found." } );
+        }
+
+        return Ok(comments);
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+      }
     }
 
     // POST: /api/[controller]
     [HttpPost]
     public async Task<ActionResult> CreateComment([FromBody] Comment comment)
     {
-      if (comment == null)
+      try
       {
-        return BadRequest("Request body is null.");
+        if (comment == null)
+        {
+          return BadRequest("Request body is null.");
+        }
+        if (!ModelState.IsValid)
+        {
+          return BadRequest("Comment data is invalid.");
+        }
+
+        await _commentService.CreateComment(comment);
+
+        return CreatedAtAction(nameof(GetCommentById), new { commentId = comment.CommentId }, comment);
       }
-      if (!ModelState.IsValid)
+      catch (Exception ex)
       {
-        return BadRequest("Comment data is invalid.");
+        return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
       }
-
-      await _commentService.CreateComment(comment);
-
-      return CreatedAtAction(nameof(GetCommentById), new { commentId = comment.CommentId }, comment);
     }
 
     // PUT: /api/[controller]
     [HttpPut]
     public async Task<ActionResult> UpdateComment([FromBody] Comment comment)
     {
-      if (comment == null)
+      try
       {
-        return BadRequest("Request body is null.");
+        if (comment == null)
+        {
+          return BadRequest("Request body is null.");
+        }
+        if (!ModelState.IsValid)
+        {
+          return BadRequest("Comment data is invalid.");
+        }
+
+        await _commentService.UpdateComment(comment);
+
+        return NoContent();
       }
-      if (!ModelState.IsValid)
+      catch (Exception ex)
       {
-        return BadRequest("Comment data is invalid.");
+        return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
       }
-
-      await _commentService.UpdateComment(comment);
-
-      return NoContent();
     }
 
     // DELETE: /api/[controller]/commentId
-    // [HttpDelete("{commentId}")]
-    // public async Task<ActionResult> DeleteComment(int commentId)
-    // {
-      
-    // }
+    [HttpDelete("{commentId}")]
+    public async Task<ActionResult> DeleteComment(Guid commentId)
+    {
+      try
+      {
+        await _commentService.DeleteComment(commentId);
+        return NoContent();
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+      }
+    }
   }
 }
