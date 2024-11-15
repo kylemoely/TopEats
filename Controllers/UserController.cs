@@ -21,71 +21,101 @@ namespace TopEats.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
         {
-            var users = await _userService.GetAllUsers();
-            return Ok(users);
+            try
+            {
+                var users = await _userService.GetAllUsers();
+                return Ok(users);                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+
         }
 
         // GET: api/User/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUserById(Guid id)
         {
-            var user = await _userService.GetUserById(id);
-            
-            if (user == null)
+            try
             {
-                return NotFound();
-            }
+                User user = await _userService.GetUserById(id);
+                
+                if (user == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(user);
+                return Ok(user);                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
         }
 
         // POST: api/User
         [HttpPost]
         public async Task<ActionResult> CreateUser([FromBody] User newUser)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                
+                await _userService.CreateUser(newUser);
+
+                return CreatedAtAction(nameof(GetUserById), new { id = newUser.UserId }, newUser);                
             }
-
-            await _userService.CreateUser(newUser);
-
-            return CreatedAtAction(nameof(GetUserById), new { id = newUser.UserId }, newUser);
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
         }
 
         // PUT: api/User/{id}
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePassword(Guid id, [FromBody] User updatedUser)
+        [HttpPut]
+        public async Task<IActionResult> UpdatePassword([FromBody] User updatedUser)
         {
-            if (id != updatedUser.UserId || !ModelState.IsValid)
+            try
             {
-                return BadRequest();
-            }
+                if (updatedUser == null)
+                {
+                    return NotFound();
+                }
 
-            var user = await _userService.GetUserById(id);
-            if (user == null)
+                await _userService.UpdatePassword(updatedUser);
+
+                return NoContent();                
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
-
-            await _userService.UpdatePassword(updatedUser);
-
-            return NoContent();
         }
 
         // DELETE: api/User/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            var user = await _userService.GetUserById(id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var user = await _userService.GetUserById(id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                await _userService.DeleteUser(id);
+
+                return NoContent();                
             }
-
-            await _userService.DeleteUser(id);
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
         }
     }
 }
