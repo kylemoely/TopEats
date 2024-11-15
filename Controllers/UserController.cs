@@ -19,7 +19,7 @@ namespace TopEats.Controllers
 
         // GET: api/User
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers()
         {
             try
             {
@@ -35,11 +35,11 @@ namespace TopEats.Controllers
 
         // GET: api/User/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUserById(Guid id)
+        public async Task<ActionResult<UserDTO>> GetUserById(Guid id)
         {
             try
             {
-                User user = await _userService.GetUserById(id);
+                UserDTO user = await _userService.GetUserById(id);
                 
                 if (user == null)
                 {
