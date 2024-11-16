@@ -17,7 +17,7 @@ namespace TopEats.Repositories
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<User> GetUserById(Guid userId)
+        public async Task<UserDTO> GetUserById(Guid userId)
         {
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
@@ -30,11 +30,10 @@ namespace TopEats.Repositories
                 {
                     if (await reader.ReadAsync())
                     {
-                        return new User
+                        return new UserDTO
                         (
                             Guid.Parse(reader["userId"].ToString()),
-                            reader["username"].ToString(),
-                            reader["passwordHash"].ToString()
+                            reader["username"].ToString()
                         );
                     }
                 }
@@ -42,9 +41,9 @@ namespace TopEats.Repositories
             return null;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<IEnumerable<UserDTO>> GetAllUsers()
         {
-            List<User> users = new List<User>();
+            List<UserDTO> users = new List<UserDTO>();
 
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
@@ -56,11 +55,10 @@ namespace TopEats.Repositories
                 {
                     while (await reader.ReadAsync())
                     {
-                        users.Add(new User
+                        users.Add(new UserDTO
                         (
                             Guid.Parse(reader["userId"].ToString()),
-                            reader["username"].ToString(),
-                            reader["passwordHash"].ToString()
+                            reader["username"].ToString()
                         ));
                     }
                 }

@@ -10,7 +10,7 @@ namespace TopEats.Models
         public Guid RestaurantId { get; set; } // FOREIGN KEY REFERENCES RESTAURANTS
         public int RestaurantRank { get; set; }
 
-        public User AssignedUser { get; set; }
+        public UserDTO AssignedUser { get; set; }
         public Restaurant AssignedRestaurant { get; set; }
 
         public UserFavRestaurant(Guid userId, Guid restaurantId, int restaurantRank)

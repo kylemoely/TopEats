@@ -9,8 +9,8 @@ namespace TopEats.Models
         public Guid FollowerId { get; set; } // FOREIGN KEY REFERENCES USERS
         public Guid FolloweeId { get; set; } // FOREIGN KEY REFERENCES USERS
         
-        public User Follower { get; set; }
-        public User Followee { get; set; }
+        public UserDTO Follower { get; set; }
+        public UserDTO Followee { get; set; }
 
         public Follow(Guid followerId, Guid followeeId)
         {

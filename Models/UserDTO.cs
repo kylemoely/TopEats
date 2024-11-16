@@ -9,7 +9,7 @@ namespace TopEats.Models
         public Guid? UserId { get; set; }
         public string Username { get; set; }
         
-        public User(Guid userId, string username)
+        public UserDTO(Guid userId, string username)
         {
             UserId = userId;
             Username = username;

@@ -7,8 +7,8 @@ namespace TopEats.Services
 {
     public interface IUserService
     {
-        Task<User> GetUserById(Guid userId);
-        Task<IEnumerable<User>> GetAllUsers();
+        Task<UserDTO> GetUserById(Guid userId);
+        Task<IEnumerable<UserDTO>> GetAllUsers();
         Task CreateUser(User user);
         Task UpdatePassword(User user);
         Task DeleteUser(Guid userId);

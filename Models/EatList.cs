@@ -11,7 +11,7 @@ namespace TopEats.Models
         public bool Private_setting { get; set; }
         public Guid UserId { get; set; } // FOREIGN KEY REFERENCES USERS
 
-        public User AssignedUser { get; set; }
+        public UserDTO AssignedUser { get; set; }
 
         public EatList(Guid eatListId, string eatListName, bool private_setting, Guid userId)
         {

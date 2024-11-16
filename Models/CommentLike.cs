@@ -11,7 +11,7 @@ namespace TopEats.Models
         public Guid UserId { get; set; } // FOREIGN KEY REFERENCES USERS
 
         public Comment AssignedComment { get; set; } 
-        public User AssignedUser { get; set; }
+        public UserDTO AssignedUser { get; set; }
 
         public CommentLike(Guid commentId, Guid userId)
         {

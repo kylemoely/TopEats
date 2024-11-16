@@ -13,7 +13,7 @@ namespace TopEats.Models
         public Guid RestaurantId { get; set; } // FOREIGN KEY REFERENCES Restaurants
         public Guid UserId { get; set; } // FOREIGN KEY REFERENCES Users
         
-        public User AssignedUser { get; set; }
+        public UserDTO AssignedUser { get; set; }
         public Restaurant AssignedRestaurant { get; set; }
 
         public Review(Guid reviewId, int rating, string reviewText, Guid restaurantId, Guid userId)

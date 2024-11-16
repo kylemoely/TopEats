@@ -9,7 +9,7 @@ namespace TopEats.Models
         public Guid ReviewId { get; set; } // FOREIGN KEY REFERENCES REVIEWS
         public Guid UserId { get; set; } // FOREIGN KEY REFERENCES USERS
 
-        public User AssignedUser { get; set; }
+        public UserDTO AssignedUser { get; set; }
         public Review AssignedReview { get; set; }
 
         public ReviewLike(Guid reviewId, Guid userId)

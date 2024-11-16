@@ -16,7 +16,7 @@ namespace TopEats.Models
         [ValidateNever]
         public Review AssignedReview { get; set; }
         [ValidateNever]
-        public User AssignedUser { get; set; }
+        public UserDTO AssignedUser { get; set; }
 
         public Comment(Guid commentId, Guid reviewId, Guid userId, string commentText)
         {

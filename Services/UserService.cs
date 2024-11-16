@@ -15,12 +15,12 @@ namespace TopEats.Services
             _userRepository = userRepository;
         }
 
-        public async Task<User> GetUserById(Guid userId)
+        public async Task<UserDTO> GetUserById(Guid userId)
         {
             return await _userRepository.GetUserById(userId);
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers()
+        public async Task<IEnumerable<UserDTO>> GetAllUsers()
         {
             return await _userRepository.GetAllUsers();
         }
