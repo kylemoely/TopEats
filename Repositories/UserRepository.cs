@@ -66,18 +66,24 @@ namespace TopEats.Repositories
             return users;
         }
 
-        public async Task CreateUser(User user)
+        public async Task<UserDTO> CreateUser(User user)
         {
+            Guid userId = Guid.NewGuid();
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Users (username, passwordHash) VALUES (@username, @passwordHash)";
+                string query = "INSERT INTO Users (userId, username, passwordHash) VALUES (@userId, @username, @passwordHash)";
                 MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
                 command.Parameters.AddWithValue("@username", user.Username);
                 command.Parameters.AddWithValue("@passwordHash", user.PasswordHash);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
             }
+            return new UserDTO(
+                userId,
+                user.Username
+            );
         }
 
         public async Task UpdatePassword(User user)

@@ -65,9 +65,9 @@ namespace TopEats.Controllers
                     return BadRequest(ModelState);
                 }
                 
-                await _userService.CreateUser(newUser);
+                UserDTO userDTO = await _userService.CreateUser(newUser);
 
-                return CreatedAtAction(nameof(GetUserById), new { id = newUser.UserId }, newUser);                
+                return CreatedAtAction(nameof(GetUserById), new { id = userDTO.UserId }, userDTO);                
             }
             catch (Exception ex)
             {

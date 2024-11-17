@@ -9,7 +9,7 @@ namespace TopEats.Services
     {
         Task<UserDTO> GetUserById(Guid userId);
         Task<IEnumerable<UserDTO>> GetAllUsers();
-        Task CreateUser(User user);
+        Task<UserDTO> CreateUser(User user);
         Task UpdatePassword(User user);
         Task DeleteUser(Guid userId);
     }

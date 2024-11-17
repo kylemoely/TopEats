@@ -25,9 +25,9 @@ namespace TopEats.Services
             return await _userRepository.GetAllUsers();
         }
 
-        public async Task CreateUser(User user)
+        public async Task<UserDTO> CreateUser(User user)
         {
-            await _userRepository.CreateUser(user);
+            return await _userRepository.CreateUser(user);
         }
 
         public async Task UpdatePassword(User user)
