@@ -76,7 +76,7 @@ namespace TopEats.Controllers
         }
 
         // PUT: api/User/{id}
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePassword([FromBody] User updatedUser)
         {
             try
