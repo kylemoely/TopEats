@@ -1,4 +1,6 @@
 using System;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace TopEats.Models
 {
@@ -16,7 +18,7 @@ namespace TopEats.Models
             Cuisine = cuisine;
             PriceCategory = priceCategory;
         }
-
+        [JsonConstructor]
         public Restaurant(string restaurantName, string cuisine, int priceCategory)
         {
             RestaurantName = restaurantName;

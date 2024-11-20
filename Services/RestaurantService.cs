@@ -25,9 +25,9 @@ namespace TopEats.Services
             return await _restaurantRepository.GetAllRestaurants();
         }
 
-        public async Task CreateRestaurant(Restaurant restaurant)
+        public async Task<Restaurant> CreateRestaurant(Restaurant restaurant)
         {
-            await _restaurantRepository.CreateRestaurant(restaurant);
+            return await _restaurantRepository.CreateRestaurant(restaurant);
         }
 
         public async Task UpdateRestaurant(Restaurant restaurant)

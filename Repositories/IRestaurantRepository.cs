@@ -9,7 +9,7 @@ namespace TopEats.Repositories
     {
         Task<Restaurant> GetRestaurantById(Guid restaurantId);
         Task<IEnumerable<Restaurant>> GetAllRestaurants();
-        Task CreateRestaurant(Restaurant restaurant);
+        Task<Restaurant> CreateRestaurant(Restaurant restaurant);
         Task UpdateRestaurant(Restaurant restaurant);
         Task DeleteRestaurant(Guid restaurantId);
     }

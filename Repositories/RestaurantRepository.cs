@@ -70,18 +70,24 @@ namespace TopEats.Repositories
             return restaurants;
         }
 
-        public async Task CreateRestaurant(Restaurant restaurant)
+        public async Task<Restaurant> CreateRestaurant(Restaurant restaurant)
         {
+            Guid restaurantId = Guid.NewGuid();
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Restaurants (restaurantName, cuisine, priceCategory) VALUES (@restaurantName, @cuisine, @priceCategory)";
+                string query = "INSERT INTO Restaurants (restaurantId, restaurantName, cuisine, priceCategory) VALUES (@restaurantId, @restaurantName, @cuisine, @priceCategory)";
                 MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@restaurantId", restaurantId);
                 command.Parameters.AddWithValue("@restaurantName", restaurant.RestaurantName);
                 command.Parameters.AddWithValue("@cuisine", restaurant.Cuisine);
                 command.Parameters.AddWithValue("@priceCategory", restaurant.PriceCategory);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
+
+                restaurant.RestaurantId = restaurantId;
+
+                return restaurant;
             }
         }
 
