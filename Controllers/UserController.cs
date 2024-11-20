@@ -56,7 +56,7 @@ namespace TopEats.Controllers
 
         // POST: api/User
         [HttpPost]
-        public async Task<ActionResult> CreateUser([FromBody] User newUser)
+        public async Task<ActionResult<UserDTO>> CreateUser([FromBody] User newUser)
         {
             try
             {
