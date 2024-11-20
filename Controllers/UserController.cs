@@ -76,8 +76,8 @@ namespace TopEats.Controllers
         }
 
         // PUT: api/User/{id}
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePassword([FromBody] User updatedUser)
+        [HttpPut("{userId}")]
+        public async Task<IActionResult> UpdatePassword([FromBody] User updatedUser, Guid userId)
         {
             try
             {
@@ -85,10 +85,15 @@ namespace TopEats.Controllers
                 {
                     return BadRequest(ModelState);
                 }
+                UserDTO user = await _userService.GetUserById(userId);
+                if (user == null)
+                {
+                    return NotFound();
+                }
 
                 await _userService.UpdatePassword(updatedUser);
 
-                return NoContent();                
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -97,18 +102,18 @@ namespace TopEats.Controllers
         }
 
         // DELETE: api/User/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(Guid id)
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> DeleteUser(Guid userId)
         {
             try
             {
-                var user = await _userService.GetUserById(id);
+                UserDTO user = await _userService.GetUserById(userId);
                 if (user == null)
                 {
                     return NotFound();
                 }
 
-                await _userService.DeleteUser(id);
+                await _userService.DeleteUser(userId);
 
                 return NoContent();                
             }
