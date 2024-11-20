@@ -81,9 +81,9 @@ namespace TopEats.Controllers
         {
             try
             {
-                if (updatedUser == null)
+                if (!ModelState.IsValid)
                 {
-                    return NotFound();
+                    return BadRequest(ModelState);
                 }
 
                 await _userService.UpdatePassword(updatedUser);
