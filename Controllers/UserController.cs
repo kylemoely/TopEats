@@ -23,7 +23,7 @@ namespace TopEats.Controllers
         {
             try
             {
-                var users = await _userService.GetAllUsers();
+                IEnumerable<UserDTO> users = await _userService.GetAllUsers();
                 return Ok(users);                
             }
             catch (Exception ex)
@@ -34,12 +34,12 @@ namespace TopEats.Controllers
         }
 
         // GET: api/User/{id}
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> GetUserById(Guid id)
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<UserDTO>> GetUserById(Guid userId)
         {
             try
             {
-                UserDTO user = await _userService.GetUserById(id);
+                UserDTO user = await _userService.GetUserById(userId);
                 
                 if (user == null)
                 {
@@ -67,7 +67,7 @@ namespace TopEats.Controllers
                 
                 UserDTO userDTO = await _userService.CreateUser(newUser);
 
-                return CreatedAtAction(nameof(GetUserById), new { id = userDTO.UserId }, userDTO);                
+                return CreatedAtAction(nameof(GetUserById), new { userId = userDTO.UserId }, userDTO);                
             }
             catch (Exception ex)
             {
