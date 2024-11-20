@@ -9,7 +9,7 @@ namespace TopEats.Services
     {
         Task<Comment> GetCommentById(Guid commentId);
         Task<IEnumerable<Comment>> GetAllComments();
-        Task CreateComment(Comment comment);
+        Task<Comment> CreateComment(Comment comment);
         Task UpdateComment(Comment comment);
         Task DeleteComment(Guid commentId);
         Task<IEnumerable<Comment>> GetReviewComments(Guid reviewId);

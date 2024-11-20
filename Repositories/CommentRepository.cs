@@ -78,12 +78,14 @@ namespace TopEats.Repositories
             return comments;
         }
 
-        public async Task CreateComment(Comment comment)
+        public async Task<Comment> CreateComment(Comment comment)
         {
+            Guid commentId = Guid.NewGuid();
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Comments (reviewId, userId, commentText) VALUES (@reviewId, @userId, @commentText)";
+                string query = "INSERT INTO Comments (commentId, reviewId, userId, commentText) VALUES (@commentId, @reviewId, @userId, @commentText)";
                 MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@commentId", commentId);
                 command.Parameters.AddWithValue("@reviewId", comment.ReviewId);
                 command.Parameters.AddWithValue("@userId", comment.UserId);
                 command.Parameters.AddWithValue("@commentText", comment.CommentText);
@@ -91,6 +93,12 @@ namespace TopEats.Repositories
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
             }
+            return new Comment(
+                commentId,
+                comment.ReviewId,
+                comment.UserId,
+                comment.CommentText
+            );
         }
 
         public async Task UpdateComment(Comment comment)

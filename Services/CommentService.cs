@@ -25,9 +25,9 @@ namespace TopEats.Services
             return await _commentRepository.GetAllComments();
         }
 
-        public async Task CreateComment(Comment comment)
+        public async Task<Comment> CreateComment(Comment comment)
         {
-            await _commentRepository.CreateComment(comment);
+            return await _commentRepository.CreateComment(comment);
         }
 
         public async Task UpdateComment(Comment comment)
