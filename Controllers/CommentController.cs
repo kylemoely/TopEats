@@ -24,7 +24,7 @@ namespace TopEats.Controllers
     {
       try
       {
-        var comment = await _commentService.GetCommentById(commentId);
+        Comment comment = await _commentService.GetCommentById(commentId);
 
         if (comment == null)
         {
@@ -63,22 +63,18 @@ namespace TopEats.Controllers
 
     // POST: /api/[controller]
     [HttpPost]
-    public async Task<ActionResult> CreateComment([FromBody] Comment comment)
+    public async Task<ActionResult<Comment>> CreateComment([FromBody] Comment reqComment)
     {
       try
       {
-        if (comment == null)
-        {
-          return BadRequest("Request body is null.");
-        }
         if (!ModelState.IsValid)
         {
           return BadRequest("Comment data is invalid.");
         }
 
-        await _commentService.CreateComment(comment);
+        Comment resComment = await _commentService.CreateComment(reqComment);
 
-        return CreatedAtAction(nameof(GetCommentById), new { commentId = comment.CommentId }, comment);
+        return CreatedAtAction(nameof(GetCommentById), new { commentId = resComment.CommentId }, resComment);
       }
       catch (Exception ex)
       {
