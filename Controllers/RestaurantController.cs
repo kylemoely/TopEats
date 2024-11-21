@@ -74,7 +74,7 @@ namespace TopEats.Controllers
         }
 
         [HttpPut("{restaurantId}")]
-        public async Task<IActionResult> UpdateRestaurant([FromBody] Restaurant restaurant)
+        public async Task<IActionResult> UpdateRestaurant([FromBody] Restaurant reqRestaurant, Guid restaurantId)
         {
             try
             {
@@ -82,8 +82,37 @@ namespace TopEats.Controllers
                 {
                     return BadRequest(ModelState);
                 }
+                Restaurant checkRestaurant = await _restaurantService.GetRestaurantById(restaurantId);
+                if (checkRestaurant == null)
+                {
+                    return NotFound();
+                }
+                await _restaurantService.UpdateRestaurant(reqRestaurant);
 
-                await _restaurantService.UpdateRestaurant(restaurant);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+        }
+
+        [HttpDelete("{restaurantId}")]
+        public async Task<IActionResult> DeleteRestaurant(Guid restaurantId)
+        {
+            try
+            {
+                if (restaurantId == null)
+                {
+                    return BadRequest();
+                }
+                Restaurant restaurant = await _restaurantService.GetRestaurantById(restaurantId);
+                if (restaurant == null)
+                {
+                    return NotFound();
+                }
+
+                await _restaurantService.DeleteRestaurant(restaurantId);
 
                 return NoContent();
             }
