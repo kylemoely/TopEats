@@ -81,12 +81,14 @@ namespace TopEats.Repositories
             return reviews;
         }
 
-        public async Task CreateReview(Review review)
+        public async Task<Review> CreateReview(Review review)
         {
+            Guid reviewId = Guid.NewGuid();
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Reviews (rating, reviewText, restaurantId, userId) VALUES (@rating, @reviewText, @restaurantId, @userId)";
+                string query = "INSERT INTO Reviews (reviewId, rating, reviewText, restaurantId, userId) VALUES (@reviewId, @rating, @reviewText, @restaurantId, @userId)";
                 MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@reviewId", reviewId);
                 command.Parameters.AddWithValue("@rating", review.Rating);
                 command.Parameters.AddWithValue("@reviewText", review.ReviewText);
                 command.Parameters.AddWithValue("@restaurantId", review.RestaurantId);
@@ -94,6 +96,10 @@ namespace TopEats.Repositories
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
+
+                review.ReviewId = reviewId;
+
+                return review;
             }
         }
 

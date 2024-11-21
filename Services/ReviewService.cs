@@ -25,9 +25,9 @@ namespace TopEats.Services
             return await _reviewRepository.GetAllReviews();
         }
 
-        public async Task CreateReview(Review review)
+        public async Task<Review> CreateReview(Review review)
         {
-            await _reviewRepository.CreateReview(review);
+            return await _reviewRepository.CreateReview(review);
         }
 
         public async Task UpdateReview(Review review)

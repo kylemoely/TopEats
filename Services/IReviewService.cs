@@ -9,7 +9,7 @@ namespace TopEats.Services
     {
         Task<Review> GetReviewById(Guid reviewId);
         Task<IEnumerable<Review>> GetAllReviews();
-        Task CreateReview(Review review);
+        Task<Review> CreateReview(Review review);
         Task UpdateReview(Review review);
         Task DeleteReview(Guid reviewId);
         Task<IEnumerable<Review>> GetUserReviews(Guid userId);
