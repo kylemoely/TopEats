@@ -79,5 +79,33 @@ namespace TopEats.Controllers
                 return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
         }
+
+        [HttpPut("{reviewId}")]
+        public async Task<IActionResult> UpdateReview([FromBody] Review review, Guid reviewId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                Review checkReview = await _reviewService.GetReviewById(reviewId);
+
+                if (checkReview == null)
+                {
+                    return NotFound();
+                }
+
+                review.ReviewId = reviewId;
+                await _reviewService.UpdateReview(review);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+        }
     }
 }
