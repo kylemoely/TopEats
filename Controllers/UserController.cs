@@ -90,7 +90,7 @@ namespace TopEats.Controllers
                 {
                     return NotFound();
                 }
-
+                updatedUser.UserId = userId;
                 await _userService.UpdatePassword(updatedUser);
 
                 return NoContent();
