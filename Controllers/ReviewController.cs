@@ -11,10 +11,12 @@ namespace TopEats.Controllers
     public class ReviewController : ControllerBase
     {
         private readonly IReviewService _reviewService;
+        private readonly IUserService _userService;
 
-        public ReviewController(IReviewService reviewService)
+        public ReviewController(IReviewService reviewService, IUserService userService)
         {
             _reviewService = reviewService;
+            _userService = userService;
         }
 
         [HttpGet("{reviewId}")]
@@ -48,11 +50,7 @@ namespace TopEats.Controllers
             try
             {
                 IEnumerable<Review> reviews = await _reviewService.GetAllReviews();
-                if (reviews.Any())
-                {
-                    return Ok(reviews);
-                }
-                return NotFound();
+                return Ok(reviews);
             }
             catch (Exception ex)
             {
@@ -128,6 +126,32 @@ namespace TopEats.Controllers
                 await _reviewService.DeleteReview(reviewId);
 
                 return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+        }
+
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetUserReviews(Guid userId)
+        {
+            try
+            {
+                if (userId == null)
+                {
+                    return BadRequest();
+                }
+                
+                UserDTO user = await _userService.GetUserById(userId);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                IEnumerable<Review> reviews = await _reviewService.GetUserReviews(userId);
+                return Ok(reviews);
             }
             catch(Exception ex)
             {
