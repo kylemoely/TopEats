@@ -107,5 +107,32 @@ namespace TopEats.Controllers
                 return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
         }
+
+        [HttpDelete("{reviewId}")]
+        public async Task<IActionResult> DeleteReview(Guid reviewId)
+        {
+            try
+            {
+                if (reviewId == null)
+                {
+                    return BadRequest();
+                }
+
+                Review review = await _reviewService.GetReviewById(reviewId);
+
+                if (review == null)
+                {
+                    return NotFound();
+                }
+
+                await _reviewService.DeleteReview(reviewId);
+
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+        }
     }
 }
