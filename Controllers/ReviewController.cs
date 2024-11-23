@@ -185,5 +185,29 @@ namespace TopEats.Controllers
                 return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
         }
+
+        [HttpGet("followee/{userId}")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetFolloweeReviews(Guid userId)
+        {
+            try
+            {
+                if (userId == null)
+                {
+                    return BadRequest();
+                }
+                UserDTO user = await _userService.GetUserById(userId);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                IEnumerable<Review> reviews = await _reviewService.GetFolloweeReviews(userId);
+                return Ok(reviews);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+        }
     }
 }
