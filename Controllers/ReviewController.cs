@@ -12,11 +12,13 @@ namespace TopEats.Controllers
     {
         private readonly IReviewService _reviewService;
         private readonly IUserService _userService;
+        private readonly IRestaurantService _restaurantService;
 
-        public ReviewController(IReviewService reviewService, IUserService userService)
+        public ReviewController(IReviewService reviewService, IUserService userService, IRestaurantService restaurantService)
         {
             _reviewService = reviewService;
             _userService = userService;
+            _restaurantService = restaurantService;
         }
 
         [HttpGet("{reviewId}")]
@@ -154,6 +156,31 @@ namespace TopEats.Controllers
                 return Ok(reviews);
             }
             catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+        }
+
+        [HttpGet("restaurant/{restaurantId}")]
+        public async Task<ActionResult<IEnumerable<Review>>> GetRestaurantReviews(Guid restaurantId)
+        {
+            try
+            {
+                if (restaurantId == null)
+                {
+                    return BadRequest();
+                }
+
+                Restaurant restaurant = await _restaurantService.GetRestaurantById(restaurantId);
+                if (restaurant == null)
+                {
+                    return NotFound();
+                }
+
+                IEnumerable<Review> reviews = await _reviewService.GetRestaurantReviews(restaurantId);
+                return Ok(reviews);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
