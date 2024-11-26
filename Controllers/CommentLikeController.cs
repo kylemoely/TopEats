@@ -12,61 +12,93 @@ namespace TopEats.Controllers
     public class CommentLikeController : ControllerBase
     {
         private readonly ICommentLikeService _commentLikeService;
+        private readonly ICommentService _commentService;
+        private readonly IUserService _userService;
 
-        public CommentLikeController(ICommentLikeService commentLikeService)
+        public CommentLikeController(ICommentLikeService commentLikeService, ICommentService commentService, IUserService userService)
         {
             _commentLikeService = commentLikeService;
+            _commentService = commentService;
+            _userService = userService;
         }
 
         // GET: api/CommentLike/{commentId}
         [HttpGet("{commentId}")]
         public async Task<ActionResult<IEnumerable<CommentLike>>> GetCommentLikes(Guid commentId)
         {
-            var commentLikes = await _commentLikeService.GetCommentLikes(commentId);
-
-            if (commentLikes == null)
+            try
             {
-                return NotFound( new { message = "Comment not found."} );
-            }
+                if (commentId == null)
+                {
+                    return BadRequest();
+                }
 
-            return Ok(commentLikes);
+                Comment comment = await _commentService.GetCommentById(commentId);
+                if (comment == null)
+                {
+                    return NotFound();
+                }
+
+                IEnumerable<CommentLike> commentLikes = await _commentLikeService.GetCommentLikes(commentId);
+                return Ok(commentLikes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
         }
 
         // POST: api/CommentLike
         [HttpPost]
         public async Task<ActionResult> CreateCommentLike([FromBody] CommentLike commentLike)
         {
-            if (commentLike == null)
+            try
             {
-                return BadRequest("Request body is null.");
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                Comment comment = await _commentService.GetCommentById(commentLike.CommentId);
+                UserDTO user = await _userService.GetUserById(commentLike.UserId);
+
+                if (comment == null || user == null)
+                {
+                    return NotFound();
+                }
+
+                await _commentLikeService.CreateCommentLike(commentLike);
+                return NoContent();
             }
-            if (!ModelState.IsValid)
+            catch (Exception ex)
             {
-                return BadRequest("CommentLike data is invalid.");
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
-
-            await _commentLikeService.CreateCommentLike(commentLike);
-
-            // Return a 201 Created response with the created comment like information
-            return CreatedAtAction(nameof(GetCommentLikes), new { commentId = commentLike.CommentId }, commentLike);
         }
 
         // DELETE: api/CommentLike
         [HttpDelete]
         public async Task<ActionResult> DeleteCommentLike([FromBody] CommentLike commentLike)
         {
-            if (commentLike == null)
+            try
             {
-                return BadRequest("Request body is null.");
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                CommentLike checkCommentLike = await _commentLikeService.GetCommentLikeById(commentLike);
+
+                if (checkCommentLike == null)
+                {
+                    return NotFound();
+                }
+
+                await _commentLikeService.DeleteCommentLike(commentLike);
+                return NoContent();
             }
-            if (!ModelState.IsValid)
+            catch (Exception ex)
             {
-                return BadRequest("CommentLike data is invalid.");
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
-
-            await _commentLikeService.DeleteCommentLike(commentLike);
-
-            return NoContent(); // 204 No Content response for successful deletion
         }
     }
 }

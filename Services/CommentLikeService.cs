@@ -9,10 +9,15 @@ namespace TopEats.Services
     public class CommentLikeService : ICommentLikeService
     {
         private readonly ICommentLikeRepository _commentLikeRepository;
-
+        
         public CommentLikeService(ICommentLikeRepository commentLikeRepository)
         {
             _commentLikeRepository = commentLikeRepository;
+        }
+
+        public async Task<CommentLike> GetCommentLikeById(CommentLike commentLike)
+        {
+            return await _commentLikeRepository.GetCommentLikeById(commentLike);
         }
 
         public async Task<IEnumerable<CommentLike>> GetCommentLikes(Guid commentId)

@@ -1,6 +1,8 @@
 using System;
 using TopEats.Services;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace TopEats.Models
 {
@@ -10,9 +12,12 @@ namespace TopEats.Models
         public Guid CommentId { get; set; } // FOREIGN KEY REFERENCES COMMENTS
         public Guid UserId { get; set; } // FOREIGN KEY REFERENCES USERS
 
-        public Comment AssignedComment { get; set; } 
-        public UserDTO AssignedUser { get; set; }
+        [JsonIgnore]
+        public Comment? AssignedComment { get; set; }
+        [JsonIgnore] 
+        public UserDTO? AssignedUser { get; set; }
 
+        [JsonConstructor]
         public CommentLike(Guid commentId, Guid userId)
         {
             CommentId = commentId;

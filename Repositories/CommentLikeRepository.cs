@@ -22,6 +22,27 @@ namespace TopEats.Repositories
             _commentService = commentService;
         }
 
+        public async Task<CommentLike> GetCommentLikeById(CommentLike commentLike)
+        {
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                string query = "SELECT * FROM CommentLikes WHERE commentId = @commentId AND userId = @userId";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@commentId", commentLike.CommentId);
+                command.Parameters.AddWithValue("@userId", commentLike.UserId);
+
+                await connection.OpenAsync();
+                using (MySqlDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    if (await reader.ReadAsync())
+                    {
+                        return commentLike;
+                    }
+                }
+            }
+            return null;
+        }
+
         public async Task<IEnumerable<CommentLike>> GetCommentLikes(Guid commentId)
         {
             List<CommentLike> commentLikes = new List<CommentLike>();
