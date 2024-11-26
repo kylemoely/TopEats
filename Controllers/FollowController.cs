@@ -36,10 +36,35 @@ namespace TopEats.Controllers
                     return NotFound();
                 }
 
-                IEnumerable<Follow> follows = await _followService.GetUserFollowers(userId);
-                return Ok(follows);
+                IEnumerable<Follow> followers = await _followService.GetUserFollowers(userId);
+                return Ok(followers);
             }
             catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+        }
+
+        [HttpGet("followee/{userId}")]
+        public async Task<ActionResult<IEnumerable<Follow>>> GetUserFollowees(Guid userId)
+        {
+            try
+            {
+                if (userId == null)
+                {
+                    return BadRequest();
+                }
+                UserDTO user = await _userService.GetUserById(userId);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                IEnumerable<Follow> followees = await _followService.GetUserFollowees(userId);
+                return Ok(followees);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
