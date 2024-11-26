@@ -69,5 +69,32 @@ namespace TopEats.Controllers
                 return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateFollow([FromBody] Follow follow)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                UserDTO user1 = await _userService.GetUserById(follow.FollowerId);
+                UserDTO user2 = await _userService.GetUserById(follow.FolloweeId);
+
+                if (user1 == null || user2 == null)
+                {
+                    return NotFound();
+                }
+
+                await _followService.CreateFollow(follow);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+        }
     }
 }
