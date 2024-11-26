@@ -1,6 +1,8 @@
 using System;
 using TopEats.Services;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace TopEats.Models
 {
@@ -9,9 +11,12 @@ namespace TopEats.Models
         public Guid FollowerId { get; set; } // FOREIGN KEY REFERENCES USERS
         public Guid FolloweeId { get; set; } // FOREIGN KEY REFERENCES USERS
         
-        public UserDTO Follower { get; set; }
-        public UserDTO Followee { get; set; }
+        [JsonIgnore]
+        public UserDTO? Follower { get; set; }
+        [JsonIgnore]
+        public UserDTO? Followee { get; set; }
 
+        [JsonConstructor]
         public Follow(Guid followerId, Guid followeeId)
         {
             FollowerId = followerId;
