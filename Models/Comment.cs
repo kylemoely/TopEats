@@ -13,10 +13,10 @@ namespace TopEats.Models
         public Guid UserId { get; set; } // FOREIGN KEY REFERENCES USERS
         public string CommentText { get; set; } 
 
-        [ValidateNever]
-        public Review AssignedReview { get; set; }
-        [ValidateNever]
-        public UserDTO AssignedUser { get; set; }
+        [JsonIgnore]
+        public Review? AssignedReview { get; set; }
+        [JsonIgnore]
+        public UserDTO? AssignedUser { get; set; }
 
         public Comment(Guid commentId, Guid reviewId, Guid userId, string commentText)
         {

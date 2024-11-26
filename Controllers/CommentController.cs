@@ -12,10 +12,12 @@ namespace TopEats.Controllers
   public class CommentController : ControllerBase
   {
     private readonly ICommentService _commentService;
+    private readonly IReviewService _reviewService;
 
-    public CommentController(ICommentService commentService)
+    public CommentController(ICommentService commentService, IReviewService reviewService)
     {
       _commentService = commentService;
+      _reviewService = reviewService;
     }
 
     // GET: /api/[controller]/commentId
@@ -83,20 +85,25 @@ namespace TopEats.Controllers
     }
 
     // PUT: /api/[controller]
-    [HttpPut]
-    public async Task<ActionResult> UpdateComment([FromBody] Comment comment)
+    [HttpPut("{commentId}")]
+    public async Task<ActionResult> UpdateComment([FromBody] Comment comment, Guid commentId)
     {
       try
       {
-        if (comment == null)
+        if (commentId == null)
         {
-          return BadRequest("Request body is null.");
+          return BadRequest();
         }
         if (!ModelState.IsValid)
         {
-          return BadRequest("Comment data is invalid.");
+          return BadRequest(ModelState);
         }
-
+        Comment checkComment = await _commentService.GetCommentById(commentId);
+        if (checkComment == null)
+        {
+          return NotFound();
+        }
+        comment.CommentId = commentId;
         await _commentService.UpdateComment(comment);
 
         return NoContent();
@@ -115,6 +122,31 @@ namespace TopEats.Controllers
       {
         await _commentService.DeleteComment(commentId);
         return NoContent();
+      }
+      catch (Exception ex)
+      {
+        return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+      }
+    }
+
+    [HttpGet("review/{reviewId}")]
+    public async Task<ActionResult<IEnumerable<Comment>>> GetReviewComments(Guid reviewId)
+    {
+      try
+      {
+        if (reviewId == null)
+        {
+          return BadRequest();
+        }
+
+        Review review = await _reviewService.GetReviewById(reviewId);
+        if (review == null)
+        {
+          return NotFound();
+        }
+
+        IEnumerable<Comment> comments = await _commentService.GetReviewComments(reviewId);
+        return Ok(comments);
       }
       catch (Exception ex)
       {
