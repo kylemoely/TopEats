@@ -2,3 +2,4 @@
 obj/
 bin/
 *.sql
+*.txt
