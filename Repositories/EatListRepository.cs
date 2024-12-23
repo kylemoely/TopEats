@@ -77,7 +77,7 @@ namespace TopEats.Repositories
             return eatLists;
         }
 
-        public async Task CreateEatList(EatList eatList)
+        public async Task<EatList> CreateEatList(EatList eatList)
         {
             Guid eatListId = Guid.NewGuid();
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
