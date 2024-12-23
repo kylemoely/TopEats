@@ -1,6 +1,8 @@
 using System;
 using TopEats.Services;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace TopEats.Models
 {
@@ -11,7 +13,8 @@ namespace TopEats.Models
         public bool Private_setting { get; set; }
         public Guid UserId { get; set; } // FOREIGN KEY REFERENCES USERS
 
-        public UserDTO AssignedUser { get; set; }
+        [JsonIgnore]
+        public UserDTO? AssignedUser { get; set; }
 
         public EatList(Guid eatListId, string eatListName, bool private_setting, Guid userId)
         {
@@ -20,7 +23,7 @@ namespace TopEats.Models
             Private_setting = private_setting;
             UserId = userId;
         }
-
+        [JsonConstructor]
         public EatList(string eatListName, bool private_setting, Guid userId)
         {
             EatListName = eatListName;

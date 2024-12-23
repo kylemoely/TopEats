@@ -79,16 +79,22 @@ namespace TopEats.Repositories
 
         public async Task CreateEatList(EatList eatList)
         {
+            Guid eatListId = Guid.NewGuid();
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
-                string query = "INSERT INTO EatLists (eatListName, private_setting, userId) VALUES (@eatListName, @private_setting, @userId)";
+                string query = "INSERT INTO EatLists (eatListId, eatListName, private_setting, userId) VALUES (@eatListId, @eatListName, @private_setting, @userId)";
                 MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@eatListId", eatListId);
                 command.Parameters.AddWithValue("@eatListName", eatList.EatListName);
                 command.Parameters.AddWithValue("@private_setting", eatList.Private_setting);
                 command.Parameters.AddWithValue("@userId", eatList.UserId);
 
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
+
+                eatList.eatListId = eatListId;
+
+                return eatList;
             }
         }
 
