@@ -69,5 +69,33 @@ namespace TopEats.Controllers
                 return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
         }
+
+        [HttpPut("{eatListId}")]
+        public async Task<IActionResult> UpdateEatList ([FromBody] EatList eatList, Guid eatListId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+
+                EatList checkEatList = await _eatListService.GetEatListById(eatListId);
+
+                if (checkEatList == null)
+                {
+                    return NotFound();
+                }
+
+                eatList.EatListId = eatListId;
+                await _eatListService.UpdateEatList(eatList);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+        }
     }
 }
