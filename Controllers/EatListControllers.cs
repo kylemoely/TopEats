@@ -77,7 +77,7 @@ namespace TopEats.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return BadRequest();
+                    return BadRequest(ModelState);
                 }
 
                 EatList checkEatList = await _eatListService.GetEatListById(eatListId);
