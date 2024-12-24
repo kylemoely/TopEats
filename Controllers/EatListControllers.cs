@@ -124,5 +124,32 @@ namespace TopEats.Controllers
                 return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
         }
+
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<EatList>>> GetUserEatLists (Guid userId)
+        {
+            try
+            {
+                if (userId == null)
+                {
+                    return BadRequest();
+                }
+
+                UserDTO user = await _userService.GetUserById(userId);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                IEnumerable<EatList> eatLists = await _eatListService.GetUserEatLists(userId);
+
+                return Ok(eatLists);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+        }
     }
 }
