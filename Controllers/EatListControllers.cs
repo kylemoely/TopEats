@@ -97,5 +97,32 @@ namespace TopEats.Controllers
                 return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
         }
+
+        [HttpDelete("{eatListId}")]
+        public async Task<IActionResult> DeleteEatList(Guid eatListId)
+        {
+            try
+            {
+                if (eatListId == null)
+                {
+                    return BadRequest();
+                }
+
+                EatList eatList = await _eatListService.GetEatListById(eatListId);
+
+                if (eatList == null)
+                {
+                    return NotFound();
+                }
+
+                await _eatListService.DeleteEatList(eatListId);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
+            }
+        }
     }
 }
