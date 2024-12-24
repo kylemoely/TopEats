@@ -25,9 +25,9 @@ namespace TopEats.Services
             return await _eatListRepository.GetAllEatLists();
         }
 
-        public async Task CreateEatList(EatList eatList)
+        public async Task<EatList> CreateEatList(EatList eatList)
         {
-            await _eatListRepository.CreateEatList(eatList);
+            return await _eatListRepository.CreateEatList(eatList);
         }
 
         public async Task UpdateEatList(EatList eatList)

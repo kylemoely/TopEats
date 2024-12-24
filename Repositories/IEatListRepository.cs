@@ -9,7 +9,7 @@ namespace TopEats.Repositories
     {
         Task<EatList> GetEatListById(Guid eatListId);
         Task<IEnumerable<EatList>> GetAllEatLists();
-        Task CreateEatList(EatList eatList);
+        Task<EatList> CreateEatList(EatList eatList);
         Task UpdateEatList(EatList eatList);
         Task DeleteEatList(Guid eatListId);
         Task<IEnumerable<EatList>> GetUserEatLists(Guid userId);

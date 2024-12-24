@@ -92,7 +92,7 @@ namespace TopEats.Repositories
                 await connection.OpenAsync();
                 await command.ExecuteNonQueryAsync();
 
-                eatList.eatListId = eatListId;
+                eatList.EatListId = eatListId;
 
                 return eatList;
             }

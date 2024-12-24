@@ -44,7 +44,7 @@ namespace TopEats.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<EatList>> CreateEatList([FromBody] EatList eatList)
+        public async Task<ActionResult<EatList>> CreateEatList([FromBody] EatList reqEatList)
         {
             try
             {
@@ -53,12 +53,20 @@ namespace TopEats.Controllers
                     return BadRequest(ModelState);
                 }
 
-                UserDTO user = await _userService.GetUserById(eatList.UserId);
+                UserDTO user = await _userService.GetUserById(reqEatList.UserId);
 
                 if (user == null)
                 {
                     return NotFound();
                 }
+
+                EatList resEatList = await _eatListService.CreateEatList(reqEatList);
+
+                return CreatedAtAction(nameof(GetEatListById), new { eatListId = resEatList.EatListId }, resEatList);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occured on our end. Try again later.", details=ex.Message});
             }
         }
     }
