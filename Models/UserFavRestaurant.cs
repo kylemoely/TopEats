@@ -1,6 +1,8 @@
 using System;
 using TopEats.Services;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace TopEats.Models
 {
@@ -10,9 +12,12 @@ namespace TopEats.Models
         public Guid RestaurantId { get; set; } // FOREIGN KEY REFERENCES RESTAURANTS
         public int RestaurantRank { get; set; }
 
-        public UserDTO AssignedUser { get; set; }
-        public Restaurant AssignedRestaurant { get; set; }
+        [JsonIgnore]
+        public UserDTO? AssignedUser { get; set; }
+        [JsonIgnore]
+        public Restaurant? AssignedRestaurant { get; set; }
 
+        [JsonConstructor]
         public UserFavRestaurant(Guid userId, Guid restaurantId, int restaurantRank)
         {
             UserId = userId;
